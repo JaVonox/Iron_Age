@@ -16,8 +16,8 @@ namespace Exp2
             InitializeComponent();
         }
 
-        static int xlen = 1916;
-        static int ylen = 1053;
+        static int xlen = 1400;
+        static int ylen = 900;
         int j = 1;
         string era = "Prehistoric";
         string AD = "BH";
@@ -44,9 +44,10 @@ namespace Exp2
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.Size = new Size(xlen, ylen);
-            this.Height = Map.Height;
-            this.Width = Map.Width;
+            //this.Size = new Size(800, 800);
+            this.Size = new System.Drawing.Size(1400, 900);
+            //this.Height = ylen;
+            //this.Width = xlen;
 
             pictureBox1.ClientSize = new Size(this.Width, this.Height);
             pictureBox1.Image = Map;
@@ -66,8 +67,8 @@ namespace Exp2
                 {
                     int radius = (716 - j) / 2;
                     double angle = i * System.Math.PI / 180;
-                    int x = xlen / 2 - (int)(150 + radius * System.Math.Cos(angle));
-                    int y = ylen / 2 - (int)(150 + radius * System.Math.Sin(angle));
+                    int x = xlen / 2 - (int)(radius * System.Math.Cos(angle));
+                    int y = Math.Max(ylen / 2 - (int)(radius * System.Math.Sin(angle)),1);
                     if (j > 0)
                     {
                         if (y == ff)
@@ -273,8 +274,8 @@ namespace Exp2
                                     countl += 1;
                                     for (int splii = 0; splii <= 999999; splii++)
                                     {
-                                        int opx = Rander.Next(0, 1000);
-                                        int opy = Rander.Next(0, 1000);
+                                        int opx = Rander.Next(0, xlen - 1);
+                                        int opy = Rander.Next(0, ylen - 1);
 
                                         if (Rander.Next(1, 3) == 2)
                                         {
@@ -446,8 +447,8 @@ namespace Exp2
 
                             if (newpos[tempisln].X == 0)
                             {
-                                newpos[tempisln].X = Rander.Next(1, Map.Width); //random new position
-                                newpos[tempisln].Y = Rander.Next(1, Map.Height);
+                                newpos[tempisln].X = Rander.Next(1, xlen); //random new position
+                                newpos[tempisln].Y = Rander.Next(50, ylen - 50);
 
                                 xchange[tempisln] = newpos[tempisln].X - x; //change in coords
                                 ychange[tempisln] = newpos[tempisln].Y - y;
@@ -478,7 +479,7 @@ namespace Exp2
             Bitmap bmp = Map;
 
             // Lock the bitmap's bits.  
-            Rectangle rect = new Rectangle(0, 0, (xlen * 2), bmp.Height );
+            Rectangle rect = new Rectangle(0, 0, xlen, ylen);
             System.Drawing.Imaging.BitmapData bmpData =
                 bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
                 bmp.PixelFormat); //32 ARGB

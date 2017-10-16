@@ -70,3 +70,12 @@ C:\Users\Jamie\Documents\Empire-Sim-master\EmpireSim\Exp2\obj\Debug\Exp2.Propert
 C:\Users\Jamie\Documents\Empire-Sim-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.Cache
 C:\Users\Jamie\Documents\Empire-Sim-master\EmpireSim\Exp2\bin\Debug\Exp2.exe
 C:\Users\Jamie\Documents\Empire-Sim-master\EmpireSim\Exp2\bin\Debug\Exp2.pdb
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\bin\Debug\Exp2.exe.config
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.exe
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.pdb
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\bin\Debug\Exp2.exe
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\bin\Debug\Exp2.pdb
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.csprojResolveAssemblyReference.cache
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.Form1.resources
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.Properties.Resources.resources
+C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.Cache
