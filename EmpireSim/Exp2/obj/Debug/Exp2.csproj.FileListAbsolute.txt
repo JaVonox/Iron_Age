@@ -79,3 +79,12 @@ C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.c
 C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.Form1.resources
 C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.Properties.Resources.resources
 C:\Users\Jamie\Documents\GitHub\IronAge\Iron_Age\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.Cache
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Exp2.exe.config
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.exe
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.pdb
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Exp2.exe
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Exp2.pdb
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csprojResolveAssemblyReference.cache
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Form1.resources
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Properties.Resources.resources
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.Cache

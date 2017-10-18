@@ -35,7 +35,7 @@ namespace Exp2
         int[, ,] Tempcolor = new int[xlen, ylen, 3]; //r //g //b
         int[,] Newcolor = new int[xlen * ylen, 3];
         Color[] colours = new Color[99999];
-        Bitmap Map = new Bitmap(Exp2.Properties.Resources.testimage,xlen * 2,ylen);
+        Bitmap Map = new Bitmap(Exp2.Properties.Resources.testimage,xlen,ylen);
 
         //int[,] landgen = new int[xlen,ylen];
 
@@ -45,7 +45,7 @@ namespace Exp2
         private void Form1_Load(object sender, EventArgs e)
         {
             //this.Size = new Size(800, 800);
-            this.Size = new System.Drawing.Size(1400, 900);
+            this.Size = new System.Drawing.Size(xlen, ylen);
             //this.Height = ylen;
             //this.Width = xlen;
 
@@ -108,6 +108,46 @@ namespace Exp2
 
             using (var g = Graphics.FromImage(pictureBox1.Image))
             {
+
+                //g.DrawRectangle(Pens.Orange, 0, 0, xlen - 17, ylen - 40);
+
+                if (age == "Provincial Age")
+                {
+                    //seperate world into different provinces
+
+                    
+                    for(int x = 0; x <= xlen - 1; x+= xlen / 100)
+                    {
+                        for (int y = 0; y <= ylen - 1; y+= ylen / 100)
+                        {
+
+                            int a1 = Rander.Next(1, 255);
+                            int a2 = Rander.Next(1, 255);
+                            int a3 = Rander.Next(1, 255);
+                            Color Randerpaint = new Color();
+                            Randerpaint = Color.FromArgb(a1, a2, a3);
+
+                            for (int mx = x; mx <= x + xlen / 100 && mx <= xlen - 1; mx++)
+                            {
+                                for (int my = y; my <= y + ylen / 100 && my <= ylen - 1; my++)
+                                {
+
+                                    if(Map.GetPixel(mx,my) != Color.FromArgb(28,107,160))
+                                    {
+                                        Map.SetPixel(mx, my, Randerpaint);
+                                    }
+
+                                    //    rgbValues[dx + 3] = 255; //alpha
+                                    //rgbValues[dx + 2] = 28; //red
+                                    //rgbValues[dx + 1] = 107; //green
+                                    //rgbValues[dx] = 160; //blue
+                                }
+                            }
+                            //g.DrawRectangle(Pens.Orange, x, y, x + xlen / 100, y + ylen / 100);
+                        }
+                    }
+
+                }
 
                 if(age == "Age of Formation")
                 {
@@ -364,7 +404,7 @@ namespace Exp2
             if (age == "Islandic Age")
             {
                 int count = 0;
-                year += 2;
+                year += Rander.Next(1,10000);
 
                 //This is really slow
 
@@ -381,7 +421,7 @@ namespace Exp2
                             xchanget = xchange[islnum[x, y]];
                             ychanget = ychange[islnum[x, y]];
 
-                            if(x + xchanget < (xlen * 2) - 2 && y + ychanget < ylen - 2 && x + xchanget > 2 && y + ychanget > 2)
+                            if(x + xchanget < xlen - 2 && y + ychanget < ylen - 2 && x + xchanget > 2 && y + ychanget > 2)
                             {
                               newMap[x + xchanget, y + ychanget] = 1;
                             }
@@ -425,7 +465,9 @@ namespace Exp2
                 using (var g = Graphics.FromImage(pictureBox1.Image))
                 {
                     Dobits();
-                    age = "Human Age";
+                    bg = ((green / (green + blue))) * 100;
+                    Console.WriteLine(bg);
+                    age = "Provincial Age";
                 }
             }
 
@@ -468,9 +510,8 @@ namespace Exp2
         int[] xchange = new int[9999];
         int[] ychange = new int[9999];
         Point[] newpos = new Point[9999];
-        byte[,] newMap = new byte[xlen * 2,ylen];
+        byte[,] newMap = new byte[xlen + 1,ylen];
         //int[,] newMapS = new int[xlen * ylen) + 1,2];
-        Color[,] scanresults = new Color[717, 4499]; //shell, place in shell
 
         private void Dobits() //PaintEventArgs e
         {
@@ -479,7 +520,7 @@ namespace Exp2
             Bitmap bmp = Map;
 
             // Lock the bitmap's bits.  
-            Rectangle rect = new Rectangle(0, 0, xlen, ylen);
+            Rectangle rect = new Rectangle(0, 0, xlen - 17, ylen - 40);
             System.Drawing.Imaging.BitmapData bmpData =
                 bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
                 bmp.PixelFormat); //32 ARGB
@@ -497,20 +538,21 @@ namespace Exp2
 
             int tcount = 0;
 
-            for (int y = 1; y <= ylen - 2; y++)
+            for (int y = 1; y <= ylen - 41; y++)
             {
                 int l = y * Math.Abs(bmpData.Stride);
 
-                for (int x = 1; x <= (xlen * 2) - 2; x++)
+                for (int x = 1; x <= xlen - 18; x++)
                 {
                     int dx = l + x * 4;
 
-                    if(newMap[x,y] == 1)
+                    if(newMap[x,y] == 1) //land
                     {
                         if (newMap[x, y + 1] == 0 && newMap[x, y - 1] == 0 && newMap[x + 1, y] == 0 && newMap[x - 1, y] == 0) //if its a single island
                         {
                             if (Rander.Next(1, 41) == 15)
                             {
+                                green += 1;
                                 rgbValues[dx + 3] = 255; //alpha
                                 rgbValues[dx + 2] = 32; //red
                                 rgbValues[dx + 1] = 176; //green
@@ -526,12 +568,14 @@ namespace Exp2
                         }
                         else
                         {
-                            if (newMap[x, y + 1] == 1 && newMap[x, y - 1] == 1 && newMap[x + 1, y] == 1 && newMap[x - 1, y] == 1) //if its a single island
+                            if (newMap[x, y + 1] == 1 && newMap[x, y - 1] == 1 && newMap[x + 1, y] == 1 && newMap[x - 1, y] == 1)
                             {
-                                if (newMap[x + 1, y + 1] == 1 && newMap[x + 1, y - 1] == 1 && newMap[x - 1, y + 1] == 1 && newMap[x - 1, y - 1] == 1)
+                                green += 1;
+
+                                if (newMap[x + 1, y + 1] == 1 && newMap[x + 1, y - 1] == 1 && newMap[x - 1, y + 1] == 1 && newMap[x - 1, y - 1] == 1) //land
                                 {
                                     rgbValues[dx + 3] = 255; //alpha
-                                    rgbValues[dx + 2] = 32; //red
+                                    rgbValues[dx + 2] = 78; //red
                                     rgbValues[dx + 1] = 176; //green
                                     rgbValues[dx] = 134; //blue
                                 }
@@ -554,7 +598,8 @@ namespace Exp2
                     }
                     else
                     {
-
+                        //water
+                        blue += 1;
                             rgbValues[dx + 3] = 255; //alpha
                             rgbValues[dx + 2] = 28; //red
                             rgbValues[dx + 1] = 107; //green
@@ -577,8 +622,9 @@ namespace Exp2
 
         }
 
-
-
+        double green = 0;
+        double blue = 0;
+        double bg = 0;
 
         private void FloodFill(Bitmap bmp, Point pt, Color targetColor, Color replacementColor) //code from https://simpledevcode.wordpress.com/2015/12/29/flood-fill-algorithm-using-c-net/ by Karim Oumghar
         {
