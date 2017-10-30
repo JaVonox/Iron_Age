@@ -61,6 +61,63 @@ namespace Exp2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to les Escaldes
+        ///Andorra la Vella
+        ///Umm al Qaywayn
+        ///Ras al-Khaimah
+        ///Khawr Fakkān
+        ///Dubai
+        ///Dibba Al-Fujairah
+        ///Dibba Al-Hisn
+        ///Sharjah
+        ///Ar Ruways
+        ///Al Fujayrah
+        ///Al Ain
+        ///Ajman
+        ///Adh Dhayd
+        ///Abu Dhabi
+        ///Zaranj
+        ///Taloqan
+        ///Shīnḏanḏ
+        ///Shibirghān
+        ///Shahrak
+        ///Sar-e Pul
+        ///Sang-e Chārak
+        ///Aībak
+        ///Rustāq
+        ///Qarqīn
+        ///Qarāwul
+        ///Pul-e Khumrī
+        ///Paghmān
+        ///Nahrīn
+        ///Maymana
+        ///Mehtar Lām
+        ///Mazār-e Sharīf
+        ///Lashkar Gāh
+        ///Kushk
+        ///Kunduz
+        ///Khōst
+        ///Khulm
+        ///Khāsh
+        ///Khanabad
+        ///Karukh
+        ///Kandahār
+        ///Kabul
+        ///Jalālābād
+        ///Jabal os Saraj
+        ///Herāt
+        ///Ghormach
+        ///Ghazni
+        ///Gereshk
+        ///Gard [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string ProvincesReal {
+            get {
+                return ResourceManager.GetString("ProvincesReal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap testimage {

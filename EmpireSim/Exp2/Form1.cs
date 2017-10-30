@@ -103,6 +103,8 @@ namespace Exp2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            //funct.Functions.MarkovsGen("Prov");
+            //temp
             label1.Text = day + ","  + month + "," +  year + AD + ", " + era ;
             label2.Text = age;
 
