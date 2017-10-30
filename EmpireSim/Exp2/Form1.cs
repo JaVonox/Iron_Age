@@ -49,6 +49,11 @@ namespace Exp2
             //this.Height = ylen;
             //this.Width = xlen;
 
+
+            //temp 
+            Province.Text = funct.Functions.Generator("Prov");
+
+
             pictureBox1.ClientSize = new Size(this.Width, this.Height);
             pictureBox1.Image = Map;
             circles_are_dumb();
@@ -103,7 +108,6 @@ namespace Exp2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //funct.Functions.MarkovsGen("Prov");
             //temp
             label1.Text = day + ","  + month + "," +  year + AD + ", " + era ;
             label2.Text = age;
@@ -148,6 +152,8 @@ namespace Exp2
                             //g.DrawRectangle(Pens.Orange, x, y, x + xlen / 100, y + ylen / 100);
                         }
                     }
+
+                    age = "Post-Provincial Age";
 
                 }
 
@@ -408,7 +414,6 @@ namespace Exp2
                 int count = 0;
                 year += Rander.Next(1,10000);
 
-                //This is really slow
 
                 int xchanget;
                 int ychanget;
