@@ -97,3 +97,4 @@ C:\Users\Jamie\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.cs
 C:\Users\Jamie\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Form1.resources
 C:\Users\Jamie\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Properties.Resources.resources
 C:\Users\Jamie\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.Cache
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.MainMenu.resources

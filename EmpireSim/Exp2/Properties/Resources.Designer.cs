@@ -61,6 +61,59 @@ namespace Exp2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap arcade_alternative {
+            get {
+                object obj = ResourceManager.GetObject("arcade_alternative", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ArcadeAlternate {
+            get {
+                object obj = ResourceManager.GetObject("ArcadeAlternate", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap font_map_arcade_alternative {
+            get {
+                object obj = ResourceManager.GetObject("font_map_arcade_alternative", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap font_map_unicode_arcade_alternative {
+            get {
+                object obj = ResourceManager.GetObject("font_map_unicode_arcade_alternative", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This font was downloaded from
+        ///
+        ///http://www.myfonts.me
+        ///
+        ///Thank you for download!!!.
+        /// </summary>
+        internal static string myfonts_me {
+            get {
+                return ResourceManager.GetString("myfonts_me", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to les Escaldes
         ///Andorra la Vella
         ///Umm al Qaywayn
