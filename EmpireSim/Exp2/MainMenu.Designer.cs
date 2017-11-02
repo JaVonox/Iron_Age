@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.MenuImg = new System.Windows.Forms.PictureBox();
-            this.Timer = new System.Windows.Forms.Timer(this.components);
+            this.Timera = new System.Windows.Forms.Timer(this.components);
             this.Datainputtmr = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.MenuImg)).BeginInit();
             this.SuspendLayout();
@@ -46,15 +46,13 @@
             this.MenuImg.TabIndex = 0;
             this.MenuImg.TabStop = false;
             // 
-            // Timer
+            // Timera
             // 
-            this.Timer.Enabled = true;
-            this.Timer.Interval = 33;
-            this.Timer.Tick += new System.EventHandler(this.Timer_Tick);
+            this.Timera.Interval = 33;
+            this.Timera.Tick += new System.EventHandler(this.Timer_Tick);
             // 
             // Datainputtmr
             // 
-            this.Datainputtmr.Enabled = true;
             this.Datainputtmr.Interval = 1;
             this.Datainputtmr.Tick += new System.EventHandler(this.Datainputtmr_Tick);
             // 
@@ -78,7 +76,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox MenuImg;
-        private System.Windows.Forms.Timer Timer;
-        private System.Windows.Forms.Timer Datainputtmr;
+        public System.Windows.Forms.Timer Timera;
+        public System.Windows.Forms.Timer Datainputtmr;
     }
 }
