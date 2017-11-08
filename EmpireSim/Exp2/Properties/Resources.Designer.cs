@@ -101,6 +101,16 @@ namespace Exp2.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon MainMenu {
+            get {
+                object obj = ResourceManager.GetObject("MainMenu", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This font was downloaded from
         ///
         ///http://www.myfonts.me
@@ -177,6 +187,16 @@ namespace Exp2.Properties {
             get {
                 object obj = ResourceManager.GetObject("testimage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon WorldGen {
+            get {
+                object obj = ResourceManager.GetObject("WorldGen", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
     }

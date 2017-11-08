@@ -139,4 +139,10 @@
   <data name="testimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\testimage.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MainMenu" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\assets\icons\mainmenu.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="WorldGen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\assets\icons\worldgen.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

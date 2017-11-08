@@ -49,11 +49,6 @@ namespace Exp2
             //this.Height = ylen;
             //this.Width = xlen;
 
-
-            //temp 
-            Province.Text = funct.Functions.Generator("Prov");
-
-
             pictureBox1.ClientSize = new Size(this.Width, this.Height);
             pictureBox1.Image = Map;
             circles_are_dumb();

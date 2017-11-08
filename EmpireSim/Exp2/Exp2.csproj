@@ -138,6 +138,10 @@
   <ItemGroup>
     <None Include="Resources\Font\ArcadeAlternate\font-map-arcade-alternative.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Assets\Icons\MainMenu.ico" />
+    <Content Include="Resources\Assets\Icons\WorldGen.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -45,6 +45,7 @@
             this.MenuImg.Size = new System.Drawing.Size(1384, 861);
             this.MenuImg.TabIndex = 0;
             this.MenuImg.TabStop = false;
+            this.MenuImg.Click += new System.EventHandler(this.MenuImg_Click);
             // 
             // Timera
             // 
@@ -67,7 +68,6 @@
             this.Name = "MainMenu";
             this.Text = "MainMenu";
             this.Load += new System.EventHandler(this.MainMenu_Load);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MainMenu_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.MenuImg)).EndInit();
             this.ResumeLayout(false);
 

@@ -78,7 +78,16 @@ namespace funct
                         randpro = ran.Next(1, 23018);
                         rando = ran.Next(1, 6);
                         pull = citi[randpro].ToCharArray();
-
+                        int tmp = (int)pull[pull.Length - 1];
+                        if(tmp >= 255)
+                        {
+                            if(ran.Next(1,100) == 30)
+                            {
+                                break;
+                            }
+                        }
+                        else
+                        {
                         if(pull.Length <= tempoff)
                         {
 
@@ -90,10 +99,37 @@ namespace funct
                                 break;
                             }
                         }
+                        }
                         
                     }
                 }
              }
+            else if(type == "Real")
+            {
+                string FileName = string.Format("{0}Resources\\ProvincesReal.txt", Path.GetFullPath(Path.Combine(RunningPath, @"..\..\"))); //real file
+
+
+                StreamReader read = new StreamReader(FileName);
+                String[] citi = new String[23018]; //array of city names
+                int randpro = ran.Next(1, 23018); //which line to search
+
+                for (int i = 0; i <= 23017; i++)
+                {
+                    citi[i] = read.ReadLine();
+                }
+
+                read.Close();
+
+                randpro = ran.Next(1, 23018);
+                char[] pull = citi[randpro].ToCharArray();
+
+                size = Math.Min(pull.Length - 1,19);
+
+                for(int i = 0; i <= pull.Length - 1  && i < 20;i++)
+                {
+                    newname[i] = pull[i];
+                }
+            }
 
             string outpt = null;
 

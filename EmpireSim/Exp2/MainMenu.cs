@@ -19,10 +19,14 @@ namespace Exp2
         static int xlen = 1400;
         static int ylen = 900;
         Bitmap Bg = new Bitmap(Exp2.Properties.Resources.testimage, xlen, ylen);
+        Icon Ic = new Icon(Exp2.Properties.Resources.MainMenu,64,64);
         Color[,] bitmapc = new Color[xlen, ylen];
         private System.Drawing.Text.PrivateFontCollection fonts = new System.Drawing.Text.PrivateFontCollection();
         Font myFont;
         Font myFontB;
+        Font myFontsmall;
+        Font myFontsmallClick;
+        Font myFontDetail;
         Random Rand = new Random();
         int mouseposX;
         int mouseposY;
@@ -33,6 +37,7 @@ namespace Exp2
         {
             InitializeComponent();
             MenuImg.Image = Bg;
+            this.Icon = Ic;
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
@@ -48,6 +53,9 @@ namespace Exp2
 
             myFont = new Font(fonts.Families[0], 32.0F);
             myFontB = new Font(fonts.Families[0], 52.0F);
+            myFontsmall = new Font(fonts.Families[0], 22.0F);
+            myFontsmallClick = new Font(fonts.Families[0], 22.0F,FontStyle.Underline);
+            myFontDetail = new Font(fonts.Families[0], 12.0F);
             //pfc.AddFontFile(Path.Combine(Application.StartupPath.Substring(0, Application.StartupPath.IndexOf("bin")) + "Font.ttf"));
             //Font Arcade = new Font(privateFonts.Families[0], 12, FontStyle.Regular);
             //privateFonts.AddFontFile("ArcadeAlternate.ttf");
@@ -269,7 +277,7 @@ namespace Exp2
                 }
             }
 
-            for (int x = (xlen / 5) * 2; x <= ((xlen / 5) * 3); x++) //play box
+            for (int x = (xlen / 10) * 1; x <= ((xlen / 10) * 2.7); x++) //play box
             {
                 for (int y = (ylen / 20) * 7; y <= ((ylen / 20) * 9); y++)
                 {
@@ -277,7 +285,7 @@ namespace Exp2
                     //bitmapc[x, y] = Color.HotPink;
                     int temprand = Rand.Next(2, 10);
 
-                    if (x <= (xlen / 5) * 2 + 5 || x >= ((xlen / 5) * 3) - 6)
+                    if (x <= (xlen / 10) * 1 + 5 || x >= ((xlen / 10) * 2.7) - 6)
                     {
                         if (y == (ylen / 20) * 7 || y == ((ylen / 20) * 9))
                         {
@@ -337,7 +345,7 @@ namespace Exp2
                 }
             }
 
-            for (int x = (xlen / 5) * 2; x <= ((xlen / 5) * 3); x++) // Create World box
+            for (int x = (xlen / 10) * 1; x <= ((xlen / 10) * 2.7); x++) // Create World box
             {
                 for (int y = (ylen / 20) * 10; y <= ((ylen / 20) * 12); y++)
                 {
@@ -345,7 +353,7 @@ namespace Exp2
                     //bitmapc[x, y] = Color.HotPink;
                     int temprand = Rand.Next(2, 10);
 
-                    if (x <= (xlen / 5) * 2 + 5 || x >= ((xlen / 5) * 3) - 6)
+                    if (x <= (xlen / 10) * 1 + 5 || x >= ((xlen / 10) * 2.7) - 6)
                     {
                         if (y == (ylen / 20) * 10 || y == ((ylen / 20) * 12))
                         {
@@ -405,7 +413,7 @@ namespace Exp2
                 }
             }
 
-            for (int x = (xlen / 5) * 2; x <= ((xlen / 5) * 3); x++) // Options Box
+            for (int x = (xlen / 10) * 1; x <= ((xlen / 10) * 2.7); x++) // Options Box
             {
                 for (int y = (ylen / 20) * 13; y <= ((ylen / 20) * 15); y++)
                 {
@@ -413,7 +421,7 @@ namespace Exp2
                     //bitmapc[x, y] = Color.HotPink;
                     int temprand = Rand.Next(2, 10);
 
-                    if (x <= (xlen / 5) * 2 + 5 || x >= ((xlen / 5) * 3) - 6)
+                    if (x <= (xlen / 10) * 1 + 5 || x >= ((xlen / 10) * 2.7) - 6)
                     {
                         if (y == (ylen / 20) * 13 || y == ((ylen / 20) * 15))
                         {
@@ -473,12 +481,82 @@ namespace Exp2
                 }
             }
 
+            for (int x = (xlen / 10) * 3; x <= ((xlen / 10) * 8) - 1; x++) //bbox
+            {
+                for (int y = (ylen / 20) * 7; y <= ((ylen / 20) * 15) - 1; y++)
+                {
+                    //bitmapc[x, y] = Color.HotPink;
+                    //bitmapc[x, y] = Color.HotPink;
+                    int temprand = Rand.Next(2, 10);
+
+                    if (x <= (xlen / 10) * 3 + 5 || x >= ((xlen / 10) * 8) - 6)
+                    {
+                        if (y == (ylen / 20) * 7 || y == (((ylen / 20) * 15) - 1))
+                        {
+                            bitmapc[x, y] = Color.Gold;
+                            bitmapc[x, y + 1] = Color.Gold;
+                            bitmapc[x, y + 2] = Color.Gold;
+                            bitmapc[x, y - 1] = Color.Gold;
+                            bitmapc[x, y - 2] = Color.Gold;
+                        }
+                        else
+                        {
+                            if (temprand == 2)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(73, 64, 32);
+                            }
+                            else if (temprand == 3)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(192, 151, 98);
+                            }
+                            else if (temprand == 4)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(158, 133, 72);
+                            }
+                            else if (temprand == 5)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(108, 85, 58);
+                            }
+                            else
+                            {
+                                bitmapc[x, y] = Color.FromArgb(115, 94, 57);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (temprand == 2)
+                        {
+                            bitmapc[x, y] = Color.FromArgb(246, 221, 155);
+                        }
+                        else if (temprand == 3)
+                        {
+                            bitmapc[x, y] = Color.FromArgb(253, 235, 185);
+                        }
+                        else if (temprand == 4)
+                        {
+                            bitmapc[x, y] = Color.FromArgb(247, 225, 175);
+                        }
+                        else if (temprand == 5)
+                        {
+                            bitmapc[x, y] = Color.FromArgb(255, 231, 173);
+                        }
+                        else
+                        {
+                            bitmapc[x, y] = Color.FromArgb(238, 223, 166);
+                        }
+                    }
+                }
+            }
+
+
             using (var g = Graphics.FromImage(MenuImg.Image))
             {
                 for (int x = 0; x <= xlen - 1; x++)
                 {
                     for (int y = 0; y <= ylen - 1; y++)
                     {
+
                         Bg.SetPixel(x, y, bitmapc[x,y]);
                     }
                 }
@@ -487,21 +565,21 @@ namespace Exp2
             using (var g = Graphics.FromImage(MenuImg.Image)) //options
             {
                 Brush newbrush = new SolidBrush(Color.DarkSlateGray);
-                Point newpoint = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
                 g.DrawString("Options", myFont, newbrush, newpoint);
             }
 
             using (var g = Graphics.FromImage(MenuImg.Image)) //Create World
             {
                 Brush newbrush = new SolidBrush(Color.DarkSlateGray);
-                Point newpoint = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                 g.DrawString("Generate", myFont, newbrush, newpoint);
             }
 
             using (var g = Graphics.FromImage(MenuImg.Image)) //Play World
             {
                 Brush newbrush = new SolidBrush(Color.DarkSlateGray);
-                Point newpoint = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
                 g.DrawString("Play", myFont, newbrush, newpoint);
             }
 
@@ -521,78 +599,135 @@ namespace Exp2
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            using (var g = Graphics.FromImage(MenuImg.Image))
+            MenuImg.Invalidate();
+            Point p = this.PointToClient(Cursor.Position);
+            mouseposX = Math.Max(0, p.X);
+            mouseposY = Math.Max(0, p.Y);
+
+            if (selectedobj == 1)
             {
-                MenuImg.Invalidate();
-                Point p = this.PointToClient(Cursor.Position);
-                mouseposX = Math.Max(0, p.X);
-                mouseposY = Math.Max(0, p.Y);
-
-                if (mouseposX != 0 && mouseposY != 0)
+                using (var g = Graphics.FromImage(MenuImg.Image))
                 {
-                    if (mouseposX >= (xlen / 5) * 2 && mouseposX <= ((xlen / 5) * 3) && mouseposY >= ((ylen / 20) * 7) && mouseposY <= ((ylen / 20) * 9)) //play box
-                    {
-                                Point newpoint = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                                animate(1, objanimatestage[1], "Red", Color.DarkSlateGray, newpoint,"Play");
+                    Point newpointm = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                    animate(1, objanimatestage[1], "Red", Color.DarkSlateGray, newpointm, "Play");
 
-                                Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointb = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 10.52));
-                                g.DrawString("Generate", myFont, newbrushb, newpointb);
-                                Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointc = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 13.52));
-                                g.DrawString("Options", myFont, newbrushc, newpointc);
-                                objanimatestage[2] = 0;
-                                objanimatestage[3] = 0;
+                    Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                    Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                    g.DrawString("Generate", myFont, newbrushb, newpointb);
+                    Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
+                    Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                    g.DrawString("Options", myFont, newbrushc, newpointc);
+                    objanimatestage[2] = 0;
+                    objanimatestage[3] = 0;
+                }
+            }
+            else if (selectedobj == 2)
+            {
+                using (var g = Graphics.FromImage(MenuImg.Image))
+                {
+                    Point newpointm = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                    animate(2, objanimatestage[2], "Red", Color.DarkSlateGray, newpointm, "Generate");
 
-                    }
-                    else
+                    Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                    Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
+                    Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                    g.DrawString("Options", myFont, newbrushc, newpointc);
+                    objanimatestage[1] = 0;
+                    objanimatestage[3] = 0;
+                }
+            }
+            else if (selectedobj == 3)
+            {
+                using (var g = Graphics.FromImage(MenuImg.Image))
+                {
+                    Point newpointm = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                    animate(3, objanimatestage[3], "Red", Color.DarkSlateGray, newpointm, "Options");
+
+
+                    Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                    Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                    Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                    g.DrawString("Generate", myFont, newbrushb, newpointb);
+                    objanimatestage[1] = 0;
+                    objanimatestage[2] = 0;
+                }
+            }
+            else
+            {
+
+                using (var g = Graphics.FromImage(MenuImg.Image))
+                {
+
+                    if (mouseposX != 0 && mouseposY != 0)
                     {
-                        if (mouseposX >= (xlen / 5) * 2 && mouseposX <= ((xlen / 5) * 3) && mouseposY >= ((ylen / 20) * 10) && mouseposY <= ((ylen / 20) * 12))
+                        if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 7) && mouseposY <= ((ylen / 20) * 9)) //play box
                         {
-                            Point newpoint = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 10.52));
-                            animate(2, objanimatestage[2], "Red", Color.DarkSlateGray, newpoint,"Generate");
+                            Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                            animate(1, objanimatestage[1], "Red", Color.DarkSlateGray, newpoint, "Play");
 
-                            Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
-                            Point newpointa = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                            g.DrawString("Play", myFont, newbrusha, newpointa);
+                            Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                            Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                            g.DrawString("Generate", myFont, newbrushb, newpointb);
                             Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
-                            Point newpointc = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                            Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
                             g.DrawString("Options", myFont, newbrushc, newpointc);
-                            objanimatestage[1] = 0;
+                            objanimatestage[2] = 0;
                             objanimatestage[3] = 0;
 
                         }
                         else
                         {
-                            if (mouseposX >= (xlen / 5) * 2 && mouseposX <= ((xlen / 5) * 3) && mouseposY >= ((ylen / 20) * 13) && mouseposY <= ((ylen / 20) * 15))
+                            if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 10) && mouseposY <= ((ylen / 20) * 12))
                             {
-                                Point newpoint = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 13.52));
-                                animate(3, objanimatestage[3], "Red", Color.DarkSlateGray, newpoint, "Options");
+                                Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                animate(2, objanimatestage[2], "Red", Color.DarkSlateGray, newpoint, "Generate");
 
                                 Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointa = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                                Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
                                 g.DrawString("Play", myFont, newbrusha, newpointa);
-                                Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointb = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 10.52));
-                                g.DrawString("Generate", myFont, newbrushb, newpointb);
+                                Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
+                                Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                                g.DrawString("Options", myFont, newbrushc, newpointc);
                                 objanimatestage[1] = 0;
-                                objanimatestage[2] = 0;
+                                objanimatestage[3] = 0;
 
                             }
                             else
                             {
-                                Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointa = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                                g.DrawString("Play", myFont, newbrusha, newpointa);
-                                Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointb = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 10.52));
-                                g.DrawString("Generate", myFont, newbrushb, newpointb);
-                                Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointc = new Point(Convert.ToInt16(((xlen / 5) * 2.06)), Convert.ToInt16((ylen / 20) * 13.52));
-                                g.DrawString("Options", myFont, newbrushc, newpointc);
-                                objanimatestage[1] = 0;
-                                objanimatestage[2] = 0;
-                                objanimatestage[3] = 0;
+                                if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 13) && mouseposY <= ((ylen / 20) * 15))
+                                {
+                                    Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                                    animate(3, objanimatestage[3], "Red", Color.DarkSlateGray, newpoint, "Options");
+
+                                    Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
+                                    Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                                    Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                                    Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                    g.DrawString("Generate", myFont, newbrushb, newpointb);
+                                    objanimatestage[1] = 0;
+                                    objanimatestage[2] = 0;
+
+                                }
+                                else
+                                {
+                                    Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
+                                    Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                                    Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                                    Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                    g.DrawString("Generate", myFont, newbrushb, newpointb);
+                                    Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
+                                    Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                                    g.DrawString("Options", myFont, newbrushc, newpointc);
+                                    objanimatestage[1] = 0;
+                                    objanimatestage[2] = 0;
+                                    objanimatestage[3] = 0;
+                                }
                             }
                         }
                     }
@@ -603,6 +738,7 @@ namespace Exp2
         public void animate(int objnum, int currentobjnum,string colourshift,Color currcol, Point inputpo,string inputstring)
         {
             MenuImg.Invalidate();
+
             using (var g = Graphics.FromImage(MenuImg.Image))
             {
                 if (colourshift == "Red")
@@ -638,6 +774,8 @@ namespace Exp2
             }
         }
 
+        int selectedobj = 0;
+
         private void Datainputtmr_Tick(object sender, EventArgs e)
         {
             Point p = this.PointToClient(Cursor.Position);
@@ -647,9 +785,460 @@ namespace Exp2
             //abel2.Text = xstore + "," + ystore; 
         }
 
-        private void MainMenu_MouseMove(object sender, MouseEventArgs e)
+        public void updatebigbox(int mode)
         {
+            outcancel = true;
+            outname = null;
+            existing = false;
+            random = false;
 
+            using (var g = Graphics.FromImage(MenuImg.Image))
+            {
+                for (int x = (xlen / 10) * 3; x <= ((xlen / 10) * 8) - 1; x++) //bbox
+                {
+                    for (int y = (ylen / 20) * 7; y <= ((ylen / 20) * 15) - 1; y++)
+                    {
+                        //bitmapc[x, y] = Color.HotPink;
+                        //bitmapc[x, y] = Color.HotPink;
+                        int temprand = Rand.Next(2, 10);
+
+                        if (x <= (xlen / 10) * 3 + 5 || x >= ((xlen / 10) * 8) - 6)
+                        {
+                            if (y == (ylen / 20) * 7 || y == (((ylen / 20) * 15) - 1))
+                            {
+                                bitmapc[x, y] = Color.Gold;
+                                bitmapc[x, y + 1] = Color.Gold;
+                                bitmapc[x, y + 2] = Color.Gold;
+                                bitmapc[x, y - 1] = Color.Gold;
+                                bitmapc[x, y - 2] = Color.Gold;
+                            }
+                            else
+                            {
+                                if (temprand == 2)
+                                {
+                                    bitmapc[x, y] = Color.FromArgb(73, 64, 32);
+                                }
+                                else if (temprand == 3)
+                                {
+                                    bitmapc[x, y] = Color.FromArgb(192, 151, 98);
+                                }
+                                else if (temprand == 4)
+                                {
+                                    bitmapc[x, y] = Color.FromArgb(158, 133, 72);
+                                }
+                                else if (temprand == 5)
+                                {
+                                    bitmapc[x, y] = Color.FromArgb(108, 85, 58);
+                                }
+                                else
+                                {
+                                    bitmapc[x, y] = Color.FromArgb(115, 94, 57);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (temprand == 2)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(246, 221, 155);
+                            }
+                            else if (temprand == 3)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(253, 235, 185);
+                            }
+                            else if (temprand == 4)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(247, 225, 175);
+                            }
+                            else if (temprand == 5)
+                            {
+                                bitmapc[x, y] = Color.FromArgb(255, 231, 173);
+                            }
+                            else
+                            {
+                                bitmapc[x, y] = Color.FromArgb(238, 223, 166);
+                            }
+                        }
+                    }
+                }
+
+                    for (int x = (xlen / 10) * 3; x <= ((xlen / 10) * 8) - 1; x++)
+                    {
+                        for (int y = (ylen / 20) * 7; y <= ((ylen / 20) * 15) - 1; y++)
+                        {
+                            Bg.SetPixel(x, y, bitmapc[x, y]);
+                        }
+                    }
+
+                Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
+                Brush newbrushC = new SolidBrush(Color.DarkSlateBlue);
+                MenuImg.Invalidate();
+                if (mode == 1)
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("Selected Save:", myFontsmall, newbrushD, newpointa);
+
+                    Point newpointa1 = new Point(Convert.ToInt16(((xlen / 10) * 4.56)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("_________", myFontsmall, newbrushD, newpointa1);
+
+                    Point newpointa2 = new Point(Convert.ToInt16(((xlen / 10) * 6.56)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("Browse", myFontsmallClick, newbrushC, newpointa2);
+
+                    Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 8.52));
+                    g.DrawString("World Name:", myFontsmall, newbrushD, newpointb);
+
+                    Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 9.52));
+                    g.DrawString("Year:", myFontsmall, newbrushD, newpointc);
+
+                    Point newpointd = new Point(Convert.ToInt16(((xlen / 10) * 7.16)), Convert.ToInt16((ylen / 20) * 13.62));
+                    g.DrawString("Play >", myFontsmallClick, newbrushC, newpointd);
+                }
+                else if(mode == 2)
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("Save Location:", myFontsmall, newbrushD, newpointa);
+
+                    Point newpointa1 = new Point(Convert.ToInt16(((xlen / 10) * 4.56)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("_________", myFontsmall, newbrushD, newpointa1);
+
+                    Point newpointa2 = new Point(Convert.ToInt16(((xlen / 10) * 6.56)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("Browse", myFontsmallClick, newbrushC, newpointa2);
+
+                    Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 8.52));
+                    g.DrawString("Province Names From:", myFontsmall, newbrushD, newpointb);
+
+                    Point newpointb1 = new Point(Convert.ToInt16(((xlen / 10) * 5.56)), Convert.ToInt16((ylen / 20) * 8.52));
+                    g.DrawString("Random", myFontsmall, newbrushC, newpointb1);
+
+                    Point newpointb2 = new Point(Convert.ToInt16(((xlen / 10) * 6.56)), Convert.ToInt16((ylen / 20) * 8.52));
+                    g.DrawString("/", myFontsmall, newbrushD, newpointb2);
+
+                    Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 6.90)), Convert.ToInt16((ylen / 20) * 8.52));
+                    g.DrawString("Existing", myFontsmall, newbrushC, newpointb3);
+
+                    Point newpointd = new Point(Convert.ToInt16(((xlen / 10) * 6.76)), Convert.ToInt16((ylen / 20) * 13.62));
+                    g.DrawString("Generate >", myFontsmallClick, newbrushC, newpointd);
+                }
+                else if (mode == 3)
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                    g.DrawString("About", myFontsmall, newbrushD, newpointa);
+
+                    Point newpointa2 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 8.52));
+                    g.DrawString("Iron Age is a program developed by James Benjamin Brimelow Gorman", myFontDetail, newbrushD, newpointa2);
+
+                    Point newpointa3 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 9.52));
+                    g.DrawString("While the program is not officially copyrighted under UK laws", myFontDetail, newbrushD, newpointa3);
+
+                    Point newpointa4 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.02));
+                    g.DrawString("i would respectfully request you refrain from redistributing or selling this software", myFontDetail, newbrushD, newpointa4);
+
+                    Point newpointa5 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                    g.DrawString("the project should always be available for download from my github page:", myFontDetail, newbrushD, newpointa5);
+
+                    Point newpointa6 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 11.02));
+                    g.DrawString("https://github.com/JaVonox/Iron_Age", myFontDetail, newbrushD, newpointa6);
+
+                    Point newpointa7 = new Point(Convert.ToInt16(((xlen / 10) * 6.56)), Convert.ToInt16((ylen / 20) * 11.52));
+                    g.DrawString(" - Jamie <3", myFontDetail, newbrushD, newpointa7);
+                }
+
+                else
+                {
+
+                }
+            }
+        }
+
+        string outname = null;
+        bool outcancel = true;
+        bool FileSpecified = false;
+        string savpath = null;
+
+        public void filebrowse(string mode)
+        {
+            // Displays an OpenFileDialog so the user can select a Cursor.  
+            SaveFileDialog savedialog = new SaveFileDialog();
+
+            //openFileDialog1.Filter = "Cursor Files|*.cur";
+            //openFileDialog1.Title = "Select a Cursor File";
+
+            savedialog.Title = "Select A Place To Save The World";
+            savedialog.Filter = "*Save Folder | Save Location";
+            // Show the Dialog.  
+            // If the user clicked OK in the dialog and  
+            // a .CUR file was selected, open it.  
+
+            if (savedialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                string newFileName = savedialog.FileName;
+                savpath = newFileName;
+                System.IO.Directory.CreateDirectory(newFileName); //main directory for common files
+                outname = System.IO.Path.GetFileNameWithoutExtension(newFileName);
+                System.IO.File.Create(newFileName + "//World.dat"); //Stores World tiles
+                System.IO.File.Create(newFileName + "//Kingdoms.dat"); //Stores existing kingdoms and their provinces
+                System.IO.Directory.CreateDirectory(newFileName + "//Data"); //Data for key data such as world year/name etc.
+                System.IO.File.Create(newFileName + "//Data//Key.dat"); //stores key stuff like names/year
+                System.IO.File.Create(newFileName + "//Data//Provinces.dat"); //Stores Names/Info for provinces
+                System.IO.Directory.CreateDirectory(newFileName + "//Info"); //Data for minor data such as name generation data
+                System.IO.File.Create(newFileName + "//Info//ReligionNames.dat"); //Stores Religion Names
+                System.IO.File.Create(newFileName + "//Info//History.dat"); //Stores Historical Data
+                System.IO.File.Create(newFileName + "//Info//Names.dat"); //Stores NPC Names
+                outcancel = false;
+                FileSpecified = true;
+            }  
+            else
+            {
+                outcancel = true;
+            }
+        }
+
+        public void writeto(string type)
+        {
+            Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
+            if(FileSpecified = true)
+            {
+                if(type == "Provinces")
+                {
+                    //System.IO.File.Create(savpath + "//Info//ProvinceNames.dat"); //Stores Province Names
+                    try
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            System.IO.File.WriteAllLines(savpath + "//Info//ProvinceNames.dat", allgen);
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 9.52));
+                            g.DrawString("Complete", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 9.52));
+                            g.DrawString("Failed", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        public void opengenerate()
+        {
+            if(random == true)
+            {
+                for (int i = 0; i <= 500; i++)
+                {
+                    string word = funct.Functions.Generator("Prov");
+
+                    if (i <= 1)
+                    {
+                        allgen[i] = word;
+                    }
+                    else
+                    {
+                        if (allgen[i - 1] == word)
+                        {
+                            i -= 1;
+                        }
+                        else
+                        {
+                            allgen[i] = word;
+                        }
+                    }
+                }
+
+            }
+            else if(existing == true)
+            {
+                for (int i = 0; i <= 500; i++)
+                {
+                    string word = funct.Functions.Generator("Real");
+
+                    if (i <= 1)
+                    {
+                        allgen[i] = word;
+                    }
+                    else
+                    {
+                        if (allgen[i - 1] == word)
+                        {
+                            i -= 1;
+                        }
+                        else
+                        {
+                            allgen[i] = word;
+                        }
+                    }
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        bool existing = false;
+        bool random = false;
+        string[] allgen = new string[501];
+        int point = 0;
+        private void MenuImg_Click(object sender, EventArgs e)
+        {
+            using (var g = Graphics.FromImage(MenuImg.Image))
+            {
+                MenuImg.Invalidate();
+                Point p = this.PointToClient(Cursor.Position);
+                mouseposX = Math.Max(0, p.X);
+                mouseposY = Math.Max(0, p.Y);
+
+                if (mouseposX != 0 && mouseposY != 0)
+                {
+                    if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 7) && mouseposY <= ((ylen / 20) * 9)) //play box
+                    {
+                        selectedobj = 1;
+
+                        Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                        Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                        g.DrawString("Generate", myFont, newbrushb, newpointb);
+                        Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
+                        Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                        g.DrawString("Options", myFont, newbrushc, newpointc);
+                        objanimatestage[2] = 0;
+                        objanimatestage[3] = 0;
+                        updatebigbox(selectedobj);
+
+                    }
+                    else
+                    {
+                        if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 10) && mouseposY <= ((ylen / 20) * 12))
+                        {
+                            selectedobj = 2;
+
+                            Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
+                            Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                            g.DrawString("Play", myFont, newbrusha, newpointa);
+                            Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
+                            Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                            g.DrawString("Options", myFont, newbrushc, newpointc);
+                            objanimatestage[1] = 0;
+                            objanimatestage[3] = 0;
+                            updatebigbox(selectedobj);
+
+                        }
+                        else
+                        {
+                            if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 13) && mouseposY <= ((ylen / 20) * 15))
+                            {
+                                selectedobj = 3;
+
+                                Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
+                                Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                                g.DrawString("Play", myFont, newbrusha, newpointa);
+                                Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                                Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                g.DrawString("Generate", myFont, newbrushb, newpointb);
+                                objanimatestage[1] = 0;
+                                objanimatestage[2] = 0;
+                                updatebigbox(selectedobj);
+
+                            }
+                            else
+                            {
+                                
+                                if(selectedobj == 1) //play screen
+                                {
+
+                                }
+                                else if(selectedobj == 2) //generate screen
+                                {
+                                    Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
+                                    Brush newbrushC = new SolidBrush(Color.DarkSlateBlue);
+                                    Brush newbrushA = new SolidBrush(Color.DarkRed);
+
+                                    //browse for file directory
+                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32))
+                                    {
+                                        filebrowse("WriteNew");
+                                        if (outcancel == false)
+                                        {
+                                            MenuImg.Invalidate();
+                                            Point newpointa1 = new Point(Convert.ToInt16(((xlen / 10) * 4.56)), Convert.ToInt16((ylen / 20) * 7.32));
+                                            g.DrawString(outname, myFontsmall, newbrushD, newpointa1);
+                                            outcancel = true;
+
+                                            //filenames will stack over each other upon reentry
+                                        }
+                                        else
+                                        {
+                                            
+                                        }
+                                    }
+                                    else if(mouseposX >= (xlen / 10) * 5.56 && mouseposX <= ((xlen / 10) * 6.56) && mouseposY >= ((ylen / 20) * 8.52) && mouseposY <= ((ylen / 20) * 9.52))
+                                    {
+                                        existing = false;
+                                        random = true;
+
+                                        Point newpointb1 = new Point(Convert.ToInt16(((xlen / 10) * 5.56)), Convert.ToInt16((ylen / 20) * 8.52));
+                                        g.DrawString("Random", myFontsmall, newbrushA, newpointb1);
+
+                                        Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 6.90)), Convert.ToInt16((ylen / 20) * 8.52));
+                                        g.DrawString("Existing", myFontsmall, newbrushC, newpointb3);
+                                    }
+                                    else if (mouseposX >= (xlen / 10) * 6.90 && mouseposX <= ((xlen / 10) * 7.80) && mouseposY >= ((ylen / 20) * 8.52) && mouseposY <= ((ylen / 20) * 9.52))
+                                    {
+                                        existing = true;
+                                        random = false;
+
+                                        Point newpointb1 = new Point(Convert.ToInt16(((xlen / 10) * 5.56)), Convert.ToInt16((ylen / 20) * 8.52));
+                                        g.DrawString("Random", myFontsmall, newbrushC, newpointb1);
+
+                                        Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 6.90)), Convert.ToInt16((ylen / 20) * 8.52));
+                                        g.DrawString("Existing", myFontsmall, newbrushA, newpointb3);
+                                    }
+                                    else if (mouseposX >= (xlen / 10) * 6.70 && mouseposX <= ((xlen / 10) * 7.76) && mouseposY >= ((ylen / 20) * 13.52) && mouseposY <= ((ylen / 20) * 14.52))
+                                    {
+                                        //provinces
+                                        Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 9.52));
+                                        g.DrawString("Generating Province Names:", myFontsmall, newbrushD, newpointb3);
+                                        opengenerate();
+                                        writeto("Provinces");
+                                    }
+                                    else
+                                    {
+
+                                    }
+                                        
+                                }
+                                else if (selectedobj == 3) //options screen
+                                {
+
+                                }
+                                else //default screen
+                                {
+
+                                selectedobj = 0;
+                                Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
+                                Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
+                                g.DrawString("Play", myFont, newbrusha, newpointa);
+                                Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
+                                Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                g.DrawString("Generate", myFont, newbrushb, newpointb);
+                                Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
+                                Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                                g.DrawString("Options", myFont, newbrushc, newpointc);
+                                objanimatestage[1] = 0;
+                                objanimatestage[2] = 0;
+                                objanimatestage[3] = 0;
+                                updatebigbox(selectedobj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 
