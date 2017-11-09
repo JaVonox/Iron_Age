@@ -141,6 +141,9 @@
   <ItemGroup>
     <Content Include="Resources\Assets\Icons\MainMenu.ico" />
     <Content Include="Resources\Assets\Icons\WorldGen.ico" />
+    <None Include="Resources\FirstNameReal.txt" />
+    <None Include="Resources\SurnamesReal.txt" />
+    <None Include="Resources\ReligionsReal.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

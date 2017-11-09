@@ -604,7 +604,51 @@ namespace Exp2
             mouseposX = Math.Max(0, p.X);
             mouseposY = Math.Max(0, p.Y);
 
-            if (selectedobj == 1)
+            if(rndcycle != 0)
+            {
+                using (var g = Graphics.FromImage(MenuImg.Image))
+                {
+                    Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
+                    Brush newbrushC = new SolidBrush(Color.DarkSlateBlue);
+                    Brush newbrushA = new SolidBrush(Color.DarkRed);
+
+                    if (rndcycle == 1)
+                    {
+                        //provinces
+                        opengenerate("Prov");
+                        writeto("Provinces");
+                        Array.Clear(allgen, 0, 501);
+                        rndcycle = 2;
+                    }
+                    else if (rndcycle == 2)
+                    {
+                        opengenerate("Faith");
+                        writeto("Religions");
+                        Array.Clear(allgen, 0, 501);
+                        rndcycle = 3;
+                    }
+                    else if (rndcycle == 3)
+                    {
+                        opengenerate("Fname");
+                        writeto("Fname");
+                        Array.Clear(allgen, 0, 501);
+                        rndcycle = 4;
+                    }
+                    else if (rndcycle == 4)
+                    {
+                        opengenerate("Sname");
+                        writeto("Sname");
+                        Array.Clear(allgen, 0, 501);
+                        rndcycle = 5;
+                    }
+                    else if(rndcycle == 5)
+                    {
+                        Point newpointb6 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                        g.DrawString("Generating Map...", myFontsmall, newbrushD, newpointb6);
+                    }
+                }
+            }
+            else if (selectedobj == 1)
             {
                 using (var g = Graphics.FromImage(MenuImg.Image))
                 {
@@ -981,9 +1025,7 @@ namespace Exp2
                 System.IO.File.Create(newFileName + "//Data//Key.dat"); //stores key stuff like names/year
                 System.IO.File.Create(newFileName + "//Data//Provinces.dat"); //Stores Names/Info for provinces
                 System.IO.Directory.CreateDirectory(newFileName + "//Info"); //Data for minor data such as name generation data
-                System.IO.File.Create(newFileName + "//Info//ReligionNames.dat"); //Stores Religion Names
                 System.IO.File.Create(newFileName + "//Info//History.dat"); //Stores Historical Data
-                System.IO.File.Create(newFileName + "//Info//Names.dat"); //Stores NPC Names
                 outcancel = false;
                 FileSpecified = true;
             }  
@@ -1000,7 +1042,6 @@ namespace Exp2
             {
                 if(type == "Provinces")
                 {
-                    //System.IO.File.Create(savpath + "//Info//ProvinceNames.dat"); //Stores Province Names
                     try
                     {
                         using (var g = Graphics.FromImage(MenuImg.Image))
@@ -1019,6 +1060,66 @@ namespace Exp2
                         }
                     }
                 }
+                else if (type == "Religions")
+                {
+                    try
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            System.IO.File.WriteAllLines(savpath + "//Info//ReligionNames.dat", allgen);
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 10.52));
+                            g.DrawString("Complete", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 10.52));
+                            g.DrawString("Failed", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                }
+                else if (type == "Fname")
+                {
+                    try
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            System.IO.File.WriteAllLines(savpath + "//Info//Names.dat", allgen);
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 11.52));
+                            g.DrawString("Complete", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 11.52));
+                            g.DrawString("Failed", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                }
+                else if (type == "Sname")
+                {
+                    try
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            System.IO.File.WriteAllLines(savpath + "//Info//Dynasty.dat", allgen);
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 12.52));
+                            g.DrawString("Complete", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        using (var g = Graphics.FromImage(MenuImg.Image))
+                        {
+                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 5.90)), Convert.ToInt16((ylen / 20) * 12.52));
+                            g.DrawString("Failed", myFontsmall, newbrushD, newpointb4);
+                        }
+                    }
+                }
             }
             else
             {
@@ -1026,15 +1127,87 @@ namespace Exp2
             }
         }
 
-        public void opengenerate()
+        public void opengenerate(string type)
         {
-            if(random == true)
+            if (type == "Prov")
+            {
+                if (random == true)
+                {
+                    for (int i = 0; i <= 500; i++)
+                    {
+                        string word = funct.Functions.Generator("Prov");
+
+                        if (i <= 1)
+                        {
+                            allgen[i] = word;
+                        }
+                        else
+                        {
+                            if (allgen[i - 1] == word)
+                            {
+                                i -= 1;
+                            }
+                            else
+                            {
+                                allgen[i] = word;
+                            }
+                        }
+                    }
+                }
+                else if (existing == true)
+                {
+                    for (int i = 0; i <= 500; i++)
+                    {
+                        string word = funct.Functions.Generator("Real");
+
+                        if (i <= 1)
+                        {
+                            allgen[i] = word;
+                        }
+                        else
+                        {
+                            if (allgen[i - 1] == word)
+                            {
+                                i -= 1;
+                            }
+                            else
+                            {
+                                allgen[i] = word;
+                            }
+                        }
+                    }
+                }
+            }
+            else if(type == "Faith")
+            {
+                    for (int i = 0; i <= 100; i++)
+                    {
+                        string word = funct.Functions.Generator("Faith");
+
+                        if (i < 1)
+                        {
+                            allgen[i] = word;
+                        }
+                        else
+                        {
+                            if (allgen[i - 1] == word)
+                            {
+                                i -= 1;
+                            }
+                            else
+                            {
+                                allgen[i] = word;
+                            }
+                        }
+                    }
+            }
+            else if (type == "Fname")
             {
                 for (int i = 0; i <= 500; i++)
                 {
-                    string word = funct.Functions.Generator("Prov");
+                    string word = funct.Functions.Generator("Fname");
 
-                    if (i <= 1)
+                    if (i < 1)
                     {
                         allgen[i] = word;
                     }
@@ -1050,15 +1223,14 @@ namespace Exp2
                         }
                     }
                 }
-
             }
-            else if(existing == true)
+            else if (type == "Sname")
             {
                 for (int i = 0; i <= 500; i++)
                 {
-                    string word = funct.Functions.Generator("Real");
+                    string word = funct.Functions.Generator("Sname");
 
-                    if (i <= 1)
+                    if (i < 1)
                     {
                         allgen[i] = word;
                     }
@@ -1085,6 +1257,8 @@ namespace Exp2
         bool random = false;
         string[] allgen = new string[501];
         int point = 0;
+        int rndcycle = 0;
+
         private void MenuImg_Click(object sender, EventArgs e)
         {
             using (var g = Graphics.FromImage(MenuImg.Image))
@@ -1094,7 +1268,11 @@ namespace Exp2
                 mouseposX = Math.Max(0, p.X);
                 mouseposY = Math.Max(0, p.Y);
 
-                if (mouseposX != 0 && mouseposY != 0)
+                if(rndcycle > 0)
+                {
+                    
+                }
+                else if (mouseposX != 0 && mouseposY != 0)
                 {
                     if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 7) && mouseposY <= ((ylen / 20) * 9)) //play box
                     {
@@ -1200,11 +1378,24 @@ namespace Exp2
                                     }
                                     else if (mouseposX >= (xlen / 10) * 6.70 && mouseposX <= ((xlen / 10) * 7.76) && mouseposY >= ((ylen / 20) * 13.52) && mouseposY <= ((ylen / 20) * 14.52))
                                     {
+                                        rndcycle = 1;
                                         //provinces
                                         Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 9.52));
-                                        g.DrawString("Generating Province Names:", myFontsmall, newbrushD, newpointb3);
-                                        opengenerate();
-                                        writeto("Provinces");
+                                        if (random == false)
+                                        {
+                                            g.DrawString("Pulling Province Names:", myFontsmall, newbrushD, newpointb3);
+                                        }
+                                        else
+                                        {
+                                            g.DrawString("Generating Province Names:", myFontsmall, newbrushD, newpointb3);
+                                        }
+                                        Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                        g.DrawString("Generating Religion Names:", myFontsmall, newbrushD, newpointb4);
+                                        Point newpointb5 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 11.52));
+                                        g.DrawString("Pulling First Names:", myFontsmall, newbrushD, newpointb5);
+                                        Point newpointb6 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 12.52));
+                                        g.DrawString("Pulling Dynasty Names:", myFontsmall, newbrushD, newpointb6);
+                                        Array.Clear(allgen, 0, 501);
                                     }
                                     else
                                     {
@@ -1227,7 +1418,7 @@ namespace Exp2
                                 Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                                 g.DrawString("Generate", myFont, newbrushb, newpointb);
                                 Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
+                                Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                                 g.DrawString("Options", myFont, newbrushc, newpointc);
                                 objanimatestage[1] = 0;
                                 objanimatestage[2] = 0;
