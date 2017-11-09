@@ -645,6 +645,15 @@ namespace Exp2
                     {
                         Point newpointb6 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 13.52));
                         g.DrawString("Generating Map...", myFontsmall, newbrushD, newpointb6);
+                        rndcycle = 6;
+                    }
+                    else if(rndcycle == 6)
+                    {
+                        Timera.Stop();
+                        Form1 genmap = new Form1();
+                        genmap.Text = savpath; 
+                        genmap.Show();
+                        this.Hide();
                     }
                 }
             }
@@ -1001,17 +1010,10 @@ namespace Exp2
 
         public void filebrowse(string mode)
         {
-            // Displays an OpenFileDialog so the user can select a Cursor.  
             SaveFileDialog savedialog = new SaveFileDialog();
-
-            //openFileDialog1.Filter = "Cursor Files|*.cur";
-            //openFileDialog1.Title = "Select a Cursor File";
 
             savedialog.Title = "Select A Place To Save The World";
             savedialog.Filter = "*Save Folder | Save Location";
-            // Show the Dialog.  
-            // If the user clicked OK in the dialog and  
-            // a .CUR file was selected, open it.  
 
             if (savedialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {

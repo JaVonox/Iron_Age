@@ -37,6 +37,11 @@ namespace Exp2
         Color[] colours = new Color[99999];
         Bitmap Map = new Bitmap(Exp2.Properties.Resources.testimage,xlen,ylen);
 
+        string pathing;
+        string[] ProvList = new string[501];
+        string[] FaithList = new string[101];
+        string[] NamesList = new string[501];
+        string[] SurnameList = new string[501];
         //int[,] landgen = new int[xlen,ylen];
 
         Random Rander = new Random();
@@ -51,12 +56,49 @@ namespace Exp2
 
             pictureBox1.ClientSize = new Size(this.Width, this.Height);
             pictureBox1.Image = Map;
+            drawfile();
             circles_are_dumb();
 
             refreshmap();
             timer1.Start();
         }
         int countp = 0;
+
+        public void drawfile()
+        {
+            pathing = this.Text;
+            this.Text = "Generating Map...";
+            this.Icon = Exp2.Properties.Resources.WorldGen;
+
+            System.IO.StreamReader Read = new System.IO.StreamReader(pathing + "//Info//ProvinceNames.dat");
+            for(int i = 0; i <= 500;i++)
+            {
+                ProvList[i] = Read.ReadLine();
+            }
+            Read.Close();
+
+            System.IO.StreamReader Reada = new System.IO.StreamReader(pathing + "//Info//ReligionNames.dat");
+            for (int i = 0; i <= 100; i++)
+            {
+                FaithList[i] = Reada.ReadLine();
+            }
+            Reada.Close();
+
+            System.IO.StreamReader Readb = new System.IO.StreamReader(pathing + "//Info//Names.dat");
+            for (int i = 0; i <= 500; i++)
+            {
+                NamesList[i] = Readb.ReadLine();
+            }
+            Readb.Close();
+
+            System.IO.StreamReader Readc = new System.IO.StreamReader(pathing + "//Info//Dynasty.dat");
+            for (int i = 0; i <= 500; i++)
+            {
+                SurnameList[i] = Readc.ReadLine();
+            }
+            Readc.Close();
+
+        }
 
         private void circles_are_dumb()
         {
