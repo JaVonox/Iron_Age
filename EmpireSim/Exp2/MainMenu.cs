@@ -617,28 +617,28 @@ namespace Exp2
                         //provinces
                         opengenerate("Prov");
                         writeto("Provinces");
-                        Array.Clear(allgen, 0, 501);
+                        Array.Clear(allgen, 0, 10001);
                         rndcycle = 2;
                     }
                     else if (rndcycle == 2)
                     {
                         opengenerate("Faith");
                         writeto("Religions");
-                        Array.Clear(allgen, 0, 501);
+                        Array.Clear(allgen, 0, 10001);
                         rndcycle = 3;
                     }
                     else if (rndcycle == 3)
                     {
                         opengenerate("Fname");
                         writeto("Fname");
-                        Array.Clear(allgen, 0, 501);
+                        Array.Clear(allgen, 0, 10001);
                         rndcycle = 4;
                     }
                     else if (rndcycle == 4)
                     {
                         opengenerate("Sname");
                         writeto("Sname");
-                        Array.Clear(allgen, 0, 501);
+                        Array.Clear(allgen, 0, 10001);
                         rndcycle = 5;
                     }
                     else if(rndcycle == 5)
@@ -1135,7 +1135,7 @@ namespace Exp2
             {
                 if (random == true)
                 {
-                    for (int i = 0; i <= 500; i++)
+                    for (int i = 0; i <= 10000; i++)
                     {
                         string word = funct.Functions.Generator("Prov");
 
@@ -1158,7 +1158,7 @@ namespace Exp2
                 }
                 else if (existing == true)
                 {
-                    for (int i = 0; i <= 500; i++)
+                    for (int i = 0; i <= 10000; i++)
                     {
                         string word = funct.Functions.Generator("Real");
 
@@ -1257,7 +1257,7 @@ namespace Exp2
 
         bool existing = false;
         bool random = false;
-        string[] allgen = new string[501];
+        string[] allgen = new string[10001];
         int point = 0;
         int rndcycle = 0;
 

@@ -27,6 +27,8 @@ namespace Exp2
         int day = 1;
         int randxb = 0;
         int randyb = 0;
+        int mouseposX;
+        int mouseposY;
 
         int tempgreencount = 0;
         Point media = new Point(0, 0);
@@ -38,7 +40,7 @@ namespace Exp2
         Bitmap Map = new Bitmap(Exp2.Properties.Resources.testimage,xlen,ylen);
 
         string pathing;
-        string[] ProvList = new string[501];
+        string[] ProvList = new string[10001];
         string[] FaithList = new string[101];
         string[] NamesList = new string[501];
         string[] SurnameList = new string[501];
@@ -71,7 +73,7 @@ namespace Exp2
             this.Icon = Exp2.Properties.Resources.WorldGen;
 
             System.IO.StreamReader Read = new System.IO.StreamReader(pathing + "//Info//ProvinceNames.dat");
-            for(int i = 0; i <= 500;i++)
+            for(int i = 0; i <= 10000;i++)
             {
                 ProvList[i] = Read.ReadLine();
             }
@@ -143,6 +145,16 @@ namespace Exp2
         int tempi = 0;
         int tempib = 0;
 
+        string[,] prov = new string[xlen, ylen];
+        string[] listprovn = new string[10001];
+
+        bool rtn = false;
+        Color[] tmpcoler = new Color[100000];
+        int ccount;
+
+        int[] convprov = new int[5000];
+        string[,] newprov = new string[xlen, ylen];
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             //temp
@@ -158,10 +170,11 @@ namespace Exp2
                 {
                     //seperate world into different provinces
 
-                    
-                    for(int x = 0; x <= xlen - 1; x+= xlen / 100)
+                    int[] valueof = new int[10000];
+
+                    for(int x = 1; x <= xlen - 1; x+= xlen / 100)
                     {
-                        for (int y = 0; y <= ylen - 1; y+= ylen / 100)
+                        for (int y = 1; y <= ylen - 1; y+= ylen / 100)
                         {
 
                             int a1 = Rander.Next(1, 255);
@@ -170,6 +183,7 @@ namespace Exp2
                             Color Randerpaint = new Color();
                             Randerpaint = Color.FromArgb(a1, a2, a3);
 
+
                             for (int mx = x; mx <= x + xlen / 100 && mx <= xlen - 1; mx++)
                             {
                                 for (int my = y; my <= y + ylen / 100 && my <= ylen - 1; my++)
@@ -177,24 +191,77 @@ namespace Exp2
 
                                     if(Map.GetPixel(mx,my) != Color.FromArgb(28,107,160))
                                     {
+                                        tmpcoler[ccount] = Randerpaint;
                                         Map.SetPixel(mx, my, Randerpaint);
+                                        prov[mx,my] = ccount.ToString();
+                                        rtn = true;
                                     }
 
-                                    //    rgbValues[dx + 3] = 255; //alpha
-                                    //rgbValues[dx + 2] = 28; //red
-                                    //rgbValues[dx + 1] = 107; //green
-                                    //rgbValues[dx] = 160; //blue
                                 }
                             }
-                            //g.DrawRectangle(Pens.Orange, x, y, x + xlen / 100, y + ylen / 100);
+                            if(rtn == true)
+                            {
+                                ccount++;
+                                rtn = false;
+                            }
+                        }
+                    }
+
+                    int convcount = 0;
+                    bool[] taken = new bool[10000];
+                    int counttken = 2;
+
+                    //following returns -1. Potentially cant find value in .indexof()
+
+                    for (int x = 1; x <= xlen - 1; x++)
+                    {
+                        for (int y = 1; y <= ylen - 1; y++)
+                        {
+
+                            if (y >= ylen || x >= xlen)
+                            {
+                                
+                            }
+                            else
+                            {
+                                if (prov[x, y] != null)
+                                {
+                                    if (valueof[Convert.ToInt32(prov[x, y])] > 0)
+                                    {
+                                        newprov[x, y] = valueof[Convert.ToInt32(prov[x, y])].ToString();
+                                    }
+                                    else
+                                    {
+                                        taken[counttken] = true;
+                                        valueof[Convert.ToInt32(prov[x, y])] = counttken;
+                                        newprov[x, y] = counttken.ToString();
+                                        counttken += 1;
+                                    }
+                                }
+                            }
                         }
                     }
 
                     age = "Post-Provincial Age";
 
                 }
+                else if(age == "Post-Provincial Age")
+                {
+                    //if mouse is outside the border it crashes
+                    Point p = this.PointToClient(Cursor.Position);
+                    mouseposX = Math.Max(0, p.X);
+                    mouseposY = Math.Max(0, p.Y);
 
-                if(age == "Age of Formation")
+                    if(newprov[mouseposX,mouseposY] != null)
+                    {
+                        Province.Text = ProvList[Convert.ToInt32(newprov[mouseposX, mouseposY])];
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else if(age == "Age of Formation")
                 {
                     year = (Convert.ToInt32(countp / 3.7) - countl);
                     month = 1;
@@ -446,7 +513,7 @@ namespace Exp2
                     
             }
 
-            if (age == "Islandic Age")
+            else if (age == "Islandic Age")
             {
                 int count = 0;
                 year += Rander.Next(1,10000);
@@ -515,7 +582,7 @@ namespace Exp2
                 }
             }
 
-            if (age == "Pre-Islandic Age")
+            else if (age == "Pre-Islandic Age")
             {
                 year += 1;
                 day = 1;

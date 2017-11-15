@@ -187,19 +187,6 @@ namespace Exp2.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This font was downloaded from
-        ///
-        ///http://www.myfonts.me
-        ///
-        ///Thank you for download!!!.
-        /// </summary>
-        internal static string myfonts_me {
-            get {
-                return ResourceManager.GetString("myfonts_me", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to les Escaldes
         ///Andorra la Vella
         ///Umm al Qaywayn

@@ -130,9 +130,6 @@
     <None Include="Resources\Font\ArcadeAlternate\font-map-unicode-arcade-alternative.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Font\ArcadeAlternate\myfonts.me.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Font\ArcadeAlternate\arcade-alternative.png" />
   </ItemGroup>
   <ItemGroup>
