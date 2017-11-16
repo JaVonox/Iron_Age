@@ -242,21 +242,74 @@ namespace Exp2
                         }
                     }
 
+                    //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
+                    System.IO.StreamWriter Writer = new System.IO.StreamWriter(pathing + "//World.dat");
+
+                    for (int y = 1; y <= ylen - 2; y++)
+                    {
+                        for (int x = 1; x <= xlen - 2; x++)
+                        {
+                            if(newprov[x,y] == null)
+                            {
+                                Writer.Write("*"); //blank space
+                            }
+                            else
+                            {
+                                Writer.Write("@" + newprov[x,y] + ","); //taken land
+                            }
+                        }
+                        Writer.Write("~"); //end char
+                        Writer.Write("\r\n"); //new line
+
+                    }
+
+                    Writer.Close();
+
+                    System.IO.StreamWriter Writer2 = new System.IO.StreamWriter(pathing + "//Provs.dat");
+
+                    for (int m = 2; m <= counttken + 1; m++)
+                    { 
+                        //ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%
+                        Writer2.Write("%" + m + "%");
+                        Writer2.Write(ProvList[m] + "%");
+                        Writer2.Write("PAGAN%");
+                        Writer2.Write(ProvList[m] + "%");
+                        Writer2.Write(Rander.Next(100,150) + "%");
+                        Writer2.Write(Rander.Next(151, 250) + "%");
+                        Writer2.Write(Rander.Next(250, 300) + "%");
+                        Writer2.Write(Rander.Next(300, 500) + "%");
+                        Writer2.Write(Rander.Next(500, 700) + "%");
+                        Writer2.Write(Rander.Next(100, 200) + "%");
+                        Writer2.Write(Rander.Next(100, 300) + "%");
+                        Writer2.Write("5%");
+                        Writer2.Write("Y%");
+                        Writer2.Write("~"); //end char
+                        Writer2.Write("\r\n"); //new line
+                    }
+
+                    Writer2.Close();
+
                     age = "Post-Provincial Age";
 
                 }
                 else if(age == "Post-Provincial Age")
                 {
-                    //if mouse is outside the border it crashes
-                    Point p = this.PointToClient(Cursor.Position);
-                    mouseposX = Math.Max(0, p.X);
-                    mouseposY = Math.Max(0, p.Y);
-
-                    if(newprov[mouseposX,mouseposY] != null)
+                    try
                     {
-                        Province.Text = ProvList[Convert.ToInt32(newprov[mouseposX, mouseposY])];
+                        //if mouse is outside the border it crashes
+                        Point p = this.PointToClient(Cursor.Position);
+                        mouseposX = Math.Max(0, p.X);
+                        mouseposY = Math.Max(0, p.Y);
+
+                        if (newprov[mouseposX, mouseposY] != null)
+                        {
+                            Province.Text = ProvList[Convert.ToInt32(newprov[mouseposX, mouseposY])];
+                        }
+                        else
+                        {
+                        }
                     }
-                    else
+                    catch(Exception ex)
                     {
 
                     }

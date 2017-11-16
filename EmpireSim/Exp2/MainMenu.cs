@@ -1021,8 +1021,8 @@ namespace Exp2
                 savpath = newFileName;
                 System.IO.Directory.CreateDirectory(newFileName); //main directory for common files
                 outname = System.IO.Path.GetFileNameWithoutExtension(newFileName);
-                System.IO.File.Create(newFileName + "//World.dat"); //Stores World tiles
-                System.IO.File.Create(newFileName + "//Kingdoms.dat"); //Stores existing kingdoms and their provinces
+                //System.IO.File.Create(newFileName + "//World.dat"); //Stores World tiles
+                //System.IO.File.Create(newFileName + "//Kingdoms.dat"); //Stores existing kingdoms and their provinces
                 System.IO.Directory.CreateDirectory(newFileName + "//Data"); //Data for key data such as world year/name etc.
                 System.IO.File.Create(newFileName + "//Data//Key.dat"); //stores key stuff like names/year
                 System.IO.File.Create(newFileName + "//Data//Provinces.dat"); //Stores Names/Info for provinces
@@ -1420,7 +1420,7 @@ namespace Exp2
                                 Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                                 g.DrawString("Generate", myFont, newbrushb, newpointb);
                                 Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
-                                Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
                                 g.DrawString("Options", myFont, newbrushc, newpointc);
                                 objanimatestage[1] = 0;
                                 objanimatestage[2] = 0;
