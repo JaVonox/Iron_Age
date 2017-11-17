@@ -172,9 +172,9 @@ namespace Exp2
 
                     int[] valueof = new int[10000];
 
-                    for(int x = 1; x <= xlen - 1; x+= xlen / 100)
+                    for(int x = 1; x <= xlen - 30; x+= xlen / 100)
                     {
-                        for (int y = 1; y <= ylen - 1; y+= ylen / 100)
+                        for (int y = 1; y <= ylen - 50; y+= ylen / 100)
                         {
 
                             int a1 = Rander.Next(1, 255);
@@ -211,7 +211,6 @@ namespace Exp2
                     bool[] taken = new bool[10000];
                     int counttken = 2;
 
-                    //following returns -1. Potentially cant find value in .indexof()
 
                     for (int x = 1; x <= xlen - 1; x++)
                     {
@@ -245,9 +244,9 @@ namespace Exp2
                     //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
                     System.IO.StreamWriter Writer = new System.IO.StreamWriter(pathing + "//World.dat");
 
-                    for (int y = 1; y <= ylen - 2; y++)
+                    for (int y = 1; y <= ylen - 1; y++)
                     {
-                        for (int x = 1; x <= xlen - 2; x++)
+                        for (int x = 1; x <= xlen - 1; x++)
                         {
                             if(newprov[x,y] == null)
                             {
@@ -269,8 +268,8 @@ namespace Exp2
 
                     for (int m = 2; m <= counttken + 1; m++)
                     { 
-                        //ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%
-                        Writer2.Write("%" + m + "%");
+                        //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%
+                        Writer2.Write("$" + m + "%");
                         Writer2.Write(ProvList[m] + "%");
                         Writer2.Write("PAGAN%");
                         Writer2.Write(ProvList[m] + "%");
@@ -288,6 +287,28 @@ namespace Exp2
                     }
 
                     Writer2.Close();
+
+                    System.IO.StreamWriter Writer3 = new System.IO.StreamWriter(pathing + "//Kingdoms.dat");
+
+                    for (int m = 2; m <= counttken + 1; m++)
+                    {
+                        //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+                        Writer3.Write("$" + m + "%");
+                        Writer3.Write(ProvList[m] + "%");
+                        Writer3.Write("TRIBAL%");
+                        Writer3.Write("NULL%");
+                        Writer3.Write("( " + "%" + m + "%" + "," + " ) %");
+                        Writer3.Write(Rander.Next(-5, 5) + "%");
+                        Writer3.Write(Rander.Next(-5, 5) + "%");
+                        Writer3.Write("0%");
+                        Writer3.Write(NamesList[Rander.Next(1,500)] + "%");
+                        Writer3.Write(SurnameList[Rander.Next(1, 500)] + "%");
+                        Writer3.Write(Rander.Next(16, 50)+ "%");
+                        Writer3.Write("~"); //end char
+                        Writer3.Write("\r\n"); //new line
+                    }
+
+                    Writer3.Close();
 
                     age = "Post-Provincial Age";
 
@@ -865,6 +886,11 @@ namespace Exp2
                     }
                 }
             }
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
         }
     }
 

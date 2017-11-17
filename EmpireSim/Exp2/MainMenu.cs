@@ -1434,6 +1434,11 @@ namespace Exp2
             }
         }
 
+        private void MainMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
+
 
     }
 }
