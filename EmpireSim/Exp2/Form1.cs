@@ -268,7 +268,7 @@ namespace Exp2
 
                     for (int m = 2; m <= counttken + 1; m++)
                     { 
-                        //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%
+                        //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                         Writer2.Write("$" + m + "%");
                         Writer2.Write(ProvList[m] + "%");
                         Writer2.Write("PAGAN%");
@@ -282,6 +282,9 @@ namespace Exp2
                         Writer2.Write(Rander.Next(100, 300) + "%");
                         Writer2.Write("5%");
                         Writer2.Write("Y%");
+                        Writer2.Write(Rander.Next(1, 255) + "%");
+                        Writer2.Write(Rander.Next(1, 255) + "%");
+                        Writer2.Write(Rander.Next(1, 255) + "%");
                         Writer2.Write("~"); //end char
                         Writer2.Write("\r\n"); //new line
                     }
@@ -309,6 +312,11 @@ namespace Exp2
                     }
 
                     Writer3.Close();
+
+                    System.IO.StreamWriter Writer4 = new System.IO.StreamWriter(pathing + "//GameInfo.sav");
+                    Writer4.Write(pathing + "\r\n");
+                    Writer4.Write("0");
+                    Writer4.Close();
 
                     age = "Post-Provincial Age";
 

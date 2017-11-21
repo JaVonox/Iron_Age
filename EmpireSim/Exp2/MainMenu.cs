@@ -201,79 +201,6 @@ namespace Exp2
                         }
                     }
 
-                    //bitmapc[x, y] = Color.HotPink;
-                    //int temprand = Rand.Next(2, 10);
-
-                    //if (x <= (xlen / 5) + 9 || x >= ((xlen / 5) * 4) - 9)
-                    //{
-                    //    if (temprand == 2)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(73, 64, 32);
-                    //    }
-                    //    else if (temprand == 3)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(192, 151, 98);
-                    //    }
-                    //    else if (temprand == 4)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(158, 133, 72);
-                    //    }
-                    //    else if (temprand == 5)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(108, 85, 58);
-                    //    }
-                    //    else
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(115, 94, 57);
-                    //    }
-
-                    //}
-                    //else if (y <= (ylen / 10) + 9 || y >= ((ylen / 10) * 3) - 9)
-                    //{
-                    //    if (temprand == 2)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(73, 64, 32);
-                    //    }
-                    //    else if (temprand == 3)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(192, 151, 98);
-                    //    }
-                    //    else if (temprand == 4)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(158, 133, 72);
-                    //    }
-                    //    else if (temprand == 5)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(108, 85, 58);
-                    //    }
-                    //    else
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(115, 94, 57);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (temprand == 2)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(127, 127, 127);
-                    //    }
-                    //    else if (temprand == 3)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(116, 116, 116);
-                    //    }
-                    //    else if (temprand == 4)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(115, 115, 115);
-                    //    }
-                    //    else if (temprand == 5)
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(104, 104, 104);
-                    //    }
-                    //    else
-                    //    {
-                    //        bitmapc[x, y] = Color.FromArgb(143, 143, 143);
-                    //    }
-                    //}
                 }
             }
 
@@ -580,7 +507,7 @@ namespace Exp2
             {
                 Brush newbrush = new SolidBrush(Color.DarkSlateGray);
                 Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                g.DrawString("Play", myFont, newbrush, newpoint);
+                g.DrawString("Start", myFont, newbrush, newpoint);
             }
 
             using (var g = Graphics.FromImage(MenuImg.Image)) //Title
@@ -662,7 +589,7 @@ namespace Exp2
                 using (var g = Graphics.FromImage(MenuImg.Image))
                 {
                     Point newpointm = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                    animate(1, objanimatestage[1], "Red", Color.DarkSlateGray, newpointm, "Play");
+                    animate(1, objanimatestage[1], "Red", Color.DarkSlateGray, newpointm, "Start");
 
                     Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
                     Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
@@ -683,7 +610,7 @@ namespace Exp2
 
                     Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                     Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                    g.DrawString("Start", myFont, newbrusha, newpointa);
                     Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
                     Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
                     g.DrawString("Options", myFont, newbrushc, newpointc);
@@ -701,7 +628,7 @@ namespace Exp2
 
                     Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                     Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                    g.DrawString("Start", myFont, newbrusha, newpointa);
                     Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
                     Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                     g.DrawString("Generate", myFont, newbrushb, newpointb);
@@ -717,10 +644,10 @@ namespace Exp2
 
                     if (mouseposX != 0 && mouseposY != 0)
                     {
-                        if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 7) && mouseposY <= ((ylen / 20) * 9)) //play box
+                        if (mouseposX >= (xlen / 10) * 1 && mouseposX <= ((xlen / 10) * 2.7) && mouseposY >= ((ylen / 20) * 7) && mouseposY <= ((ylen / 20) * 9)) //Play box
                         {
                             Point newpoint = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                            animate(1, objanimatestage[1], "Red", Color.DarkSlateGray, newpoint, "Play");
+                            animate(1, objanimatestage[1], "Red", Color.DarkSlateGray, newpoint, "Start");
 
                             Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
                             Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
@@ -741,7 +668,7 @@ namespace Exp2
 
                                 Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                                 Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                                g.DrawString("Play", myFont, newbrusha, newpointa);
+                                g.DrawString("Start", myFont, newbrusha, newpointa);
                                 Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
                                 Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
                                 g.DrawString("Options", myFont, newbrushc, newpointc);
@@ -758,7 +685,7 @@ namespace Exp2
 
                                     Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                                     Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                                    g.DrawString("Start", myFont, newbrusha, newpointa);
                                     Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
                                     Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                                     g.DrawString("Generate", myFont, newbrushb, newpointb);
@@ -770,7 +697,7 @@ namespace Exp2
                                 {
                                     Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                                     Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                                    g.DrawString("Play", myFont, newbrusha, newpointa);
+                                    g.DrawString("Start", myFont, newbrusha, newpointa);
                                     Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
                                     Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                                     g.DrawString("Generate", myFont, newbrushb, newpointb);
@@ -928,6 +855,13 @@ namespace Exp2
                 MenuImg.Invalidate();
                 if (mode == 1)
                 {
+
+                    random = false;
+                    existing = false;
+                    obs = false;
+                    sim = false;
+                    browse = false;
+
                     Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 7.52));
                     g.DrawString("Selected Save:", myFontsmall, newbrushD, newpointa);
 
@@ -944,10 +878,29 @@ namespace Exp2
                     g.DrawString("Year:", myFontsmall, newbrushD, newpointc);
 
                     Point newpointd = new Point(Convert.ToInt16(((xlen / 10) * 7.16)), Convert.ToInt16((ylen / 20) * 13.62));
-                    g.DrawString("Play >", myFontsmallClick, newbrushC, newpointd);
+                    g.DrawString("Start >", myFontsmallClick, newbrushC, newpointd);
+
+                    Point newpointe = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                    g.DrawString("Mode:", myFontsmall, newbrushD, newpointe);
+
+                    Point newpointe1 = new Point(Convert.ToInt16(((xlen / 10) * 3.76)), Convert.ToInt16((ylen / 20) * 10.52));
+                    g.DrawString("Observe", myFontsmall, newbrushC, newpointe1);
+
+                    Point newpointe2 = new Point(Convert.ToInt16(((xlen / 10) * 4.66)), Convert.ToInt16((ylen / 20) * 10.52));
+                    g.DrawString("/", myFontsmall, newbrushD, newpointe2);
+
+                    Point newpointe3 = new Point(Convert.ToInt16(((xlen / 10) * 4.86)), Convert.ToInt16((ylen / 20) * 10.52));
+                    g.DrawString("Simulate", myFontsmall, newbrushC, newpointe3);
                 }
                 else if(mode == 2)
                 {
+
+                    random = false;
+                    existing = false;
+                    obs = false;
+                    sim = false;
+                    browse = false;
+
                     Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 7.52));
                     g.DrawString("Save Location:", myFontsmall, newbrushD, newpointa);
 
@@ -974,6 +927,13 @@ namespace Exp2
                 }
                 else if (mode == 3)
                 {
+
+                    random = false;
+                    existing = false;
+                    obs = false;
+                    sim = false;
+                    browse = false;
+
                     Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 7.52));
                     g.DrawString("About", myFontsmall, newbrushD, newpointa);
 
@@ -1010,30 +970,56 @@ namespace Exp2
 
         public void filebrowse(string mode)
         {
-            SaveFileDialog savedialog = new SaveFileDialog();
-
-            savedialog.Title = "Select A Place To Save The World";
-            savedialog.Filter = "*Save Folder | Save Location";
-
-            if (savedialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (mode == "WriteNew")
             {
-                string newFileName = savedialog.FileName;
-                savpath = newFileName;
-                System.IO.Directory.CreateDirectory(newFileName); //main directory for common files
-                outname = System.IO.Path.GetFileNameWithoutExtension(newFileName);
-                //System.IO.File.Create(newFileName + "//World.dat"); //Stores World tiles
-                //System.IO.File.Create(newFileName + "//Kingdoms.dat"); //Stores existing kingdoms and their provinces
-                System.IO.Directory.CreateDirectory(newFileName + "//Data"); //Data for key data such as world year/name etc.
-                System.IO.File.Create(newFileName + "//Data//Key.dat"); //stores key stuff like names/year
-                System.IO.File.Create(newFileName + "//Data//Provinces.dat"); //Stores Names/Info for provinces
-                System.IO.Directory.CreateDirectory(newFileName + "//Info"); //Data for minor data such as name generation data
-                System.IO.File.Create(newFileName + "//Info//History.dat"); //Stores Historical Data
-                outcancel = false;
-                FileSpecified = true;
-            }  
-            else
+                browse = true;
+                SaveFileDialog savedialog = new SaveFileDialog();
+
+                savedialog.Title = "Select A Place To Save The World";
+                savedialog.Filter = "*Save Folder | Save Location";
+
+                if (savedialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string newFileName = savedialog.FileName;
+                    savpath = newFileName;
+                    System.IO.Directory.CreateDirectory(newFileName); //main directory for common files
+                    outname = System.IO.Path.GetFileNameWithoutExtension(newFileName);
+                    //System.IO.File.Create(newFileName + "//World.dat"); //Stores World tiles
+                    //System.IO.File.Create(newFileName + "//Kingdoms.dat"); //Stores existing kingdoms and their provinces
+                    System.IO.Directory.CreateDirectory(newFileName + "//Data"); //Data for key data such as world year/name etc.
+                    System.IO.File.Create(newFileName + "//Data//Key.dat"); //stores key stuff like names/year
+                    System.IO.File.Create(newFileName + "//Data//Provinces.dat"); //Stores Names/Info for provinces
+                    System.IO.Directory.CreateDirectory(newFileName + "//Info"); //Data for minor data such as name generation data
+                    System.IO.File.Create(newFileName + "//Info//History.dat"); //Stores Historical Data
+                    outcancel = false;
+                    FileSpecified = true;
+                }
+                else
+                {
+                    outcancel = true;
+                }
+            }
+            else if(mode == "Open")
             {
-                outcancel = true;
+                browse = true;
+                OpenFileDialog opendialog = new OpenFileDialog();
+
+                opendialog.Title = "Select the GameInfo file";
+                opendialog.Filter = "Save file | *.sav";
+
+                if (opendialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string newFileName = opendialog.FileName;
+                    savpath = newFileName;
+                    outname = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(newFileName));
+
+                    outcancel = false;
+                    FileSpecified = true;
+                }
+                else
+                {
+                    outcancel = true;
+                }
             }
         }
 
@@ -1257,6 +1243,9 @@ namespace Exp2
 
         bool existing = false;
         bool random = false;
+        bool browse = false;
+        bool sim = false;
+        bool obs = false;
         string[] allgen = new string[10001];
         int point = 0;
         int rndcycle = 0;
@@ -1299,7 +1288,7 @@ namespace Exp2
 
                             Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                             Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                            g.DrawString("Play", myFont, newbrusha, newpointa);
+                            g.DrawString("Start", myFont, newbrusha, newpointa);
                             Brush newbrushc = new SolidBrush(Color.DarkSlateGray);
                             Point newpointc = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 13.52));
                             g.DrawString("Options", myFont, newbrushc, newpointc);
@@ -1316,7 +1305,7 @@ namespace Exp2
 
                                 Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                                 Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                                g.DrawString("Play", myFont, newbrusha, newpointa);
+                                g.DrawString("Start", myFont, newbrusha, newpointa);
                                 Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
                                 Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                                 g.DrawString("Generate", myFont, newbrushb, newpointb);
@@ -1330,7 +1319,83 @@ namespace Exp2
                                 
                                 if(selectedobj == 1) //play screen
                                 {
+                                    Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
+                                    Brush newbrushC = new SolidBrush(Color.DarkSlateBlue);
+                                    Brush newbrushA = new SolidBrush(Color.DarkRed);
 
+                                    //Point newpointe1 = new Point(Convert.ToInt16(((xlen / 10) * 3.76)), Convert.ToInt16((ylen / 20) * 10.52));
+                                    //g.DrawString("Observe", myFontsmall, newbrushC, newpointe1);
+
+                                    //Point newpointe2 = new Point(Convert.ToInt16(((xlen / 10) * 4.66)), Convert.ToInt16((ylen / 20) * 10.52));
+                                    //g.DrawString("/", myFontsmall, newbrushD, newpointe2);
+
+                                    //Point newpointe3 = new Point(Convert.ToInt16(((xlen / 10) * 4.86)), Convert.ToInt16((ylen / 20) * 10.52));
+                                    //g.DrawString("Simulate", myFontsmall, newbrushC, newpointe3);
+                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32) && browse == false)
+                                    {
+                                        filebrowse("Open");
+
+                                        if (outcancel == false)
+                                        {
+                                            MenuImg.Invalidate();
+                                            Point newpointa1 = new Point(Convert.ToInt16(((xlen / 10) * 4.56)), Convert.ToInt16((ylen / 20) * 7.32));
+                                            g.DrawString(outname, myFontsmall, newbrushD, newpointa1);
+                                            outcancel = true;
+
+                                            System.IO.StreamReader Read = new System.IO.StreamReader(savpath);
+
+                                            Read.ReadLine();
+                                            string year = Read.ReadLine();
+
+                                            Point newpointa2 = new Point(Convert.ToInt16(((xlen / 10) * 4.26)), Convert.ToInt16((ylen / 20) * 8.52));
+                                            g.DrawString(outname, myFontsmall, newbrushD, newpointa2);
+
+                                            Point newpointa3 = new Point(Convert.ToInt16(((xlen / 10) * 3.66)), Convert.ToInt16((ylen / 20) * 9.52));
+                                            g.DrawString(year, myFontsmall, newbrushD, newpointa3);
+                                            //filenames will stack over each other upon reentry
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    }
+                                    else if (mouseposX >= (xlen / 10) * 3.66 && mouseposX <= ((xlen / 10) * 4.56) && mouseposY >= ((ylen / 20) * 10.52) && mouseposY <= ((ylen / 20) * 11.00))
+                                    {
+                                        //observe
+
+                                        obs = true;
+                                        sim = false;
+
+                                        Point newpointe1 = new Point(Convert.ToInt16(((xlen / 10) * 3.76)), Convert.ToInt16((ylen / 20) * 10.52));
+                                        g.DrawString("Observe", myFontsmall, newbrushA, newpointe1);
+
+                                        Point newpointe3 = new Point(Convert.ToInt16(((xlen / 10) * 4.86)), Convert.ToInt16((ylen / 20) * 10.52));
+                                        g.DrawString("Simulate", myFontsmall, newbrushC, newpointe3);
+                                    }
+                                    else if (mouseposX >= (xlen / 10) * 4.76 && mouseposX <= ((xlen / 10) * 5.56) && mouseposY >= ((ylen / 20) * 10.52) && mouseposY <= ((ylen / 20) * 11.00))
+                                    {
+                                        //Simulate
+
+                                        obs = false;
+                                        sim = true;
+
+                                        Point newpointe1 = new Point(Convert.ToInt16(((xlen / 10) * 3.76)), Convert.ToInt16((ylen / 20) * 10.52));
+                                        g.DrawString("Observe", myFontsmall, newbrushC, newpointe1);
+
+                                        Point newpointe3 = new Point(Convert.ToInt16(((xlen / 10) * 4.86)), Convert.ToInt16((ylen / 20) * 10.52));
+                                        g.DrawString("Simulate", myFontsmall, newbrushA, newpointe3);
+                                    }
+                                    else if (mouseposX >= (xlen / 10) * 6.70 && mouseposX <= ((xlen / 10) * 7.76) && mouseposY >= ((ylen / 20) * 13.52) && mouseposY <= ((ylen / 20) * 14.52))
+                                    {
+                                        if (obs == true || sim == true && browse == true)
+                                        {
+                                            Timera.Stop();
+                                            Observe observer = new Observe();
+                                            observer.Text = savpath;
+                                            observer.Show();
+                                            this.Hide();
+                                        }
+                                    }
                                 }
                                 else if(selectedobj == 2) //generate screen
                                 {
@@ -1339,7 +1404,7 @@ namespace Exp2
                                     Brush newbrushA = new SolidBrush(Color.DarkRed);
 
                                     //browse for file directory
-                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32))
+                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32) && browse == false)
                                     {
                                         filebrowse("WriteNew");
                                         if (outcancel == false)
@@ -1380,24 +1445,27 @@ namespace Exp2
                                     }
                                     else if (mouseposX >= (xlen / 10) * 6.70 && mouseposX <= ((xlen / 10) * 7.76) && mouseposY >= ((ylen / 20) * 13.52) && mouseposY <= ((ylen / 20) * 14.52))
                                     {
-                                        rndcycle = 1;
                                         //provinces
                                         Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 9.52));
-                                        if (random == false)
+                                        if (random == true || existing == true && browse == true)
                                         {
-                                            g.DrawString("Pulling Province Names:", myFontsmall, newbrushD, newpointb3);
+                                            rndcycle = 1;
+                                            if (random == false)
+                                            {
+                                                g.DrawString("Pulling Province Names:", myFontsmall, newbrushD, newpointb3);
+                                            }
+                                            else
+                                            {
+                                                g.DrawString("Generating Province Names:", myFontsmall, newbrushD, newpointb3);
+                                            }
+                                            Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.52));
+                                            g.DrawString("Generating Religion Names:", myFontsmall, newbrushD, newpointb4);
+                                            Point newpointb5 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 11.52));
+                                            g.DrawString("Pulling First Names:", myFontsmall, newbrushD, newpointb5);
+                                            Point newpointb6 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 12.52));
+                                            g.DrawString("Pulling Dynasty Names:", myFontsmall, newbrushD, newpointb6);
+                                            Array.Clear(allgen, 0, 501);
                                         }
-                                        else
-                                        {
-                                            g.DrawString("Generating Province Names:", myFontsmall, newbrushD, newpointb3);
-                                        }
-                                        Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.52));
-                                        g.DrawString("Generating Religion Names:", myFontsmall, newbrushD, newpointb4);
-                                        Point newpointb5 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 11.52));
-                                        g.DrawString("Pulling First Names:", myFontsmall, newbrushD, newpointb5);
-                                        Point newpointb6 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 12.52));
-                                        g.DrawString("Pulling Dynasty Names:", myFontsmall, newbrushD, newpointb6);
-                                        Array.Clear(allgen, 0, 501);
                                     }
                                     else
                                     {
@@ -1415,7 +1483,7 @@ namespace Exp2
                                 selectedobj = 0;
                                 Brush newbrusha = new SolidBrush(Color.DarkSlateGray);
                                 Point newpointa = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 7.52));
-                                g.DrawString("Play", myFont, newbrusha, newpointa);
+                                g.DrawString("Start", myFont, newbrusha, newpointa);
                                 Brush newbrushb = new SolidBrush(Color.DarkSlateGray);
                                 Point newpointb = new Point(Convert.ToInt16(((xlen / 10) * 1.06)), Convert.ToInt16((ylen / 20) * 10.52));
                                 g.DrawString("Generate", myFont, newbrushb, newpointb);
