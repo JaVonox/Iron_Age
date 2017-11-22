@@ -28,23 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.ImagePic = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePic)).BeginInit();
             this.SuspendLayout();
+            // 
+            // ImagePic
+            // 
+            this.ImagePic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ImagePic.Location = new System.Drawing.Point(0, 0);
+            this.ImagePic.Name = "ImagePic";
+            this.ImagePic.Size = new System.Drawing.Size(284, 261);
+            this.ImagePic.TabIndex = 0;
+            this.ImagePic.TabStop = false;
             // 
             // Observe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Salmon;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.ImagePic);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Observe";
             this.Text = "Observe";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Observe_FormClosed);
             this.Load += new System.EventHandler(this.Observe_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.ImagePic)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.PictureBox ImagePic;
     }
 }

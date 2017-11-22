@@ -29,7 +29,7 @@ namespace Exp2
         int randyb = 0;
         int mouseposX;
         int mouseposY;
-
+        IntPtr point;
         int tempgreencount = 0;
         Point media = new Point(0, 0);
 
@@ -315,7 +315,8 @@ namespace Exp2
 
                     System.IO.StreamWriter Writer4 = new System.IO.StreamWriter(pathing + "//GameInfo.sav");
                     Writer4.Write(pathing + "\r\n");
-                    Writer4.Write("0");
+                    Writer4.Write("0" + "\r\n");
+                    Writer4.Write(point.ToString() + "\r\n");
                     Writer4.Close();
 
                     age = "Post-Provincial Age";
@@ -720,7 +721,7 @@ namespace Exp2
 
             // Get the address of the first line.
             IntPtr ptr = bmpData.Scan0;
-
+            point = ptr;
             // Declare an array to hold the bytes of the bitmap.
             int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
             byte[] rgbValues = new byte[bytes];
@@ -728,8 +729,6 @@ namespace Exp2
             // Copy the RGB values into the array.
             //System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
             // Set every third value to 255. A 24bpp bitmap will look red.  
-
-            int tcount = 0;
 
             for (int y = 1; y <= ylen - 41; y++)
             {

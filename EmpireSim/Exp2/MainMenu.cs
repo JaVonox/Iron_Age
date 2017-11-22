@@ -1010,7 +1010,7 @@ namespace Exp2
                 if (opendialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     string newFileName = opendialog.FileName;
-                    savpath = newFileName;
+                    savpath = newFileName; 
                     outname = System.IO.Path.GetFileName(System.IO.Path.GetDirectoryName(newFileName));
 
                     outcancel = false;
@@ -1391,7 +1391,7 @@ namespace Exp2
                                         {
                                             Timera.Stop();
                                             Observe observer = new Observe();
-                                            observer.Text = savpath;
+                                            observer.Text = System.IO.Path.GetDirectoryName(savpath);
                                             observer.Show();
                                             this.Hide();
                                         }
