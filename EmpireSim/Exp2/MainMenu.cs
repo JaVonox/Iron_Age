@@ -879,7 +879,7 @@ namespace Exp2
 
                     Point newpointd = new Point(Convert.ToInt16(((xlen / 10) * 7.16)), Convert.ToInt16((ylen / 20) * 13.62));
                     g.DrawString("Start >", myFontsmallClick, newbrushC, newpointd);
-
+                    
                     Point newpointe = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.52));
                     g.DrawString("Mode:", myFontsmall, newbrushD, newpointe);
 
