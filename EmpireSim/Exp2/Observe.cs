@@ -24,6 +24,7 @@ namespace Exp2
         //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
         string[,] kingdoms = new string[10000, 10];
         string[,] kingdomowner = new string[10000, 10000];
+        string[] kingidname = new string[10000];
 
         string path;
         Bitmap Map = new Bitmap(Exp2.Properties.Resources.testimage,xlen,ylen);
@@ -173,6 +174,110 @@ namespace Exp2
 
             Readb.Close();
 
+            System.IO.StreamReader Readc = new System.IO.StreamReader(path + "//Kingdoms.dat");
+            int indcountb = -1;
+
+            //for(int i = -1; i <= 10000; i++)
+            //{
+            //    indcount = -1;
+
+            int ib = -1;
+            bool aftb = false;
+            bool ownedmode = false;
+
+            int indcountc = -1;
+
+            while (true)
+            {
+                singlechar = (char)Readc.Read();
+
+                if (ownedmode == false)
+                {
+                    indcountc = -1;
+
+                    if (singlechar.ToString() == "$")
+                    {
+                        aftb = false;
+                        ib += 1;
+                        indcountb = 0;
+                    }
+                    else if (singlechar.ToString() == "%")
+                    {
+                        indcountb += 1;
+                    }
+                    else if (singlechar.ToString() == "~")
+                    {
+                        aftb = true;
+                    }
+                    else if (singlechar.ToString() == "(" && indcountb == 4)
+                    {
+                        ownedmode = true;
+                        indcountb -= 1;
+                    }
+                    else if (aftb == true)
+                    {
+                        if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
+                        {
+
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        kingdoms[ib, indcountb] += singlechar.ToString();
+
+                        //if (indcountb == 1)
+                        //{
+                        //    kingidname[ib] += singlechar.ToString();
+                        //}
+                    }
+                }
+                else
+                {
+                    if (singlechar.ToString() == "%")
+                    {
+                        indcountc += 1;
+                    }
+                    else if (singlechar.ToString() == ")")
+                    {
+                        ownedmode = false;
+                    }
+                    else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
+                    {
+
+                    }
+                    else
+                    {
+                        kingdomowner[ib, indcountc] += singlechar.ToString();
+                    }
+
+                }
+            }
+
+            //}
+
+            Readc.Close();
+
+            for(int n = 2; n <= 9999;n++)
+            {
+                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                //string[,] provinces = new string[10000,16];
+                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+
+                if(provinces[n - 2,3] != provinces[n -2,1])
+                {
+                    //kingidname[n -2] = provinces[n -2, 3];
+                    kingidname[n - 2] = null;
+                }
+                else
+                {
+                    kingidname[n - 2] = provinces[n - 2, 1];
+                }
+            }
+
         }
 
         private void Dobits()
@@ -316,10 +421,43 @@ namespace Exp2
                         }
                         else
                         {
-                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
-                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
-                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                            //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                            //string[,] provinces = new string[10000,16];
+                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+
+                            string tmp1bb = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
+                            string tmp2bb = provinces[Convert.ToInt32(map[x, y]) - 2, 1];
+
+                            if (provinces[Convert.ToInt32(map[x, y]) - 2, 3] != provinces[Convert.ToInt32(map[x, y]) - 2, 1])
+                            {
+                                int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3]));
+                                
+                                if(kingdoms[tmp3n,2] != "TRIBAL")
+                                {
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 13]); //red
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 14]); //green
+                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 15]); //blue
+                                }
+
+                            }
+                            else
+                            {
+                                if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] != "TRIBAL")
+                                {
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 13]); //red
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 14]); //green
+                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 15]); //blue
+                                }
+                                else
+                                {
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
+                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                                }
+                            }
                         }
                    
                 }
@@ -485,10 +623,43 @@ namespace Exp2
                         }
                         else
                         {
-                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
-                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
-                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                            //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                            //string[,] provinces = new string[10000,16];
+                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+
+                            //string tmp1bb = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
+                            //string tmp2bb = provinces[Convert.ToInt32(map[x, y]) - 2, 1];
+
+                            if (provinces[Convert.ToInt32(map[x, y]) - 2, 3] != provinces[Convert.ToInt32(map[x, y]) - 2, 1])
+                            {
+                                int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3]));
+
+                                if (kingdoms[tmp3n, 2] != "TRIBAL")
+                                {
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 13]); //red
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 14]); //green
+                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 15]); //blue
+                                }
+
+                            }
+                            else
+                            {
+                                if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] != "TRIBAL")
+                                {
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 13]); //red
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 14]); //green
+                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 15]); //blue
+                                }
+                                else
+                                {
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
+                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                                }
+                            }
                         }
                     }
 
@@ -523,47 +694,127 @@ namespace Exp2
                 using (var g = Graphics.FromImage(ImagePic.Image))
                 {
 
-                    if (provinces[Convert.ToInt32(map[mouseposX, mouseposY]), 3] != provinces[Convert.ToInt32(map[mouseposX, mouseposY]), 1])
-                    {
-                        //temp area for when a province is owned by another kingdom.
-                        PersonaliseBits(map[mouseposX, mouseposY]);
-                    }
-                    else
-                    {
+
                         PersonaliseBits(map[mouseposX, mouseposY]);
 
-                        Point newpointa = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 4));
-                        g.DrawString(provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1], myFontTitle, newbrushD, newpointa);
+                        if (provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 3] != provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1] || kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 2] != "TRIBAL")
+                        {
+                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
 
-                        //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                            Point newpointa1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 4));
 
-                        Point newpointb = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 6));
-                        g.DrawString("Religion : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 2], myFontDetail, newbrushD, newpointb);
+                            int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 3]));
 
-                        Point newpointc = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 7));
-                        g.DrawString("Bronze : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 4] + "%", myFontDetail, newbrushD, newpointc);
+                            Point newpointa2 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 3.2));
 
-                        Point newpointd = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 8));
-                        g.DrawString("Iron : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 5] + "%", myFontDetail, newbrushD, newpointd);
+                            if (kingidname[Convert.ToInt32(map[mouseposX, mouseposY]) - 2] == null)
+                            {
+                                g.DrawString("Owned land of ", myFontDetail, newbrushD, newpointa2);
+                                g.DrawString(kingdoms[tmp3n, 1], myFontTitle, newbrushD, newpointa1);
+                            }
+                            else
+                            {
+                                g.DrawString("Capital city of ", myFontDetail, newbrushD, newpointa2);
+                                g.DrawString(kingidname[Convert.ToInt32(map[mouseposX, mouseposY]) - 2], myFontTitle, newbrushD, newpointa1);
+                                //kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1]
+                                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                            }
 
-                        Point newpointe = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 9));
-                        g.DrawString("Steel : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 6] + "%", myFontDetail, newbrushD, newpointe);
+                            //Bug - incorrect info displayed
+                            Point newpointb2 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 5));
+                            g.DrawString("Type : " + kingdoms[Convert.ToInt32(tmp3n), 2], myFontDetail, newbrushD, newpointb2);
 
-                        Point newpointf = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 10));
-                        g.DrawString("Gunpowder : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 7] + "%", myFontDetail, newbrushD, newpointf);
+                            Point newpointb1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 6));
+                            g.DrawString("Religion : " + kingdoms[Convert.ToInt32(tmp3n), 3], myFontDetail, newbrushD, newpointb1);
 
-                        Point newpointg = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 11));
-                        g.DrawString("Oil : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 8] + "%", myFontDetail, newbrushD, newpointg);
+                            Point newpointc1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 7));
+                            g.DrawString("Spirituality : " + kingdoms[Convert.ToInt32(tmp3n), 4], myFontDetail, newbrushD, newpointc1);
 
-                        Point newpointh = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 12));
-                        g.DrawString("Theology : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 9] + "%", myFontDetail, newbrushD, newpointh);
+                            Point newpointd1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 8));
+                            g.DrawString("Ethics : " + kingdoms[Convert.ToInt32(tmp3n), 5], myFontDetail, newbrushD, newpointd1);
 
-                        Point newpointi = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 13));
-                        g.DrawString("Science : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 10] + "%", myFontDetail, newbrushD, newpointi);
+                            Point newpointe1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 9));
+                            g.DrawString("Science : " + kingdoms[Convert.ToInt32(tmp3n), 6] + "/255", myFontDetail, newbrushD, newpointe1);
 
-                        Point newpointj = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 14));
-                        g.DrawString("Happiness : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 11], myFontDetail, newbrushD, newpointj);
-                    }
+                            Point newpointf1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 10));
+                            g.DrawString("Ruler :" + kingdoms[Convert.ToInt32(tmp3n), 7], myFontDetail, newbrushD, newpointf1);
+
+                            Point newpointg1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 11));
+                            g.DrawString("Dynasty : " + kingdoms[Convert.ToInt32(tmp3n), 8], myFontDetail, newbrushD, newpointg1);
+
+                            Point newpointh1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 12));
+                            g.DrawString("Age : " + kingdoms[Convert.ToInt32(tmp3n), 9], myFontDetail, newbrushD, newpointh1);
+
+                            //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+
+
+                            Point newpointa = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 16));
+                            g.DrawString(provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1], myFontTitle, newbrushD, newpointa);
+
+                            Point newpointb = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 17));
+                            g.DrawString("Religion : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 2], myFontDetail, newbrushD, newpointb);
+
+                            Point newpointc = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 18));
+                            g.DrawString("Bronze : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 4] + "%", myFontDetail, newbrushD, newpointc);
+
+                            Point newpointd = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 19));
+                            g.DrawString("Iron : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 5] + "%", myFontDetail, newbrushD, newpointd);
+
+                            Point newpointe = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 20));
+                            g.DrawString("Steel : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 6] + "%", myFontDetail, newbrushD, newpointe);
+
+                            Point newpointf = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 21));
+                            g.DrawString("Gunpowder : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 7] + "%", myFontDetail, newbrushD, newpointf);
+
+                            Point newpointg = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 22));
+                            g.DrawString("Oil : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 8] + "%", myFontDetail, newbrushD, newpointg);
+
+                            Point newpointh = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 23));
+                            g.DrawString("Theology : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 9] + "%", myFontDetail, newbrushD, newpointh);
+
+                            Point newpointi = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 24));
+                            g.DrawString("Science : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 10] + "%", myFontDetail, newbrushD, newpointi);
+
+                            Point newpointj = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 25));
+                            g.DrawString("Happiness : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 11], myFontDetail, newbrushD, newpointj);
+
+                        }
+                        else
+                        {
+
+
+                            Point newpointa = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 4));
+                            g.DrawString(provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1], myFontTitle, newbrushD, newpointa);
+
+                            //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+
+                            Point newpointb = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 6));
+                            g.DrawString("Religion : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 2], myFontDetail, newbrushD, newpointb);
+
+                            Point newpointc = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 7));
+                            g.DrawString("Bronze : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 4] + "%", myFontDetail, newbrushD, newpointc);
+
+                            Point newpointd = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 8));
+                            g.DrawString("Iron : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 5] + "%", myFontDetail, newbrushD, newpointd);
+
+                            Point newpointe = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 9));
+                            g.DrawString("Steel : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 6] + "%", myFontDetail, newbrushD, newpointe);
+
+                            Point newpointf = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 10));
+                            g.DrawString("Gunpowder : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 7] + "%", myFontDetail, newbrushD, newpointf);
+
+                            Point newpointg = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 11));
+                            g.DrawString("Oil : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 8] + "%", myFontDetail, newbrushD, newpointg);
+
+                            Point newpointh = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 12));
+                            g.DrawString("Theology : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 9] + "%", myFontDetail, newbrushD, newpointh);
+
+                            Point newpointi = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 13));
+                            g.DrawString("Science : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 10] + "%", myFontDetail, newbrushD, newpointi);
+
+                            Point newpointj = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 14));
+                            g.DrawString("Happiness : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 11], myFontDetail, newbrushD, newpointj);
+                        }
                 }
             }
             else
