@@ -331,13 +331,20 @@ namespace Exp2
                         mouseposX = Math.Max(0, p.X);
                         mouseposY = Math.Max(0, p.Y);
 
-                        if (newprov[mouseposX, mouseposY] != null)
-                        {
-                            Province.Text = ProvList[Convert.ToInt32(newprov[mouseposX, mouseposY])];
-                        }
-                        else
-                        {
-                        }
+
+                        timer1.Stop();
+                        Observe observer = new Observe();
+                        observer.Text = pathing;
+                        observer.Show();
+                        this.Hide();
+
+                        //if (newprov[mouseposX, mouseposY] != null)
+                        //{
+                        //    Province.Text = ProvList[Convert.ToInt32(newprov[mouseposX, mouseposY])];
+                        //}
+                        //else
+                        //{
+                        //}
                     }
                     catch(Exception ex)
                     {

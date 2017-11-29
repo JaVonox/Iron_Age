@@ -17,6 +17,7 @@ namespace Exp2
         Random rand = new Random();
         string[,] map = new string[xlen,ylen];
         char singlechar;
+        byte enb = 1;
 
         //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
         string[,] provinces = new string[10000,16];
@@ -73,6 +74,7 @@ namespace Exp2
             pullmapdata();
             ImagePic.Image = Map;
             Dobits();
+            defaultbuttons();
             this.Text = "Observing ";
         }
 
@@ -304,18 +306,20 @@ namespace Exp2
             //System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
             // Set every third value to 255. A 24bpp bitmap will look red.  
 
-            for (int y = 1; y <= ylen - 41; y++)
-            {
-                int l = y * Math.Abs(bmpData.Stride);
-                int rowStart = y * bmpData.Stride;
-
-                for (int x = 1; x <= xlen - 18; x++)
+            //if (enb == 1)
+            //{
+                for (int y = 1; y <= ylen - 41; y++)
                 {
+                    int l = y * Math.Abs(bmpData.Stride);
+                    int rowStart = y * bmpData.Stride;
+
+                    for (int x = 1; x <= xlen - 18; x++)
+                    {
                         int dx = l + x * 4;
-                        
-                        if(x >= (xlen / 80) * 65)
+
+                        if (x >= (xlen / 80) * 65)
                         {
-                            if(y >= (ylen / 40) * 38 || y <= (ylen / 40) * 1)
+                            if (y >= (ylen / 40) * 38 || y <= (ylen / 40) * 1)
                             {
                                 if (x >= (xlen / 80) * 81 || x <= (xlen / 80) * 66)
                                 {
@@ -415,9 +419,9 @@ namespace Exp2
                         else if (map[x, y] == "0" || map[x, y] == null)
                         {
                             rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                            rgbValues[(y * bmpData.Stride)+ (x * 4) + 2] = 28; //red
-                            rgbValues[(y * bmpData.Stride)+(x * 4) + 1] = 107; //green
-                            rgbValues[(y * bmpData.Stride)+(x * 4)] = 160; //blue
+                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 28; //red
+                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 107; //green
+                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 160; //blue
                         }
                         else
                         {
@@ -428,40 +432,295 @@ namespace Exp2
                             string tmp1bb = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
                             string tmp2bb = provinces[Convert.ToInt32(map[x, y]) - 2, 1];
 
-                            if (provinces[Convert.ToInt32(map[x, y]) - 2, 3] != provinces[Convert.ToInt32(map[x, y]) - 2, 1])
+                            if (provinces[Convert.ToInt32(map[x, y]) - 2, 3] != provinces[Convert.ToInt32(map[x, y]) - 2, 1] && enb != 3 && enb != 4 && enb != 5)
                             {
                                 int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3]));
                                 
-                                if(kingdoms[tmp3n,2] != "TRIBAL")
+                                if (kingdoms[tmp3n, 2] != "TRIBAL")
                                 {
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 13]); //red
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 14]); //green
-                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 15]); //blue
+                                    if (enb == 2)
+                                    {
+                                        if (kingdoms[tmp3n, 2] == "CHIEFTAINSHIP")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[tmp3n, 2] == "KINGDOM")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 255; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[tmp3n, 2] == "SULTANATE")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 102; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 204; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[tmp3n, 2] == "EMPIRE")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 102; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 204; //blue
+                                        }
+                                        else if (kingdoms[tmp3n, 2] == "DEMOCRACY")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
+                                        }
+                                        else if (kingdoms[tmp3n, 2] == "COMMUNIST")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 153; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[tmp3n, 2] == "DICTATORSHIP")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 51; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 51; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
+                                        }
+                                        else
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                    }
+                                    else if(enb == 1)
+                                    {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 13]); //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 14]); //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 15]); //blue
+                                    }
+
+                                }
+                                else
+                                {
+                                    if (enb == 2)
+                                    {
+                                        if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "TRIBAL")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "CHIEFTAINSHIP")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "KINGDOM")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 255; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "SULTANATE")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 102; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 204; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "EMPIRE")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 102; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 204; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "DEMOCRACY")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "COMMUNIST")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 153; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "DICTATORSHIP")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 51; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 51; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
+                                        }
+                                        else
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                    }
+                                    else if (enb == 1)
+                                    {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 13]); //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 14]); //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 15]); //blue
+                                    }
                                 }
 
+                            }
+                            else if(enb == 3)
+                            {
+                                if (provinces[Convert.ToInt32(map[x, y]) - 2,2] != "PAGAN")
+                                {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        string tmp = provinces[Convert.ToInt32(map[x, y]) - 2, 2].ToLower();
+                                        char singlechar = tmp[0];
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(Math.Min(singlechar * 2,255)); //red
+                                        singlechar = tmp[1];
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(Math.Min(singlechar * 2.3, 255)); //green
+                                        singlechar = tmp[2];
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(Math.Min(singlechar * 1.5, 255)); //blue
+                                }
+                                else
+                                {
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                }
+                            }
+                            else if(enb == 4)
+                            {
+                                int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3]));
+                                ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(255 - Convert.ToByte(kingdoms[tmp3n,6])); //red
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(kingdoms[tmp3n,6]); //green
+                                rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                            }
+                            else if (enb == 5)
+                            {
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
+                                rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
                             }
                             else
                             {
                                 if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] != "TRIBAL")
                                 {
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 13]); //red
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 14]); //green
-                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 15]); //blue
+                                    if (enb == 2)
+                                    {
+                                        if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "TRIBAL")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "CHIEFTAINSHIP")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "KINGDOM")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 255; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "SULTANATE")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 102; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 204; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "EMPIRE")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 102; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 204; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "DEMOCRACY")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "COMMUNIST")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 153; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "DICTATORSHIP")
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 51; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 51; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
+                                        }
+                                        else
+                                        {
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                            rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                        }
+                                    }
+                                    else if (enb == 1)
+                                    {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 13]); //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 14]); //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 15]); //blue
+                                    }
                                 }
                                 else
                                 {
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
-                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                                    if (enb == 1)
+                                    {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                                    }
+                                    else if (enb == 2)
+                                    {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0; //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 0; //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                                    }
                                 }
                             }
                         }
-                   
+
+                    }
                 }
-            }
 
             // Copy the RGB values back to the bitmap
             System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
@@ -680,6 +939,60 @@ namespace Exp2
             Application.Exit();
         }
 
+        public void defaultbuttons()
+        {
+            using (var g = Graphics.FromImage(ImagePic.Image))
+            {
+                Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
+                Brush newbrushA = new SolidBrush(Color.White);
+                Brush newbrushB = new SolidBrush(Color.Red);
+                Brush newbrushC = new SolidBrush(Color.DarkSlateBlue);
+
+                Point newpointa1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 30));
+                g.DrawString("Back", myFontTitle, newbrushD, newpointa1);
+
+                Point newpointa2 = new Point(Convert.ToInt16(((xlen / 40) * 33.2)), Convert.ToInt16((ylen / 40) * 0));
+                g.DrawString("D", myFontTitle, newbrushA, newpointa2); //default map mode
+
+                Point newpointa3 = new Point(Convert.ToInt16(((xlen / 40) * 34.2)), Convert.ToInt16((ylen / 40) * 0));
+                g.DrawString("K", myFontTitle, newbrushA, newpointa3); //type map mode
+
+                Point newpointa4 = new Point(Convert.ToInt16(((xlen / 40) * 35.2)), Convert.ToInt16((ylen / 40) * 0));
+                g.DrawString("R", myFontTitle, newbrushA, newpointa4); //Religion map mode
+
+                Point newpointa5 = new Point(Convert.ToInt16(((xlen / 40) * 36.2)), Convert.ToInt16((ylen / 40) * 0));
+                g.DrawString("S", myFontTitle, newbrushA, newpointa5); //Science
+
+                Point newpointa6 = new Point(Convert.ToInt16(((xlen / 40) * 37.2)), Convert.ToInt16((ylen / 40) * 0));
+                g.DrawString("T", myFontTitle, newbrushA, newpointa6); //Terrain map mode
+
+                if(enb == 0)
+                {
+
+                }
+                else if(enb == 1)
+                {
+                    g.DrawString("D", myFontTitle, newbrushB, newpointa2); //default map mode
+                }
+                else if(enb == 2)
+                {
+                    g.DrawString("K", myFontTitle, newbrushB, newpointa3); //type map mode
+                }
+                else if(enb == 3)
+                {
+                    g.DrawString("R", myFontTitle, newbrushB, newpointa4); //Religion map mode
+                }
+                else if(enb == 4)
+                {
+                    g.DrawString("S", myFontTitle, newbrushB, newpointa5); //Science
+                }
+                else if(enb == 5)
+                {
+                    g.DrawString("T", myFontTitle, newbrushB, newpointa6); //Terrain map mode
+                }
+            }
+        }
+
         private void ImagePic_Click(object sender, EventArgs e)
         {
             ImagePic.Invalidate();
@@ -693,9 +1006,9 @@ namespace Exp2
             {
                 using (var g = Graphics.FromImage(ImagePic.Image))
                 {
-
-
+                        enb = 1;
                         PersonaliseBits(map[mouseposX, mouseposY]);
+                        defaultbuttons();
 
                         if (provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 3] != provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1] || kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 2] != "TRIBAL")
                         {
@@ -817,9 +1130,67 @@ namespace Exp2
                         }
                 }
             }
+            else if (mouseposX >= (xlen / 80) * 66)
+            {
+                //Point newpointa1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 30));
+                //g.DrawString("Back", myFontTitle, newbrushD, newpointa1);
+
+                //Point newpointa2 = new Point(Convert.ToInt16(((xlen / 40) * 33.2)), Convert.ToInt16((ylen / 40) * 0));
+                //g.DrawString("D", myFontTitle, newbrushA, newpointa2); //default map mode
+
+                //Point newpointa3 = new Point(Convert.ToInt16(((xlen / 40) * 34.2)), Convert.ToInt16((ylen / 40) * 0));
+                //g.DrawString("K", myFontTitle, newbrushA, newpointa3); //type map mode
+
+                //Point newpointa4 = new Point(Convert.ToInt16(((xlen / 40) * 35.2)), Convert.ToInt16((ylen / 40) * 0));
+                //g.DrawString("R", myFontTitle, newbrushA, newpointa4); //Religion map mode
+
+                //Point newpointa5 = new Point(Convert.ToInt16(((xlen / 40) * 36.2)), Convert.ToInt16((ylen / 40) * 0));
+                //g.DrawString("S", myFontTitle, newbrushA, newpointa5); //Science
+
+                //Point newpointa6 = new Point(Convert.ToInt16(((xlen / 40) * 37.2)), Convert.ToInt16((ylen / 40) * 0));
+                //g.DrawString("T", myFontTitle, newbrushA, newpointa6); //Terrain map mode
+
+                if(mouseposY >= Convert.ToInt16((ylen / 40) * 29.7) && mouseposY <= Convert.ToInt16((ylen / 40) * 31))
+                {
+                    if(mouseposX >= Convert.ToInt16((xlen / 40) * 32.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 33.2))
+                    {
+                        Application.Restart();
+                    }
+                }
+                else
+                {
+                    if (mouseposY >= Convert.ToInt16((ylen / 40) * 0) && mouseposY <= Convert.ToInt16((ylen / 40) * 1))
+                    {
+                        if (mouseposX >= Convert.ToInt16((xlen / 40) * 33.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 34))
+                        {
+                            enb = 1;
+                        }
+                        else if (mouseposX >= Convert.ToInt16((xlen / 40) * 34.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 35))
+                        {
+                            enb = 2;
+                        }
+                        else if (mouseposX >= Convert.ToInt16((xlen / 40) * 35.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 36))
+                        {
+                            enb = 3;
+                        }
+                        else if (mouseposX >= Convert.ToInt16((xlen / 40) * 36.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 37))
+                        {
+                            enb = 4;
+                        }
+                        else if (mouseposX >= Convert.ToInt16((xlen / 40) * 37.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 38))
+                        {
+                            enb = 5;
+                        }
+
+                        Dobits();
+                        defaultbuttons();
+                    }
+                }
+            }
             else
             {
                 Dobits();
+                defaultbuttons();
             }
         }
     }
