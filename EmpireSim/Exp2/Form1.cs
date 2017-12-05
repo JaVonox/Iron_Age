@@ -63,6 +63,9 @@ namespace Exp2
 
             refreshmap();
             timer1.Start();
+            label1.Visible = false;
+            label2.Visible = false;
+            Province.Visible = false;
         }
         int countp = 0;
 
@@ -158,8 +161,8 @@ namespace Exp2
         private void timer1_Tick(object sender, EventArgs e)
         {
             //temp
-            label1.Text = day + ","  + month + "," +  year + AD + ", " + era ;
-            label2.Text = age;
+            //label1.Text = day + ","  + month + "," +  year + AD + ", " + era ;
+            //label2.Text = age;
 
             using (var g = Graphics.FromImage(pictureBox1.Image))
             {
@@ -318,7 +321,6 @@ namespace Exp2
                     Writer4.Write("0" + "\r\n");
                     Writer4.Write(point.ToString() + "\r\n");
                     Writer4.Close();
-
                     age = "Post-Provincial Age";
 
                 }
@@ -337,7 +339,7 @@ namespace Exp2
                         observer.Text = pathing;
                         observer.Show();
                         this.Hide();
-
+                        
                         //if (newprov[mouseposX, mouseposY] != null)
                         //{
                         //    Province.Text = ProvList[Convert.ToInt32(newprov[mouseposX, mouseposY])];
@@ -358,7 +360,7 @@ namespace Exp2
                     day = 1;
                     AD = "BH";
                     era = "Prehistoric era";
-
+                    Progress.Value += 200 / 973;
                 for (int x = 2; x <= xlen - 2; x++)
                 {
                     for (int y = 2; y <= ylen - 2; y++)
@@ -540,6 +542,7 @@ namespace Exp2
 
                                     if (countl >= Convert.ToInt32(countp / 3.7))
                                     {
+                                            Progress.Value = 200;
                                             age = "Pangeaic age";
                                     }
                                 }
@@ -571,6 +574,7 @@ namespace Exp2
                     {
                         month = 1;
                         year += 1;
+                        Progress.Value += 200 / 77;
                     }
                     day = 1;
                     AD = "PF";
@@ -597,6 +601,7 @@ namespace Exp2
                     }
                     else
                     {
+                        Progress.Value = 500;
                         age = "Pre-Islandic Age";
                     }
 

@@ -1132,23 +1132,6 @@ namespace Exp2
             }
             else if (mouseposX >= (xlen / 80) * 66)
             {
-                //Point newpointa1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 30));
-                //g.DrawString("Back", myFontTitle, newbrushD, newpointa1);
-
-                //Point newpointa2 = new Point(Convert.ToInt16(((xlen / 40) * 33.2)), Convert.ToInt16((ylen / 40) * 0));
-                //g.DrawString("D", myFontTitle, newbrushA, newpointa2); //default map mode
-
-                //Point newpointa3 = new Point(Convert.ToInt16(((xlen / 40) * 34.2)), Convert.ToInt16((ylen / 40) * 0));
-                //g.DrawString("K", myFontTitle, newbrushA, newpointa3); //type map mode
-
-                //Point newpointa4 = new Point(Convert.ToInt16(((xlen / 40) * 35.2)), Convert.ToInt16((ylen / 40) * 0));
-                //g.DrawString("R", myFontTitle, newbrushA, newpointa4); //Religion map mode
-
-                //Point newpointa5 = new Point(Convert.ToInt16(((xlen / 40) * 36.2)), Convert.ToInt16((ylen / 40) * 0));
-                //g.DrawString("S", myFontTitle, newbrushA, newpointa5); //Science
-
-                //Point newpointa6 = new Point(Convert.ToInt16(((xlen / 40) * 37.2)), Convert.ToInt16((ylen / 40) * 0));
-                //g.DrawString("T", myFontTitle, newbrushA, newpointa6); //Terrain map mode
 
                 if(mouseposY >= Convert.ToInt16((ylen / 40) * 29.7) && mouseposY <= Convert.ToInt16((ylen / 40) * 31))
                 {

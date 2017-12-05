@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.Province = new System.Windows.Forms.Label();
+            this.Progress = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -84,12 +85,22 @@
             this.Province.TabIndex = 3;
             this.Province.Text = "v";
             // 
+            // Progress
+            // 
+            this.Progress.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.Progress.Location = new System.Drawing.Point(0, 689);
+            this.Progress.Maximum = 500;
+            this.Progress.Name = "Progress";
+            this.Progress.Size = new System.Drawing.Size(1354, 44);
+            this.Progress.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Chocolate;
             this.ClientSize = new System.Drawing.Size(1354, 733);
+            this.Controls.Add(this.Progress);
             this.Controls.Add(this.Province);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -114,6 +125,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label Province;
+        private System.Windows.Forms.ProgressBar Progress;
     }
 }
 

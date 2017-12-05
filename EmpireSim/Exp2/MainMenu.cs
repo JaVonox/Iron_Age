@@ -984,13 +984,7 @@ namespace Exp2
                     savpath = newFileName;
                     System.IO.Directory.CreateDirectory(newFileName); //main directory for common files
                     outname = System.IO.Path.GetFileNameWithoutExtension(newFileName);
-                    //System.IO.File.Create(newFileName + "//World.dat"); //Stores World tiles
-                    //System.IO.File.Create(newFileName + "//Kingdoms.dat"); //Stores existing kingdoms and their provinces
-                    System.IO.Directory.CreateDirectory(newFileName + "//Data"); //Data for key data such as world year/name etc.
-                    System.IO.File.Create(newFileName + "//Data//Key.dat"); //stores key stuff like names/year
-                    System.IO.File.Create(newFileName + "//Data//Provinces.dat"); //Stores Names/Info for provinces
                     System.IO.Directory.CreateDirectory(newFileName + "//Info"); //Data for minor data such as name generation data
-                    System.IO.File.Create(newFileName + "//Info//History.dat"); //Stores Historical Data
                     outcancel = false;
                     FileSpecified = true;
                 }
