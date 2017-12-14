@@ -1381,12 +1381,20 @@ namespace Exp2
                                     }
                                     else if (mouseposX >= (xlen / 10) * 6.70 && mouseposX <= ((xlen / 10) * 7.76) && mouseposY >= ((ylen / 20) * 13.52) && mouseposY <= ((ylen / 20) * 14.52))
                                     {
-                                        if (obs == true || sim == true && browse == true)
+                                        if (obs == true && browse == true)
                                         {
                                             Timera.Stop();
                                             Observe observer = new Observe();
                                             observer.Text = System.IO.Path.GetDirectoryName(savpath);
                                             observer.Show();
+                                            this.Hide();
+                                        }
+                                        else if (sim == true && browse == true)
+                                        {
+                                            Timera.Stop();
+                                            Play Playfrm = new Play();
+                                            Playfrm.Text = System.IO.Path.GetDirectoryName(savpath);
+                                            Playfrm.Show();
                                             this.Hide();
                                         }
                                     }

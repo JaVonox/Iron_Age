@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Exp2
 {
-    public partial class Observe : Form
+    public partial class Play : Form
     {
         static int xlen = 1400;
         static int ylen = 900;
@@ -22,8 +22,8 @@ namespace Exp2
         //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
         string[,] provinces = new string[10000,16];
 
-        //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
-        string[,] kingdoms = new string[10000, 11];
+        //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+        string[,] kingdoms = new string[10000, 10];
         string[,] kingdomowner = new string[10000, 10000];
         string[] kingidname = new string[10000];
 
@@ -45,7 +45,7 @@ namespace Exp2
         int mouseposX;
         int mouseposY;
 
-        public Observe()
+        public Play()
         {
             InitializeComponent();
         }
@@ -72,7 +72,7 @@ namespace Exp2
             this.Icon = Exp2.Properties.Resources.WorldGen;
             path = this.Text;
             pullmapdata();
-            ImagePic.Image = Map;
+            Back.Image = Map;
             Dobits();
             defaultbuttons();
             this.Text = "Observing ";
@@ -83,73 +83,13 @@ namespace Exp2
             System.IO.StreamReader Reada = new System.IO.StreamReader(path + "//world.dat");
 
                 int y = 0;
-                int cntvl = 0;
-                bool wloop = false;
-                string wtmp = null;
-
-                for (int x = 0; x <= xlen - 1; x++)
-                {
-                    for (int my = 0; my <= ylen - 1; my++)
-                    {
-                        map[x, my] = "0";
-                    }
-                }
 
                 for (int x = 0; x <= xlen - 1; x++)
                 {
                     singlechar = (char)Reada.Read();
-
-                    if(wloop == true)
+                    if(singlechar.ToString() == "*")
                     {
-                        while(true)
-                        {
-                        if(singlechar.ToString() == "m")
-                        {
-                            cntvl = Convert.ToInt32(wtmp);
-                            wloop = false;
-
-                            for(int n = 0; n <= cntvl - 1; n++) //maybe wrong
-                            {
-                                if (x + n >= xlen - 1)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    map[x + n, y] = "0";
-                                    //singlechar = (char)Reada.Read(); why is this here
-                                }
-                            }
-
-                            x += cntvl;
-                            wtmp = null;
-                            cntvl = 0;
-                            break;
-                        }
-                        else if (singlechar.ToString() == "f")
-                        {
-                            for (int l = x; l <= xlen - 1; l++)
-                            {
-                                map[l, y] = "0";
-                            }
-
-                            Reada.ReadLine();
-                            wloop = false;
-                            y += 1;
-                            x = -1;
-                            break;
-                        }
-                        else
-                        {
-                            wtmp += singlechar.ToString();
-                        }
-                            singlechar = (char)Reada.Read();
-                        }
-                    }
-                    else if(singlechar.ToString() == "w")
-                    {
-                        wloop = true;
-                        //map[x, y] = "0";
+                        map[x, y] = "0";
                     }
                     else
                     {
@@ -327,7 +267,7 @@ namespace Exp2
             {
                 //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                 //string[,] provinces = new string[10000,16];
-                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
 
                 if(provinces[n - 2,3] != provinces[n -2,1])
                 {
@@ -487,8 +427,8 @@ namespace Exp2
                         {
                             //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                             //string[,] provinces = new string[10000,16];
-                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
-                            string tm = map[x, y];
+                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+
                             string tmp1bb = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
                             string tmp2bb = provinces[Convert.ToInt32(map[x, y]) - 2, 1];
 
@@ -668,7 +608,7 @@ namespace Exp2
                             else if(enb == 4)
                             {
                                 int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3]));
-                                ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                                ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
                                 rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
                                 rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(255 - Convert.ToByte(kingdoms[tmp3n,6])); //red
                                 rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(kingdoms[tmp3n,6]); //green
@@ -944,7 +884,7 @@ namespace Exp2
                         {
                             //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                             //string[,] provinces = new string[10000,16];
-                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
 
                             //string tmp1bb = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
                             //string tmp2bb = provinces[Convert.ToInt32(map[x, y]) - 2, 1];
@@ -1001,7 +941,7 @@ namespace Exp2
 
         public void defaultbuttons()
         {
-            using (var g = Graphics.FromImage(ImagePic.Image))
+            using (var g = Graphics.FromImage(Back.Image))
             {
                 Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
                 Brush newbrushA = new SolidBrush(Color.White);
@@ -1053,9 +993,9 @@ namespace Exp2
             }
         }
 
-        private void ImagePic_Click(object sender, EventArgs e)
+        private void Back_Click(object sender, EventArgs e)
         {
-            ImagePic.Invalidate();
+            Back.Invalidate();
             Point p = this.PointToClient(Cursor.Position);
             mouseposX = Math.Max(0, p.X);
             mouseposY = Math.Max(0, p.Y);
@@ -1064,16 +1004,15 @@ namespace Exp2
 
             if(map[mouseposX,mouseposY] != "0")
             {
-                using (var g = Graphics.FromImage(ImagePic.Image))
+                using (var g = Graphics.FromImage(Back.Image))
                 {
                         enb = 1;
                         PersonaliseBits(map[mouseposX, mouseposY]);
                         defaultbuttons();
-                        string tm2 =  map[mouseposX, mouseposY];
-                        string tm = kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 2];
+
                         if (provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 3] != provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1] || kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 2] != "TRIBAL")
                         {
-                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
 
                             Point newpointa1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 4));
 
@@ -1118,9 +1057,6 @@ namespace Exp2
 
                             Point newpointh1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 12));
                             g.DrawString("Age : " + kingdoms[Convert.ToInt32(tmp3n), 9], myFontDetail, newbrushD, newpointh1);
-
-                            Point newpointi1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 13));
-                            g.DrawString("Manpower : " + kingdoms[Convert.ToInt32(tmp3n), 10], myFontDetail, newbrushD, newpointi1);
 
                             //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
 
@@ -1191,9 +1127,6 @@ namespace Exp2
 
                             Point newpointj = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 14));
                             g.DrawString("Happiness : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 11], myFontDetail, newbrushD, newpointj);
-
-                            Point newpointh1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 15));
-                            g.DrawString("Manpower : " + kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]), 10], myFontDetail, newbrushD, newpointh1);
                         }
                 }
             }

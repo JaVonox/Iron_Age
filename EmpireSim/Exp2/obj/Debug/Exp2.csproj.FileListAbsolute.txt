@@ -99,3 +99,4 @@ C:\Users\Jamie\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Pr
 C:\Users\Jamie\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.Cache
 \\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.MainMenu.resources
 \\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Observe.resources
+\\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Play.resources

@@ -247,17 +247,67 @@ namespace Exp2
                     //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
                     System.IO.StreamWriter Writer = new System.IO.StreamWriter(pathing + "//World.dat");
 
-                    for (int y = 1; y <= ylen - 1; y++)
+                    for (int y = 1; y <= ylen - 2; y++)
                     {
-                        for (int x = 1; x <= xlen - 1; x++)
+                        for (int x = 1; x <= xlen - 2; x++)
                         {
-                            if(newprov[x,y] == null)
+
+                            if(y > ylen - 2)
                             {
-                                Writer.Write("*"); //blank space
+                                break;
+                            }
+                            else if (newprov[x, y] == null)
+                            {
+                                //w start
+                                //count of blanks
+                                //m end
+                                
+
+                                //w start
+                                //if f then fill row with blanks
+                                //m end
+
+                                Writer.Write("w"); //blank start
+                                int count = 0;
+                                bool fin = true;
+
+                                for (int tx = x; tx <= xlen - 2; tx++)
+                                    {
+                                        if (newprov[tx, y] == null)
+                                        {
+                                            count += 1;
+                                        }
+                                        else if(newprov[tx,y] != null)
+                                        {
+                                            x = tx;
+                                            fin = false;
+                                            break;
+                                        }
+                                        else if(tx == xlen - 2) //this was <= and -2
+                                        {
+                                            x = tx;
+                                            fin = true;
+                                            break;
+                                        }
+                                    }
+
+                                if (fin == true) //this was -2. x == xlen - 2 && 
+                                {
+                                    Writer.Write("fm");
+                                    Writer.Write("~"); //end char
+                                    Writer.Write("\r\n"); //new line
+                                    y += 1;
+                                    x = 1;
+                                }
+                                else
+                                {
+                                    Writer.Write(count); //blank space
+                                    Writer.Write("m"); //blank start
+                                }
                             }
                             else
                             {
-                                Writer.Write("@" + newprov[x,y] + ","); //taken land
+                                Writer.Write("@" + newprov[x, y] + ","); //taken land
                             }
                         }
                         Writer.Write("~"); //end char
@@ -298,7 +348,7 @@ namespace Exp2
 
                     for (int m = 2; m <= counttken + 1; m++)
                     {
-                        //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%
+                        //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
                         Writer3.Write("$" + m + "%");
                         Writer3.Write(ProvList[m] + "%");
                         Writer3.Write("TRIBAL%");
@@ -310,6 +360,7 @@ namespace Exp2
                         Writer3.Write(NamesList[Rander.Next(1,500)] + "%");
                         Writer3.Write(SurnameList[Rander.Next(1, 500)] + "%");
                         Writer3.Write(Rander.Next(16, 50)+ "%");
+                        Writer3.Write("0%");
                         Writer3.Write("~"); //end char
                         Writer3.Write("\r\n"); //new line
                     }
