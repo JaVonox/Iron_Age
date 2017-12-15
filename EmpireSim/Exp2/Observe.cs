@@ -112,6 +112,7 @@ namespace Exp2
                             {
                                 if (x + n >= xlen - 1)
                                 {
+                                    map[x + n, y] = "0";
                                     break;
                                 }
                                 else
@@ -121,17 +122,17 @@ namespace Exp2
                                 }
                             }
 
-                            x += cntvl;
+                            x += cntvl - 1;
                             wtmp = null;
                             cntvl = 0;
                             break;
                         }
                         else if (singlechar.ToString() == "f")
                         {
-                            for (int l = x; l <= xlen - 1; l++)
-                            {
-                                map[l, y] = "0";
-                            }
+                            //for (int l = x; l <= xlen - 1; l++)
+                            //{
+                            //    map[l, y] = "0";
+                            //}
 
                             Reada.ReadLine();
                             wloop = false;
