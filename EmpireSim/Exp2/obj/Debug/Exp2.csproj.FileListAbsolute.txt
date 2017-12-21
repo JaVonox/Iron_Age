@@ -100,3 +100,16 @@ C:\Users\Jamie\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.cs
 \\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.MainMenu.resources
 \\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Observe.resources
 \\ATS-V-FS12\StudentHome$\Year2012\JGorm95404\Visual Studio 2013\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Play.resources
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Exp2.exe.config
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Exp2.exe
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Exp2.pdb
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csprojResolveAssemblyReference.cache
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Form1.resources
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.MainMenu.resources
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Play.resources
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Observe.resources
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Properties.Resources.resources
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.Cache
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.CoreCompileInputs.cache
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.exe
+C:\Users\redss\Desktop\Projects\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.pdb

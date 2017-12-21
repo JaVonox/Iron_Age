@@ -68,7 +68,7 @@ namespace Exp2
 
             this.Size = new System.Drawing.Size(xlen,ylen);
             //ImagePic.Width = xlen;
-            //ImagePic.Height = ylen;
+            //ImagePic.HeighAt = ylen;
             this.Icon = Exp2.Properties.Resources.WorldGen;
             path = this.Text;
             pullmapdata();

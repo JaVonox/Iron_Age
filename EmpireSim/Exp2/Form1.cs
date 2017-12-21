@@ -158,12 +158,16 @@ namespace Exp2
         int[] convprov = new int[5000];
         string[,] newprov = new string[xlen, ylen];
 
+        int countfastboye = 0;
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             //temp
             //label1.Text = day + ","  + month + "," +  year + AD + ", " + era ;
             //label2.Text = age;
 
+            while(countfastboye < 10)
+            {
             using (var g = Graphics.FromImage(pictureBox1.Image))
             {
 
@@ -370,6 +374,8 @@ namespace Exp2
                     System.IO.StreamWriter Writer4 = new System.IO.StreamWriter(pathing + "//GameInfo.sav");
                     Writer4.Write(pathing + "\r\n");
                     Writer4.Write("0" + "\r\n");
+                    Writer4.Write("1" + "\r\n");
+                    Writer4.Write("1" + "\r\n");
                     Writer4.Write(point.ToString() + "\r\n");
                     Writer4.Close();
                     age = "Post-Provincial Age";
@@ -390,6 +396,8 @@ namespace Exp2
                         observer.Text = pathing;
                         observer.Show();
                         this.Hide();
+                        countfastboye = 100;
+                        break;
                         
                         //if (newprov[mouseposX, mouseposY] != null)
                         //{
@@ -761,6 +769,10 @@ namespace Exp2
                 age = "Islandic Age";
 
             }
+                countfastboye += 1;
+            }
+
+            countfastboye = 0;
         }
         
 

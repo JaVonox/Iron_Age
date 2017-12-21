@@ -40,7 +40,7 @@
             this.Back.Size = new System.Drawing.Size(1362, 741);
             this.Back.TabIndex = 0;
             this.Back.TabStop = false;
-            this.Back.Click += new System.EventHandler(this.Back_Click);
+            this.Back.Click += new System.EventHandler(this.ImagePic_Click);
             // 
             // Play
             // 
@@ -52,7 +52,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Play";
-            this.Text = "Play";
+            this.Text = "Simulate";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Observe_FormClosed);
             this.Load += new System.EventHandler(this.Observe_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Back)).EndInit();
