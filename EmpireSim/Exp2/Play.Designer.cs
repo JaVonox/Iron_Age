@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Back = new System.Windows.Forms.PictureBox();
+            this.tock = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.Back)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,6 +43,11 @@
             this.Back.TabIndex = 0;
             this.Back.TabStop = false;
             this.Back.Click += new System.EventHandler(this.ImagePic_Click);
+            // 
+            // tock
+            // 
+            this.tock.Interval = 1000;
+            this.tock.Tick += new System.EventHandler(this.Tock_Tick);
             // 
             // Play
             // 
@@ -63,5 +70,6 @@
         #endregion
 
         private System.Windows.Forms.PictureBox Back;
+        private System.Windows.Forms.Timer tock;
     }
 }

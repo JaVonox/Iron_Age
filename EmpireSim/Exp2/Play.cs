@@ -31,6 +31,16 @@ namespace Exp2
         string[,] kingdomowner = new string[10000, 10000];
         string[] kingidname = new string[10000];
 
+        //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%STARTDATE%~
+        string[,] war = new string[10000,7];
+
+        //Country id, enemy id, war id
+        string[,] Warsgroup = new string[10000, 10000];
+
+        //$COUNTRYID%TRUCELENGTH%~
+        string[] truce = new string[10000];
+
+
         string path;
         Bitmap Map = new Bitmap(Exp2.Properties.Resources.testimage, xlen, ylen);
 
@@ -336,6 +346,183 @@ namespace Exp2
 
             Readd.Close();
 
+            //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%STARTDATE%~
+            //string[,] war = new string[10000, 7];
+
+            //Country id, enemy id, war id
+            //string[,] Warsgroup = new string[10000, 10000];
+
+            //System.IO.StreamReader Reade = new System.IO.StreamReader(path + "//History.dat");
+
+            //ib = 0;
+            //aftb = false;
+            //ownedmode = false;
+            //indcountb = 0;
+            //indcountc = 0;
+
+            //while (true)
+            //{
+            //    singlechar = (char)Reade.Read();
+
+            //    if (ownedmode == false)
+            //    {
+            //        indcountc = -1;
+
+            //        if (singlechar.ToString() == "$")
+            //        {
+            //            aftb = false;
+            //            ib += 1;
+            //            indcountb = 0;
+            //        }
+            //        else if (singlechar.ToString() == "%")
+            //        {
+            //            indcountb += 1;
+            //        }
+            //        else if (singlechar.ToString() == "~")
+            //        {
+            //            Warsgroup[Convert.ToInt32(war[ib, 3]), Convert.ToInt32(war[ib, 5])] = war[ib, 0].ToString();
+            //            Warsgroup[Convert.ToInt32(war[ib, 5]), Convert.ToInt32(war[ib, 3])] = war[ib, 0].ToString();
+            //            aftb = true;
+            //        }
+            //        else if (singlechar.ToString() == "(" && indcountb == 4)
+            //        {
+            //            ownedmode = true;
+            //            indcountb -= 1;
+            //        }
+            //        else if (aftb == true)
+            //        {
+            //            if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
+            //            {
+
+            //            }
+            //            else
+            //            {
+
+            //                break;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            war[ib, indcountb] += singlechar.ToString();
+
+            //            //if (indcountb == 1)
+            //            //{
+            //            //    kingidname[ib] += singlechar.ToString();
+            //            //}
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (singlechar.ToString() == "%")
+            //        {
+            //            indcountc += 1;
+            //        }
+            //        else if (singlechar.ToString() == ")")
+            //        {
+            //            ownedmode = false;
+            //        }
+            //        else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
+            //        {
+
+            //        }
+            //        else
+            //        {
+            //            war[ib, indcountc] += singlechar.ToString();
+            //        }
+
+            //    }
+            //}
+
+            //Reade.Close();
+
+            //System.IO.StreamReader Readf = new System.IO.StreamReader(path + "//Peace.dat");
+
+            ////$COUNTRYID%TRUCELENGTH%~
+
+            //ib = 0;
+            //aftb = false;
+            //ownedmode = false;
+            //indcountb = 0;
+            //indcountc = 0;
+
+            //while (true)
+            //{
+            //    singlechar = (char)Reade.Read();
+
+            //    if (ownedmode == false)
+            //    {
+            //        indcountc = -1;
+
+            //        if (singlechar.ToString() == "$")
+            //        {
+            //            aftb = false;
+            //            ib += 1;
+            //            indcountb = 0;
+            //        }
+            //        else if (singlechar.ToString() == "%")
+            //        {
+            //            indcountb += 1;
+            //        }
+            //        else if (singlechar.ToString() == "~")
+            //        {
+            //            aftb = true;
+            //        }
+            //        else if (singlechar.ToString() == "(" && indcountb == 4)
+            //        {
+            //            ownedmode = true;
+            //            indcountb -= 1;
+            //        }
+            //        else if (aftb == true)
+            //        {
+            //            if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
+            //            {
+
+            //            }
+            //            else
+            //            {
+            //                break;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            truce[ib] += singlechar.ToString();
+
+            //            //if (indcountb == 1)
+            //            //{
+            //            //    kingidname[ib] += singlechar.ToString();
+            //            //}
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (singlechar.ToString() == "%")
+            //        {
+            //            indcountc += 1;
+            //        }
+            //        else if (singlechar.ToString() == ")")
+            //        {
+            //            ownedmode = false;
+            //        }
+            //        else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
+            //        {
+
+            //        }
+            //        else
+            //        {
+            //            truce[ib] += singlechar.ToString();
+            //        }
+
+            //    }
+            //}
+
+            //Readf.Close();
+
+            //Country id, enemy id, war id
+            //string[,] Warsgroup = new string[10000, 10000];
+
+            //$COUNTRYID%TRUCELENGTH%~
+            //string[] truce = new string[10000];
+
             for (int n = 2; n <= 9999; n++)
             {
                 //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
@@ -353,6 +540,186 @@ namespace Exp2
                 }
             }
 
+        }
+
+        private void Save()
+        {
+            //reverse pullmapdata
+
+            System.IO.File.WriteAllBytes(path + "//World.dat", new byte[0]);
+            //System.IO.StreamWriter Writea = new System.IO.StreamWriter(path + "//world.dat");
+
+
+            //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
+            System.IO.StreamWriter Writer = new System.IO.StreamWriter(path + "//World.dat");
+
+            for (int y = 1; y <= ylen - 2; y++)
+            {
+                for (int x = 1; x <= xlen - 2; x++)
+                {
+
+                    if (y > ylen - 2)
+                    {
+                        break;
+                    }
+                    else if (map[x, y] == "0")
+                    {
+                        //w start
+                        //count of blanks
+                        //m end
+
+
+                        //w start
+                        //if f then fill row with blanks
+                        //m end
+
+                        Writer.Write("w"); //blank start
+                        int count = 0;
+                        bool fin = true;
+
+                        for (int tx = x; tx <= xlen - 2; tx++)
+                        {
+                            if (map[tx, y] == "0")
+                            {
+                                count += 1;
+                            }
+                            else if (map[tx, y] != "0")
+                            {
+                                x = tx;
+                                fin = false;
+                                break;
+                            }
+                            else if (tx == xlen - 2) //this was <= and -2
+                            {
+                                x = tx;
+                                fin = true;
+                                break;
+                            }
+                        }
+
+                        if (fin == true) //this was -2. x == xlen - 2 && 
+                        {
+                            Writer.Write("fm");
+                            Writer.Write("~"); //end char
+                            Writer.Write("\r\n"); //new line
+                            y += 1;
+                            x = 1;
+                        }
+                        else
+                        {
+                            Writer.Write(count); //blank space
+                            Writer.Write("m"); //blank start
+                        }
+                    }
+                    else
+                    {
+                        Writer.Write("@" + map[x, y].Remove(0,1) + ","); //taken land
+                    }
+                }
+                Writer.Write("~"); //end char
+                Writer.Write("\r\n"); //new line
+
+            }
+
+            Writer.Close();
+
+            System.IO.File.WriteAllBytes(path + "//Provs.dat", new byte[0]);
+            //System.IO.StreamWriter Writea = new System.IO.StreamWriter(path + "//world.dat");
+
+
+            //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
+            System.IO.StreamWriter Writerb = new System.IO.StreamWriter(path + "//Provs.dat");
+
+
+            int i = 0;
+            while(provinces[i,0] != null)
+            {
+                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                //string[,] provinces = new string[10000, 16];
+                Writerb.WriteLine( "$" + provinces[i,0] + "%" + provinces[i, 1] + "%" + provinces[i, 2] + "%" + provinces[i, 3] + "%" + provinces[i, 4] + "%" + provinces[i, 5] + "%" + provinces[i, 6] + "%" + provinces[i, 7] + "%" + provinces[i, 8] + "%" + provinces[i, 9] + "%" + provinces[i, 10] + "%" + provinces[i, 11] + "%" + provinces[i, 12]  +"%" + provinces[i, 13] + "%" + provinces[i, 14] + "%" + provinces[i, 15] + "%~");
+                i += 1;
+            }
+
+            Writerb.Close();
+
+            System.IO.File.WriteAllBytes(path + "//Kingdoms.dat", new byte[0]);
+            //System.IO.StreamWriter Writea = new System.IO.StreamWriter(path + "//world.dat");
+
+
+            //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
+            System.IO.StreamWriter Writerc = new System.IO.StreamWriter(path + "//Kingdoms.dat");
+
+
+            i = 0;
+            while (kingdoms[i, 0] != null)
+            {
+                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                //string[,] kingdoms = new string[10000, 11];
+                //kingdomowner[ib, indcountc] += singlechar.ToString();
+                string concatown = "";
+
+                int m = 0;
+
+                while (true)
+                {
+
+                    if(kingdomowner[i, m] == null)
+                    {
+                        break;
+                    }
+
+                    concatown += "%" + kingdomowner[i, m] + "%,";
+
+                    m += 1;
+                }
+
+                Writerc.WriteLine("$" + kingdoms[i, 0] + "%" + kingdoms[i, 1] + "%" + kingdoms[i, 2] + "%" + kingdoms[i, 3] + " %( " + concatown + " )% " + kingdoms[i, 4] + "%" + kingdoms[i, 5] + "%" + kingdoms[i, 6] + "%" + kingdoms[i, 7] + "%" + kingdoms[i, 8] + "%" + kingdoms[i, 9] + "%" + kingdoms[i, 10] +"%~");
+                i += 1;
+            }
+
+            Writerc.Close();
+
+            System.IO.File.WriteAllBytes(path + "//Gameinfo.sav", new byte[0]);
+            //System.IO.StreamWriter Writea = new System.IO.StreamWriter(path + "//world.dat");
+
+
+            //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
+            System.IO.StreamWriter Writerd = new System.IO.StreamWriter(path + "//Gameinfo.sav");
+
+            //System.IO.StreamReader Readd = new System.IO.StreamReader(path + "//GameInfo.sav");
+
+            Writerd.WriteLine(path);
+            Writerd.WriteLine(year);
+            Writerd.WriteLine(month);
+            Writerd.WriteLine(day);
+            Writerd.WriteLine(rand.Next(1, 999999999)); //this doesnt do anything anymore
+            Writerd.Close();
+
+            //System.IO.StreamWriter Writere = new System.IO.StreamWriter(path + "//History.dat");
+            //i = 0;
+            //while (war[i, 0] != null)
+            //{
+            //    Writere.WriteLine("$" + war[i, 0] + "%" + war[i, 1] + "%" + war[i, 2] + "%" + war[i, 3] + "%" + war[i, 4] + "%" + war[i, 5] + "%" + war[i, 6] + "%~");
+            //    i += 1;
+            //}
+
+            //Writere.Close();
+
+            //System.IO.StreamWriter Writerf = new System.IO.StreamWriter(path + "//Peace.dat");
+            ////$COUNTRYID%TRUCELENGTH%~
+            //i = 0;
+            //for (int oi = 0; oi <= 10000; oi++)
+            //{
+            //    for (int mi = 0; mi <= 10000; mi++)
+            //    {
+            //        if(Warsgroup[i,mi] != null)
+            //        {
+            //            Writerf.WriteLine("$" + oi + "%" + truce[Convert.ToInt32(Warsgroup[oi, mi])] + "%~");
+            //        }
+            //    }
+            //}
+
+            //Writerf.Close();
         }
 
         private void Dobits()
@@ -1012,6 +1379,8 @@ namespace Exp2
             Application.Exit();
         }
 
+        byte speed = 0;
+
         public void defaultbuttons()
         {
             using (var g = Graphics.FromImage(Back.Image))
@@ -1021,6 +1390,13 @@ namespace Exp2
                 Brush newbrushB = new SolidBrush(Color.Red);
                 Brush newbrushBlaq = new SolidBrush(Color.Black);
                 Brush newbrushC = new SolidBrush(Color.DarkSlateBlue);
+
+
+                //invalidate??
+                Back.Invalidate();
+
+                Point newpoint0 = new Point(Convert.ToInt16(((xlen / 40) * 35.2)), Convert.ToInt16((ylen / 40) * 30));
+                g.DrawString("Save", myFontTitle, newbrushD, newpoint0);
 
                 Point newpointa1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 30));
                 g.DrawString("Back", myFontTitle, newbrushD, newpointa1);
@@ -1063,50 +1439,62 @@ namespace Exp2
                 {
                     g.DrawString("D", myFontTitle, newbrushB, newpointa2); //default map mode
                     g.DrawString("ll", myFontTitle, newbrushB, newpointa8); //Pause
+                    speed = 0;
                 }
                 else if (enb == 2)
                 {
                     g.DrawString("K", myFontTitle, newbrushB, newpointa3); //type map mode
                     g.DrawString("ll", myFontTitle, newbrushB, newpointa8); //Pause
+                    speed = 0;
                 }
                 else if (enb == 3)
                 {
                     g.DrawString("R", myFontTitle, newbrushB, newpointa4); //Religion map mode
                     g.DrawString("ll", myFontTitle, newbrushB, newpointa8); //Pause
+                    speed = 0;
                 }
                 else if (enb == 4)
                 {
                     g.DrawString("S", myFontTitle, newbrushB, newpointa5); //Science
                     g.DrawString("ll", myFontTitle, newbrushB, newpointa8); //Pause
+                    speed = 0;
                 }
                 else if (enb == 5)
                 {
                     g.DrawString("T", myFontTitle, newbrushB, newpointa6); //Terrain map mode
                     g.DrawString("ll", myFontTitle, newbrushB, newpointa8); //Pause
+                    speed = 0;
                 }
                 else if (enb == 6)
                 {
                     g.DrawString("ll", myFontTitle, newbrushB, newpointa8); //Pause
                     g.DrawString("D", myFontTitle, newbrushB, newpointa2); //default map mode
+                    speed = 0;
                     enb = 1;
                 }
                 else if (enb == 7)
                 {
                     g.DrawString("►", myFontTitle, newbrushB, newpointa7); //day per sec
                     g.DrawString("D", myFontTitle, newbrushB, newpointa2); //default map mode
-                    enb = 1;
+                    speed = 1;
+                    tock.Start();
+                    //enb = 1;
                 }
                 else if (enb == 8)
                 {
                     g.DrawString("►►", myFontTitle, newbrushB, newpointa9);  //week per sec
                     g.DrawString("D", myFontTitle, newbrushB, newpointa2); //default map mode
-                    enb = 1;
+                    speed = 2;
+                    tock.Start();
+                    //enb = 1;
                 }
                 else if (enb == 9)
                 {
                     g.DrawString("►►►", myFontTitle, newbrushB, newpointa10);  //month per sec
                     g.DrawString("D", myFontTitle, newbrushB, newpointa2); //default map mode
-                    enb = 1;
+                    speed = 3;
+                    tock.Start();
+                    //enb = 1;
                 }
             }
         }
@@ -1264,6 +1652,10 @@ namespace Exp2
                     {
                         Application.Restart();
                     }
+                    else if (mouseposX >= Convert.ToInt16((xlen / 40) * 34.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 37.2))
+                    {
+                        Save();
+                    }
                 }
                 else
                 {
@@ -1331,6 +1723,52 @@ namespace Exp2
                 Dobits();
                 defaultbuttons();
             }
+        }
+
+        private void Tock_Tick(object sender, EventArgs e)
+        {
+            int maxcount = 0;
+            int realcount = 0;
+
+            if(speed == 0)
+            {
+                tock.Stop();
+                return;
+            }
+            else if(speed == 1)
+            {
+                maxcount = 1;
+            }
+            else if (speed == 2)
+            {
+                maxcount = 7;
+            }
+            else if (speed == 3)
+            {
+                maxcount = 30;
+            }
+
+            while (realcount <= maxcount - 1)
+            {
+                day += 1;
+
+                if (day == 31)
+                {
+                    month += 1;
+                    day = 1;
+                }
+
+                if (month == 13)
+                {
+                    year += 1;
+                    month = 1;
+                }
+
+                realcount += 1;
+            }
+
+            Dobits();
+            defaultbuttons();
         }
     }
 }

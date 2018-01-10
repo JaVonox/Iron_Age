@@ -321,6 +321,7 @@ namespace Exp2
 
                     Writer.Close();
 
+
                     System.IO.StreamWriter Writer2 = new System.IO.StreamWriter(pathing + "//Provs.dat");
 
                     for (int m = 2; m <= counttken + 1; m++)
@@ -378,6 +379,12 @@ namespace Exp2
                     Writer4.Write("1" + "\r\n");
                     Writer4.Write(point.ToString() + "\r\n");
                     Writer4.Close();
+
+                    System.IO.StreamWriter Writer5 = new System.IO.StreamWriter(pathing + "//History.dat");
+                    Writer5.Close();
+
+                    System.IO.StreamWriter Writer6 = new System.IO.StreamWriter(pathing + "//Peace.dat");
+                    Writer6.Close();
                     age = "Post-Provincial Age";
 
                 }
