@@ -31,7 +31,11 @@ namespace Exp2
         string[,] kingdomowner = new string[10000, 10000];
         string[] kingidname = new string[10000];
 
-        //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%STARTDATE%~
+        //$Name%Red%Blue%Green%~
+        string[,] Religions = new string[11, 4];
+        string[] ReligionId = new string[11];
+
+        //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
         string[,] war = new string[10000,7];
 
         //Country id, enemy id, war id
@@ -54,6 +58,8 @@ namespace Exp2
         Font myFontsmall;
         Font myFontTitle;
         Font myFontDetail;
+        Events ev = new Events();
+
 
         Random Rand = new Random();
         int mouseposX;
@@ -352,170 +358,260 @@ namespace Exp2
             //Country id, enemy id, war id
             //string[,] Warsgroup = new string[10000, 10000];
 
-            //System.IO.StreamReader Reade = new System.IO.StreamReader(path + "//History.dat");
+            System.IO.StreamReader Reade = new System.IO.StreamReader(path + "//History.dat");
 
-            //ib = 0;
-            //aftb = false;
-            //ownedmode = false;
-            //indcountb = 0;
-            //indcountc = 0;
+            ib = -1;
+            aftb = false;
+            ownedmode = false;
+            indcountb = -1;
+            indcountc = -1;
 
-            //while (true)
-            //{
-            //    singlechar = (char)Reade.Read();
+            while (true)
+            {
+                singlechar = (char)Reade.Read();
 
-            //    if (ownedmode == false)
-            //    {
-            //        indcountc = -1;
+                if (ownedmode == false)
+                {
+                    indcountc = -1;
 
-            //        if (singlechar.ToString() == "$")
-            //        {
-            //            aftb = false;
-            //            ib += 1;
-            //            indcountb = 0;
-            //        }
-            //        else if (singlechar.ToString() == "%")
-            //        {
-            //            indcountb += 1;
-            //        }
-            //        else if (singlechar.ToString() == "~")
-            //        {
-            //            Warsgroup[Convert.ToInt32(war[ib, 3]), Convert.ToInt32(war[ib, 5])] = war[ib, 0].ToString();
-            //            Warsgroup[Convert.ToInt32(war[ib, 5]), Convert.ToInt32(war[ib, 3])] = war[ib, 0].ToString();
-            //            aftb = true;
-            //        }
-            //        else if (singlechar.ToString() == "(" && indcountb == 4)
-            //        {
-            //            ownedmode = true;
-            //            indcountb -= 1;
-            //        }
-            //        else if (aftb == true)
-            //        {
-            //            if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
-            //            {
+                    if (singlechar.ToString() == "$")
+                    {
+                        aftb = false;
+                        ib += 1;
+                        indcountb = 0;
+                    }
+                    else if (singlechar.ToString() == "%")
+                    {
+                        indcountb += 1;
+                    }
+                    else if (singlechar.ToString() == "~")
+                    {
+                        if (war[ib, 0] == null)
+                        {
 
-            //            }
-            //            else
-            //            {
+                        }
+                        else
+                        {
+                            Warsgroup[Convert.ToInt32(war[ib, 3]), Convert.ToInt32(war[ib, 5])] = war[ib, 0].ToString();
+                            Warsgroup[Convert.ToInt32(war[ib, 5]), Convert.ToInt32(war[ib, 3])] = war[ib, 0].ToString();
+                        }
+                        aftb = true;
+                    }
+                    else if (singlechar.ToString() == "(" && indcountb == 4)
+                    {
+                        ownedmode = true;
+                        indcountb -= 1;
+                    }
+                    else if (aftb == true)
+                    {
+                        if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
+                        {
 
-            //                break;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            war[ib, indcountb] += singlechar.ToString();
+                        }
+                        else
+                        {
 
-            //            //if (indcountb == 1)
-            //            //{
-            //            //    kingidname[ib] += singlechar.ToString();
-            //            //}
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (singlechar.ToString() == "%")
-            //        {
-            //            indcountc += 1;
-            //        }
-            //        else if (singlechar.ToString() == ")")
-            //        {
-            //            ownedmode = false;
-            //        }
-            //        else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
-            //        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        war[ib, indcountb] += singlechar.ToString();
 
-            //        }
-            //        else
-            //        {
-            //            war[ib, indcountc] += singlechar.ToString();
-            //        }
+                        //if (indcountb == 1)
+                        //{
+                        //    kingidname[ib] += singlechar.ToString();
+                        //}
+                    }
+                }
+                else
+                {
+                    if (singlechar.ToString() == "%")
+                    {
+                        indcountc += 1;
+                    }
+                    else if (singlechar.ToString() == ")")
+                    {
+                        ownedmode = false;
+                    }
+                    else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
+                    {
 
-            //    }
-            //}
+                    }
+                    else
+                    {
+                        war[ib, indcountc] += singlechar.ToString();
+                    }
 
-            //Reade.Close();
+                }
+            }
 
-            //System.IO.StreamReader Readf = new System.IO.StreamReader(path + "//Peace.dat");
+            Reade.Close();
 
-            ////$COUNTRYID%TRUCELENGTH%~
+            System.IO.StreamReader Readf = new System.IO.StreamReader(path + "//Peace.dat");
 
-            //ib = 0;
-            //aftb = false;
-            //ownedmode = false;
-            //indcountb = 0;
-            //indcountc = 0;
+            //$COUNTRYID%TRUCELENGTH%~ all truces end on new years?
 
-            //while (true)
-            //{
-            //    singlechar = (char)Reade.Read();
+            ib = -1;
+            aftb = false;
+            ownedmode = false;
+            indcountb = -1;
+            indcountc = -1;
 
-            //    if (ownedmode == false)
-            //    {
-            //        indcountc = -1;
+            while (true)
+            {
+                singlechar = (char)Readf.Read();
 
-            //        if (singlechar.ToString() == "$")
-            //        {
-            //            aftb = false;
-            //            ib += 1;
-            //            indcountb = 0;
-            //        }
-            //        else if (singlechar.ToString() == "%")
-            //        {
-            //            indcountb += 1;
-            //        }
-            //        else if (singlechar.ToString() == "~")
-            //        {
-            //            aftb = true;
-            //        }
-            //        else if (singlechar.ToString() == "(" && indcountb == 4)
-            //        {
-            //            ownedmode = true;
-            //            indcountb -= 1;
-            //        }
-            //        else if (aftb == true)
-            //        {
-            //            if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
-            //            {
+                if (ownedmode == false)
+                {
+                    indcountc = -1;
 
-            //            }
-            //            else
-            //            {
-            //                break;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            truce[ib] += singlechar.ToString();
+                    if (singlechar.ToString() == "$")
+                    {
+                        aftb = false;
+                        ib += 1;
+                        indcountb = 0;
+                    }
+                    else if (singlechar.ToString() == "%")
+                    {
+                        indcountb += 1;
+                    }
+                    else if (singlechar.ToString() == "~")
+                    {
+                        aftb = true;
+                    }
+                    else if (singlechar.ToString() == "(" && indcountb == 4)
+                    {
+                        ownedmode = true;
+                        indcountb -= 1;
+                    }
+                    else if (aftb == true)
+                    {
+                        if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
+                        {
 
-            //            //if (indcountb == 1)
-            //            //{
-            //            //    kingidname[ib] += singlechar.ToString();
-            //            //}
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (singlechar.ToString() == "%")
-            //        {
-            //            indcountc += 1;
-            //        }
-            //        else if (singlechar.ToString() == ")")
-            //        {
-            //            ownedmode = false;
-            //        }
-            //        else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
-            //        {
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        truce[ib] += singlechar.ToString();
 
-            //        }
-            //        else
-            //        {
-            //            truce[ib] += singlechar.ToString();
-            //        }
+                        //if (indcountb == 1)
+                        //{
+                        //    kingidname[ib] += singlechar.ToString();
+                        //}
+                    }
+                }
+                else
+                {
+                    if (singlechar.ToString() == "%")
+                    {
+                        indcountc += 1;
+                    }
+                    else if (singlechar.ToString() == ")")
+                    {
+                        ownedmode = false;
+                    }
+                    else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
+                    {
 
-            //    }
-            //}
+                    }
+                    else
+                    {
+                        truce[ib] += singlechar.ToString();
+                    }
 
-            //Readf.Close();
+                }
+            }
+
+            Readf.Close();
+
+            System.IO.StreamReader Readg = new System.IO.StreamReader(path + "//Info//ReligionNames.dat");
+
+            ib = -1;
+            aftb = false;
+            ownedmode = false;
+            indcountb = -1;
+            indcountc = -1;
+
+            while (true)
+            {
+                singlechar = (char)Readg.Read();
+
+                if (ownedmode == false)
+                {
+                    indcountc = -1;
+
+                    if (singlechar.ToString() == "$")
+                    {
+                        aftb = false;
+                        ib += 1;
+                        indcountb = 0;
+                    }
+                    else if (singlechar.ToString() == "%")
+                    {
+                        indcountb += 1;
+                    }
+                    else if (singlechar.ToString() == "~")
+                    {
+                        aftb = true;
+                    }
+                    else if (singlechar.ToString() == "(" && indcountb == 4)
+                    {
+                        ownedmode = true;
+                        indcountb -= 1;
+                    }
+                    else if (aftb == true)
+                    {
+                        if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
+                        {
+
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Religions[ib, indcountb] += singlechar.ToString();
+                        ReligionId[ib] = Religions[ib, 0];
+                        //truce[ib] += singlechar.ToString();
+
+                        //if (indcountb == 1)
+                        //{
+                        //    kingidname[ib] += singlechar.ToString();
+                        //}
+                    }
+                }
+                else
+                {
+                    if (singlechar.ToString() == "%")
+                    {
+                        indcountc += 1;
+                    }
+                    else if (singlechar.ToString() == ")")
+                    {
+                        ownedmode = false;
+                    }
+                    else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
+                    {
+
+                    }
+                    else
+                    {
+                        Religions[ib, indcountb] += singlechar.ToString();
+                        ReligionId[ib] = Religions[ib, 0];
+                    }
+
+                }
+            }
+
+            Readg.Close();
 
             //Country id, enemy id, war id
             //string[,] Warsgroup = new string[10000, 10000];
@@ -544,6 +640,15 @@ namespace Exp2
 
         private void Save()
         {
+            tock.Stop();
+            speed = 0;
+            enb = 1;
+
+            Dobits();
+            defaultbuttons();
+
+            //Events ev = new Events();
+            //Console.WriteLine(ev.GetValue("Save"));
             //reverse pullmapdata
 
             System.IO.File.WriteAllBytes(path + "//World.dat", new byte[0]);
@@ -695,39 +800,60 @@ namespace Exp2
             Writerd.WriteLine(rand.Next(1, 999999999)); //this doesnt do anything anymore
             Writerd.Close();
 
-            //System.IO.StreamWriter Writere = new System.IO.StreamWriter(path + "//History.dat");
-            //i = 0;
-            //while (war[i, 0] != null)
-            //{
-            //    Writere.WriteLine("$" + war[i, 0] + "%" + war[i, 1] + "%" + war[i, 2] + "%" + war[i, 3] + "%" + war[i, 4] + "%" + war[i, 5] + "%" + war[i, 6] + "%~");
-            //    i += 1;
-            //}
+            System.IO.StreamWriter Writere = new System.IO.StreamWriter(path + "//History.dat");
+            i = 0;
+            while (war[i, 0] != null || i == 0)
+            {
+                if(i == 0 && war[i,0] == null)
+                {
+                    Writere.WriteLine("$~");
+                    break;
+                }
+                Writere.WriteLine("$" + war[i, 0] + "%" + war[i, 1] + "%" + war[i, 2] + "%" + war[i, 3] + "%" + war[i, 4] + "%" + war[i, 5] + "%" + war[i, 6] + "%~");
+                i += 1;
+            }
 
-            //Writere.Close();
+            Writere.Close();
 
-            //System.IO.StreamWriter Writerf = new System.IO.StreamWriter(path + "//Peace.dat");
-            ////$COUNTRYID%TRUCELENGTH%~
-            //i = 0;
+            System.IO.StreamWriter Writerf = new System.IO.StreamWriter(path + "//Peace.dat");
+            //$COUNTRYID%TRUCELENGTH%~
+            i = 0;
+
+            while (truce[i] != null || i == 0)
+            {
+                if (i == 0 && truce[i] == null)
+                {
+                    Writerf.WriteLine("$~");
+                    break;
+                }
+                Writerf.WriteLine("$" + truce[i] + "%~");
+                i += 1;
+            }
+
             //for (int oi = 0; oi <= 10000; oi++)
             //{
             //    for (int mi = 0; mi <= 10000; mi++)
             //    {
-            //        if(Warsgroup[i,mi] != null)
+            //        if (truce[i] != null)
             //        {
+            //            if (i == 0 && war[i, 0] == null)
+            //            {
+            //                Writere.WriteLine("$~");
+            //                break;
+            //            }
             //            Writerf.WriteLine("$" + oi + "%" + truce[Convert.ToInt32(Warsgroup[oi, mi])] + "%~");
             //        }
             //    }
             //}
 
-            //Writerf.Close();
+            Writerf.Close();
         }
 
         private void Dobits()
         {
             // Create a new bitmap.
             Bitmap bmp = Map;
-
-            // Lock the bitmap's bits.  
+                        // Lock the bitmap's bits.  
             Rectangle rect = new Rectangle(0, 0, xlen - 17, ylen - 40);
             System.Drawing.Imaging.BitmapData bmpData =
                 bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -1031,11 +1157,11 @@ namespace Exp2
                                 rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
                                 string tmp = provinces[Convert.ToInt32(map[x, y]) - 2, 2].ToLower();
                                 char singlechar = tmp[0];
-                                rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(Math.Min(singlechar * 2, 255)); //red
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(Religions[Array.IndexOf(ReligionId, provinces[Convert.ToInt32(map[x, y]) - 2, 2]), 1]); //red
                                 singlechar = tmp[1];
-                                rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(Math.Min(singlechar * 2.3, 255)); //green
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(Religions[Array.IndexOf(ReligionId, provinces[Convert.ToInt32(map[x, y]) - 2, 2]), 2]); //red
                                 singlechar = tmp[2];
-                                rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(Math.Min(singlechar * 1.5, 255)); //blue
+                                rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(Religions[Array.IndexOf(ReligionId, provinces[Convert.ToInt32(map[x, y]) - 2, 2]), 3]); //blue
                             }
                             else
                             {

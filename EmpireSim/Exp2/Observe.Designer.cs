@@ -37,7 +37,7 @@
             this.ImagePic.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ImagePic.Location = new System.Drawing.Point(0, 0);
             this.ImagePic.Name = "ImagePic";
-            this.ImagePic.Size = new System.Drawing.Size(1384, 861);
+            this.ImagePic.Size = new System.Drawing.Size(1370, 749);
             this.ImagePic.TabIndex = 0;
             this.ImagePic.TabStop = false;
             this.ImagePic.Click += new System.EventHandler(this.ImagePic_Click);
@@ -47,7 +47,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Salmon;
-            this.ClientSize = new System.Drawing.Size(1384, 861);
+            this.ClientSize = new System.Drawing.Size(1370, 749);
             this.Controls.Add(this.ImagePic);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;

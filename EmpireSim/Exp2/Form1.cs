@@ -381,9 +381,11 @@ namespace Exp2
                     Writer4.Close();
 
                     System.IO.StreamWriter Writer5 = new System.IO.StreamWriter(pathing + "//History.dat");
+                    Writer5.WriteLine("$~");
                     Writer5.Close();
 
                     System.IO.StreamWriter Writer6 = new System.IO.StreamWriter(pathing + "//Peace.dat");
+                    Writer6.WriteLine("$~");
                     Writer6.Close();
                     age = "Post-Provincial Age";
 

@@ -27,6 +27,9 @@ namespace Exp2
         string[,] kingdomowner = new string[10000, 10000];
         string[] kingidname = new string[10000];
 
+        string[,] Religions = new string[11, 4];
+        string[] ReligionId = new string[11];
+
         string path;
         Bitmap Map = new Bitmap(Exp2.Properties.Resources.testimage,xlen,ylen);
 
@@ -324,7 +327,90 @@ namespace Exp2
 
             Readc.Close();
 
-            for(int n = 2; n <= 9999;n++)
+            System.IO.StreamReader Readg = new System.IO.StreamReader(path + "//Info//ReligionNames.dat");
+
+            ib = -1;
+            aftb = false;
+            ownedmode = false;
+            indcountb = -1;
+            indcountc = -1;
+
+            while (true)
+            {
+                singlechar = (char)Readg.Read();
+
+                if (ownedmode == false)
+                {
+                    indcountc = -1;
+
+                    if (singlechar.ToString() == "$")
+                    {
+                        aftb = false;
+                        ib += 1;
+                        indcountb = 0;
+                    }
+                    else if (singlechar.ToString() == "%")
+                    {
+                        indcountb += 1;
+                    }
+                    else if (singlechar.ToString() == "~")
+                    {
+                        aftb = true;
+                    }
+                    else if (singlechar.ToString() == "(" && indcountb == 4)
+                    {
+                        ownedmode = true;
+                        indcountb -= 1;
+                    }
+                    else if (aftb == true)
+                    {
+                        if (singlechar.ToString() == "\r" || singlechar.ToString() == "\n")
+                        {
+
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        Religions[ib, indcountb] += singlechar.ToString();
+                        ReligionId[ib] = Religions[ib, 0];
+                        //truce[ib] += singlechar.ToString();
+
+                        //if (indcountb == 1)
+                        //{
+                        //    kingidname[ib] += singlechar.ToString();
+                        //}
+                    }
+                }
+                else
+                {
+                    if (singlechar.ToString() == "%")
+                    {
+                        indcountc += 1;
+                    }
+                    else if (singlechar.ToString() == ")")
+                    {
+                        ownedmode = false;
+                    }
+                    else if (singlechar.ToString() == "," || singlechar.ToString() == " " || singlechar.ToString() == null)
+                    {
+
+                    }
+                    else
+                    {
+                        Religions[ib, indcountb] += singlechar.ToString();
+                        ReligionId[ib] = Religions[ib, 0];
+                    }
+
+                }
+            }
+
+            Readg.Close();
+
+            for (int n = 2; n <= 9999;n++)
             {
                 //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                 //string[,] provinces = new string[10000,16];
@@ -652,12 +738,12 @@ namespace Exp2
                                         rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
                                         string tmp = provinces[Convert.ToInt32(map[x, y]) - 2, 2].ToLower();
                                         char singlechar = tmp[0];
-                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(Math.Min(singlechar * 2,255)); //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(Religions[Array.IndexOf(ReligionId, provinces[Convert.ToInt32(map[x, y]) - 2, 2]), 1]); //red
                                         singlechar = tmp[1];
-                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(Math.Min(singlechar * 2.3, 255)); //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(Religions[Array.IndexOf(ReligionId, provinces[Convert.ToInt32(map[x, y]) - 2, 2]), 2]); //red
                                         singlechar = tmp[2];
-                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(Math.Min(singlechar * 1.5, 255)); //blue
-                                }
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(Religions[Array.IndexOf(ReligionId, provinces[Convert.ToInt32(map[x, y]) - 2, 2]), 3]); //blue
+                            }
                                 else
                                 {
                                     rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha

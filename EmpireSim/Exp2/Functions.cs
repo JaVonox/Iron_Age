@@ -10,6 +10,7 @@ namespace funct
             Random ran = new Random();
             string RunningPath = AppDomain.CurrentDomain.BaseDirectory;
             char[] newname = new char[20];
+            char[] newnamereligious = new char[100];
             int size = 0;
 
             //okay future jamie, plan time.
@@ -135,79 +136,47 @@ namespace funct
 
                 string FileName = string.Format("{0}Resources\\ReligionsReal.txt", Path.GetFullPath(Path.Combine(RunningPath, @"..\..\"))); //real file
 
-
                 StreamReader read = new StreamReader(FileName);
-                String[] citi = new String[505]; //array of religion names
+                String[] citi = new String[21]; //array of city names
+                int randpro = ran.Next(1, 21); //which line to search
 
-                for (int i = 0; i <= 504; i++)
+                for (int l = 0; l <= 20; l++)
                 {
-                    citi[i] = read.ReadLine();
+                    citi[l] = read.ReadLine();
                 }
 
                 read.Close();
 
-                int rando = ran.Next(2, 6); //how many characters to take
-                int randpro = ran.Next(1, 505); //which line to search
-
+                randpro = ran.Next(1, 21);
                 char[] pull = citi[randpro].ToCharArray();
-                int tempoff = 0;
 
-                for (int i = 0; i <= 20; i++)
+                //size = Math.Min(pull.Length - 1, 19);
+
+                int i = 0;
+                string outp = null;
+
+                while(true)
                 {
-
-                    int tempoff2 = tempoff;
-
-                    for (int ioff = tempoff; ioff <= (tempoff2 + rando); ioff++) //the change in rand
+                    if (pull[i].ToString() == "~")
                     {
-                        if (ioff >= 20 || pull.Length <= ioff)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            newname[ioff] = pull[ioff];
-                            tempoff += 1;
-                        }
+                        newnamereligious[i] = pull[i];
+                        outp += pull[i].ToString();
+                        break;
                     }
-
-                    if (tempoff >= 6)
+                    else
                     {
-                        if (ran.Next(1, 3) == 2)
-                        {
-                            size = tempoff;
-                            break;
-                        }
-                    }
-                    while (true)
-                    {
-                        randpro = ran.Next(1, 505);
-                        rando = ran.Next(1, 6);
-                        pull = citi[randpro].ToCharArray();
-                        int tmp = (int)pull[pull.Length - 1];
-                        if (tmp >= 255)
-                        {
-                            if (ran.Next(1, 100) == 30)
-                            {
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            if (pull.Length <= tempoff)
-                            {
-
-                            }
-                            else
-                            {
-                                if (pull[tempoff - 1] == newname[tempoff - 1])
-                                {
-                                    break;
-                                }
-                            }
-                        }
-
+                        newnamereligious[i] = pull[i];
+                        outp += pull[i].ToString();
+                        i += 1;
                     }
                 }
+
+                return outp;
+
+                //for (int i = 0; i <= pull.Length - 1 && i < 20; i++)
+                //{
+                //    newname[i] = pull[i];
+                //}
             }
             else if(type == "Fname")
             {

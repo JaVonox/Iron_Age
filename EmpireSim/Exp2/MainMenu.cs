@@ -1162,7 +1162,7 @@ namespace Exp2
             }
             else if(type == "Faith")
             {
-                    for (int i = 0; i <= 100; i++)
+                    for (int i = 0; i <= 10; i++)
                     {
                         string word = funct.Functions.Generator("Faith");
 
@@ -1172,7 +1172,7 @@ namespace Exp2
                         }
                         else
                         {
-                            if (allgen[i - 1] == word)
+                            if (allgen.Contains(word))
                             {
                                 i -= 1;
                             }
@@ -1461,7 +1461,7 @@ namespace Exp2
                                                 g.DrawString("Generating Province Names:", myFontsmall, newbrushD, newpointb3);
                                             }
                                             Point newpointb4 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 10.52));
-                                            g.DrawString("Generating Religion Names:", myFontsmall, newbrushD, newpointb4);
+                                            g.DrawString("Pulling Religion Names:", myFontsmall, newbrushD, newpointb4);
                                             Point newpointb5 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 11.52));
                                             g.DrawString("Pulling First Names:", myFontsmall, newbrushD, newpointb5);
                                             Point newpointb6 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 12.52));
