@@ -57,6 +57,7 @@ namespace Exp2
         Font myFontB;
         Font myFontsmall;
         Font myFontTitle;
+        Font myFontLarge;
         Font myFontDetail;
         Events ev = new Events();
 
@@ -84,6 +85,7 @@ namespace Exp2
             myFontB = new Font(fonts.Families[0], 52.0F);
             myFontsmall = new Font(fonts.Families[0], 22.0F);
             myFontTitle = new Font(fonts.Families[0], 16.8F, FontStyle.Underline);
+            myFontLarge = new Font(fonts.Families[0], 16.8F);
             myFontDetail = new Font(fonts.Families[0], 12.0F);
 
             this.Size = new System.Drawing.Size(xlen, ylen);
@@ -640,93 +642,14 @@ namespace Exp2
 
         private void Save()
         {
+
             tock.Stop();
             speed = 0;
             enb = 1;
-
+            eventnews("Save",null,null);
             Dobits();
             defaultbuttons();
-
-            //Events ev = new Events();
-            //Console.WriteLine(ev.GetValue("Save"));
-            //reverse pullmapdata
-
-            System.IO.File.WriteAllBytes(path + "//World.dat", new byte[0]);
-            //System.IO.StreamWriter Writea = new System.IO.StreamWriter(path + "//world.dat");
-
-
-            //System.IO.File.Create(pathing + "//World.dat"); //Stores World tiles
-            System.IO.StreamWriter Writer = new System.IO.StreamWriter(path + "//World.dat");
-
-            for (int y = 1; y <= ylen - 2; y++)
-            {
-                for (int x = 1; x <= xlen - 2; x++)
-                {
-
-                    if (y > ylen - 2)
-                    {
-                        break;
-                    }
-                    else if (map[x, y] == "0")
-                    {
-                        //w start
-                        //count of blanks
-                        //m end
-
-
-                        //w start
-                        //if f then fill row with blanks
-                        //m end
-
-                        Writer.Write("w"); //blank start
-                        int count = 0;
-                        bool fin = true;
-
-                        for (int tx = x; tx <= xlen - 2; tx++)
-                        {
-                            if (map[tx, y] == "0")
-                            {
-                                count += 1;
-                            }
-                            else if (map[tx, y] != "0")
-                            {
-                                x = tx;
-                                fin = false;
-                                break;
-                            }
-                            else if (tx == xlen - 2) //this was <= and -2
-                            {
-                                x = tx;
-                                fin = true;
-                                break;
-                            }
-                        }
-
-                        if (fin == true) //this was -2. x == xlen - 2 && 
-                        {
-                            Writer.Write("fm");
-                            Writer.Write("~"); //end char
-                            Writer.Write("\r\n"); //new line
-                            y += 1;
-                            x = 1;
-                        }
-                        else
-                        {
-                            Writer.Write(count); //blank space
-                            Writer.Write("m"); //blank start
-                        }
-                    }
-                    else
-                    {
-                        Writer.Write("@" + map[x, y].Remove(0,1) + ","); //taken land
-                    }
-                }
-                Writer.Write("~"); //end char
-                Writer.Write("\r\n"); //new line
-
-            }
-
-            Writer.Close();
+            
 
             System.IO.File.WriteAllBytes(path + "//Provs.dat", new byte[0]);
             //System.IO.StreamWriter Writea = new System.IO.StreamWriter(path + "//world.dat");
@@ -830,23 +753,52 @@ namespace Exp2
                 i += 1;
             }
 
-            //for (int oi = 0; oi <= 10000; oi++)
-            //{
-            //    for (int mi = 0; mi <= 10000; mi++)
-            //    {
-            //        if (truce[i] != null)
-            //        {
-            //            if (i == 0 && war[i, 0] == null)
-            //            {
-            //                Writere.WriteLine("$~");
-            //                break;
-            //            }
-            //            Writerf.WriteLine("$" + oi + "%" + truce[Convert.ToInt32(Warsgroup[oi, mi])] + "%~");
-            //        }
-            //    }
-            //}
-
             Writerf.Close();
+        }
+
+
+        string[] Newsreel = new string[100];
+        int lastnews = 0;
+
+        private void updatenews()
+        {
+            using (var g = Graphics.FromImage(Back.Image))
+            {
+                Brush newbrushD = new SolidBrush(Color.DarkSlateGray);
+
+                for (int i = 0; i < 16; i++)
+                {
+                    if (Newsreel[i] == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Point newpoint = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * (3 + i)));
+                        g.DrawString(Newsreel[i], myFontDetail, newbrushD, newpoint);
+                    }
+                }
+
+                if (lastnews > 15)
+                {
+                    Array.Clear(Newsreel, 0, 15);
+                    lastnews = Math.Max(lastnews - 15, 0);
+                }
+            }
+        }
+
+        private void eventnews(string newevent, string arg1, string arg2)
+        {
+            if (arg1 == null)
+            {
+                Newsreel[lastnews] = ev.GetValue(newevent);
+                lastnews++;
+            }
+            else
+            {
+                Newsreel[lastnews] = String.Format(ev.GetValue(newevent),arg1,arg2);
+                lastnews++;
+            }
         }
 
         private void Dobits()
@@ -1293,7 +1245,27 @@ namespace Exp2
 
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
+            updatenews();
 
+
+            if (lastnews != 0 && lastnews < 10)
+            {
+                using (var g = Graphics.FromImage(Back.Image))
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 80) * 65)), Convert.ToInt16((ylen / 40) * 0));
+                    Brush newbrush = new SolidBrush(Color.Red);
+                    g.DrawString(lastnews.ToString(), myFontLarge, newbrush, newpointa); //default map mode
+                }
+            }
+            else if (lastnews >= 10)
+            {
+                using (var g = Graphics.FromImage(Back.Image))
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 80) * 65)), Convert.ToInt16((ylen / 40) * 0));
+                    Brush newbrush = new SolidBrush(Color.Red);
+                    g.DrawString("+", myFontLarge, newbrush, newpointa); //default map mode
+                }
+            }
 
         }
 
@@ -1496,6 +1468,25 @@ namespace Exp2
 
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
+
+            if (lastnews != 0 && lastnews < 10)
+            {
+                using (var g = Graphics.FromImage(Back.Image))
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 80) * 65)), Convert.ToInt16((ylen / 40) * 0));
+                    Brush newbrush = new SolidBrush(Color.Red);
+                    g.DrawString(lastnews.ToString(), myFontLarge, newbrush, newpointa); //default map mode
+                }
+            }
+            else if (lastnews >= 10)
+            {
+                using (var g = Graphics.FromImage(Back.Image))
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 80) * 65)), Convert.ToInt16((ylen / 40) * 0));
+                    Brush newbrush = new SolidBrush(Color.Red);
+                    g.DrawString("+", myFontLarge, newbrush, newpointa); //default map mode
+                }
+            }
 
 
         }
@@ -1765,13 +1756,12 @@ namespace Exp2
                         g.DrawString("Happiness : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 11], myFontDetail, newbrushD, newpointj);
 
                         Point newpointh1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 15));
-                        g.DrawString("Manpower : " + kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]), 10], myFontDetail, newbrushD, newpointh1);
+                        g.DrawString("Manpower : " + kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) -2, 10], myFontDetail, newbrushD, newpointh1);
                     }
                 }
             }
             else if (mouseposX >= (xlen / 80) * 66)
             {
-
                 if (mouseposY >= Convert.ToInt16((ylen / 40) * 29.7) && mouseposY <= Convert.ToInt16((ylen / 40) * 31))
                 {
                     if (mouseposX >= Convert.ToInt16((xlen / 40) * 32.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 33.2))
@@ -1785,6 +1775,7 @@ namespace Exp2
                 }
                 else
                 {
+
                     if (mouseposY >= Convert.ToInt16((ylen / 40) * 0) && mouseposY <= Convert.ToInt16((ylen / 40) * 1))
                     {
                         if (mouseposX >= Convert.ToInt16((xlen / 40) * 33.2) && mouseposX <= Convert.ToInt16((xlen / 40) * 34))
@@ -1842,12 +1833,153 @@ namespace Exp2
 
                         Dobits();
                         defaultbuttons();
+
+
                     }
                 }
             else
             {
+                Array.Clear(Newsreel,0,15);
+                lastnews = Math.Max(lastnews - 15,0);
                 Dobits();
                 defaultbuttons();
+
+
+            }
+        }
+
+        private void Reinforcements()
+        {
+            //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+            //string[,] provinces = new string[10000, 16];
+
+            //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+            //string[,] kingdoms = new string[10000, 11];
+            //string[,] kingdomowner = new string[10000, 10000];
+            //string[] kingidname = new string[10000];
+            int i = 0;
+            while(true)
+            {
+                if (kingdoms[i, 0] != null)
+                {
+
+                    if (provinces[i, 3] != provinces[i, 1])
+                    {
+                        int m = Convert.ToInt32(Array.IndexOf(kingidname, provinces[i, 3]));
+
+                        if (Convert.ToInt32(kingdoms[m, 6]) < 50)
+                        {
+                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 4])));
+                        }
+                        else if (Convert.ToInt32(kingdoms[m, 6]) < 100)
+                        {
+                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 5])));
+                        }
+                        else if (Convert.ToInt32(kingdoms[m, 6]) < 150)
+                        {
+                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 6])));
+                        }
+                        else if (Convert.ToInt32(kingdoms[m, 6]) < 200)
+                        {
+                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 7])));
+                        }
+                        else
+                        {
+                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 8])));
+                        }
+                    }
+                    else
+                    {
+                        if (Convert.ToInt32(kingdoms[i, 6]) < 50)
+                        {
+                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 4])));
+                        }
+                        else if (Convert.ToInt32(kingdoms[i, 6]) < 100)
+                        {
+                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 5])));
+                        }
+                        else if (Convert.ToInt32(kingdoms[i, 6]) < 150)
+                        {
+                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 6])));
+                        }
+                        else if (Convert.ToInt32(kingdoms[i, 6]) < 200)
+                        {
+                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 7])));
+                        }
+                        else
+                        {
+                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 8])));
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
+
+                i += 1;
+            }
+        }
+
+        int existingreligions = 0;
+
+        private void Religion_Form()
+        {
+            int check = rand.Next(1, 100 * (10^(existingreligions + 1)));
+
+            if (check == 50 && existingreligions < 11) //check == 50
+            {
+                int count = 0;
+                int largestindex = 0;
+                bool nochange = true;
+
+                while (true)
+                {
+                    //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                    //string[,] provinces = new string[10000, 16];
+
+                    //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                    //string[,] kingdoms = new string[10000, 11];
+                    //string[,] kingdomowner = new string[10000, 10000];
+                    //string[] kingidname = new string[10000];
+                    if (provinces[count,0] == null)
+                    {
+                        break;
+                    }
+                    if (Convert.ToInt16(provinces[count,9]) > Convert.ToInt16(provinces[largestindex,9]) && provinces[count,2] == "PAGAN")
+                    {
+                        if (provinces[count, 3] != provinces[count, 1])
+                        {
+                            int m = Convert.ToInt32(Array.IndexOf(kingidname, provinces[count, 3]));
+
+                            if(kingdoms[m,3] == "NULL" && kingdoms[m,2] != "TRIBAL")
+                            {
+                                largestindex = count;
+                                nochange = false;
+                            }
+                        }
+                        else
+                        {
+                            if (kingdoms[count, 2] != "TRIBAL")
+                            {
+                                largestindex = count;
+                                nochange = false;
+                            }
+                        }
+                    }
+                    count += 1;
+                }
+
+                //$Name%Red%Blue%Green%~
+                //string[,] Religions = new string[11, 4];
+                //string[] ReligionId = new string[11];
+
+                if (nochange == false || largestindex == 0 && provinces[largestindex, 2] == "PAGAN")
+                {
+                    provinces[largestindex, 2] = ReligionId[existingreligions];
+                    eventnews("Religion_Form_1", provinces[largestindex, 1], ReligionId[existingreligions]);
+                    existingreligions += 1;
+                }
             }
         }
 
@@ -1861,17 +1993,22 @@ namespace Exp2
                 tock.Stop();
                 return;
             }
-            else if(speed == 1)
+            else if(speed == 1) //slowboye
             {
                 maxcount = 1;
+                tock.Interval = 500;
             }
-            else if (speed == 2)
+            else if (speed == 2) //average speedboye
             {
-                maxcount = 7;
+                maxcount = 1;
+                tock.Interval = 71;
+                //maxcount = 7;
             }
-            else if (speed == 3)
+            else if (speed == 3) //vvvv fastboye
             {
-                maxcount = 30;
+                maxcount = 1;
+                tock.Interval = 16;
+                //maxcount = 30;
             }
 
             while (realcount <= maxcount - 1)
@@ -1882,11 +2019,20 @@ namespace Exp2
                 {
                     month += 1;
                     day = 1;
+                    Reinforcements();
+                    Religion_Form();
+                    eventnews("Reinforce", null, null);
+                }
+                else if(day == 29)
+                {
+                    Array.Clear(Newsreel, 0, 15);
+                    lastnews = Math.Max(lastnews - 15, 0);
                 }
 
                 if (month == 13)
                 {
                     year += 1;
+                    eventnews("New_Year",year.ToString(),null);
                     month = 1;
                 }
 
@@ -1895,6 +2041,46 @@ namespace Exp2
 
             Dobits();
             defaultbuttons();
+
+            Back.Invalidate();
+            if (lastnews != 0 && lastnews < 10)
+            {
+                using (var g = Graphics.FromImage(Back.Image))
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 80) * 65)), Convert.ToInt16((ylen / 40) * 0));
+                    Brush newbrush = new SolidBrush(Color.Red);
+                    g.DrawString(lastnews.ToString(), myFontLarge, newbrush, newpointa); //default map mode
+                }
+            }
+            else if (lastnews >= 10)
+            {
+                using (var g = Graphics.FromImage(Back.Image))
+                {
+                    Point newpointa = new Point(Convert.ToInt16(((xlen / 80) * 65)), Convert.ToInt16((ylen / 40) * 0));
+                    Brush newbrush = new SolidBrush(Color.Red);
+                    g.DrawString("+", myFontLarge, newbrush, newpointa); //default map mode
+                }
+            }
+        }
+
+        private void Play_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Space)
+            {
+                if (enb != 1)
+                {
+                    //tock.Stop();
+                    //speed = 0;
+                    enb = 1;
+                }
+                else
+                {
+                    enb = 7;
+                }
+
+                Dobits();
+                defaultbuttons();
+            }
         }
     }
 }

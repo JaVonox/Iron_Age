@@ -6,7 +6,7 @@ $Miaphysite%206%53%97%~
 $Judaism%199%228%234%~
 $Sunni%22%229%47%~
 $Shia%21%94%30%~
-$Buddhism%94%59%21%~
+$Buddhist%94%59%21%~
 $Shinto%188%37%0%~
 $Taoist%147%139%137%~
 $Hindu%128%204%42%~
@@ -17,5 +17,5 @@ $Zoroastrian%3%86%112%~
 $Confucian%242%155%192%~
 $Germanic%193%189%191%~
 $Slavic%70%122%3%~
-$Tengri%299%199%27%~
+$Tengri%29%199%27%~
 $Docetist%66%53%130%~

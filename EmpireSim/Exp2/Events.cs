@@ -50,6 +50,10 @@ namespace Exp2
             //Country Advance
             //Save
             {"Save","Game has been saved" },
+            //New Year. Year {0}
+            {"New_Year", "It is now the year {0}" },
+            //Reinforce.
+            {"Reinforce", "New troops have arrived" },
             
         };
     }

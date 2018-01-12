@@ -62,6 +62,7 @@
             this.Text = "Simulate";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Observe_FormClosed);
             this.Load += new System.EventHandler(this.Observe_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Play_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.Back)).EndInit();
             this.ResumeLayout(false);
 
