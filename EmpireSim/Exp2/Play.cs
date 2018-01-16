@@ -36,7 +36,7 @@ namespace Exp2
         string[] ReligionId = new string[11];
 
         //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
-        string[,] war = new string[10000,7];
+        string[,] war = new string[10000, 7];
 
         //Country id, enemy id, war id
         string[,] Warsgroup = new string[10000, 10000];
@@ -98,10 +98,72 @@ namespace Exp2
             Dobits();
             defaultbuttons();
             this.Text = "Simulating";
+            madpadj();
+            //Console.WriteLine("M");
+        }
+
+        string[] NamesList = new string[501];
+        string[] SurnameList = new string[501];
+
+        string[,] adjs = new string[10000,4]; //UP LEFT DOWN RIGHT
+
+        private void madpadj()
+        {
+            for (int x = 1; x <= xlen - 1; x++)
+            {
+                for (int y = 1; y <= ylen - 1; y++)
+                {
+                    if (Convert.ToInt16(map[x, y]) != 0)
+                    {
+                        if (map[x + 1, y] != map[x, y])
+                        {
+                            if (Convert.ToInt16(map[x + 1, y]) != 0)
+                            {
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 3] = map[x + 1, y];
+                            }
+                        }
+                        else if (map[x - 1, y] != map[x, y])
+                        {
+                            if (Convert.ToInt16(map[x - 1, y]) != 0)
+                            {
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 1] = map[x - 1, y];
+                            }
+                        }
+                        else if (map[x, y + 1] != map[x, y])
+                        {
+                            if (Convert.ToInt16(map[x, y + 1]) != 0)
+                            {
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 0] = map[x, y + 1];
+                            }
+                        }
+                        else if (map[x, y - 1] != map[x, y])
+                        {
+                            if (Convert.ToInt16(map[x, y - 1]) != 0)
+                            {
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 2] = map[x, y - 1];
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void pullmapdata()
         {
+            System.IO.StreamReader Readen = new System.IO.StreamReader(path + "//Info//Names.dat");
+            for (int p = 0; p <= 500; p++)
+            {
+                NamesList[p] = Readen.ReadLine();
+            }
+            Readen.Close();
+
+            System.IO.StreamReader Readeno = new System.IO.StreamReader(path + "//Info//Dynasty.dat");
+            for (int p = 0; p <= 500; p++)
+            {
+                SurnameList[p] = Readeno.ReadLine();
+            }
+            Readeno.Close();
+
             System.IO.StreamReader Reada = new System.IO.StreamReader(path + "//world.dat");
 
             int y = 0;
@@ -351,7 +413,7 @@ namespace Exp2
             year = Convert.ToInt32(Readd.ReadLine());
             month = Convert.ToInt16(Readd.ReadLine());
             day = Convert.ToInt16(Readd.ReadLine());
-
+            existingreligions = Convert.ToInt16(Readd.ReadLine());
             Readd.Close();
 
             //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%STARTDATE%~
@@ -646,10 +708,10 @@ namespace Exp2
             tock.Stop();
             speed = 0;
             enb = 1;
-            eventnews("Save",null,null);
+            eventnews("Save", null, null);
             Dobits();
             defaultbuttons();
-            
+
 
             System.IO.File.WriteAllBytes(path + "//Provs.dat", new byte[0]);
             //System.IO.StreamWriter Writea = new System.IO.StreamWriter(path + "//world.dat");
@@ -660,11 +722,11 @@ namespace Exp2
 
 
             int i = 0;
-            while(provinces[i,0] != null)
+            while (provinces[i, 0] != null)
             {
                 //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                 //string[,] provinces = new string[10000, 16];
-                Writerb.WriteLine( "$" + provinces[i,0] + "%" + provinces[i, 1] + "%" + provinces[i, 2] + "%" + provinces[i, 3] + "%" + provinces[i, 4] + "%" + provinces[i, 5] + "%" + provinces[i, 6] + "%" + provinces[i, 7] + "%" + provinces[i, 8] + "%" + provinces[i, 9] + "%" + provinces[i, 10] + "%" + provinces[i, 11] + "%" + provinces[i, 12]  +"%" + provinces[i, 13] + "%" + provinces[i, 14] + "%" + provinces[i, 15] + "%~");
+                Writerb.WriteLine("$" + provinces[i, 0] + "%" + provinces[i, 1] + "%" + provinces[i, 2] + "%" + provinces[i, 3] + "%" + provinces[i, 4] + "%" + provinces[i, 5] + "%" + provinces[i, 6] + "%" + provinces[i, 7] + "%" + provinces[i, 8] + "%" + provinces[i, 9] + "%" + provinces[i, 10] + "%" + provinces[i, 11] + "%" + provinces[i, 12] + "%" + provinces[i, 13] + "%" + provinces[i, 14] + "%" + provinces[i, 15] + "%~");
                 i += 1;
             }
 
@@ -691,7 +753,7 @@ namespace Exp2
                 while (true)
                 {
 
-                    if(kingdomowner[i, m] == null)
+                    if (kingdomowner[i, m] == null)
                     {
                         break;
                     }
@@ -701,7 +763,7 @@ namespace Exp2
                     m += 1;
                 }
 
-                Writerc.WriteLine("$" + kingdoms[i, 0] + "%" + kingdoms[i, 1] + "%" + kingdoms[i, 2] + "%" + kingdoms[i, 3] + " %( " + concatown + " )% " + kingdoms[i, 4] + "%" + kingdoms[i, 5] + "%" + kingdoms[i, 6] + "%" + kingdoms[i, 7] + "%" + kingdoms[i, 8] + "%" + kingdoms[i, 9] + "%" + kingdoms[i, 10] +"%~");
+                Writerc.WriteLine("$" + kingdoms[i, 0] + "%" + kingdoms[i, 1] + "%" + kingdoms[i, 2] + "%" + kingdoms[i, 3] + " %( " + concatown + " )% " + kingdoms[i, 4] + "%" + kingdoms[i, 5] + "%" + kingdoms[i, 6] + "%" + kingdoms[i, 7] + "%" + kingdoms[i, 8] + "%" + kingdoms[i, 9] + "%" + kingdoms[i, 10] + "%~");
                 i += 1;
             }
 
@@ -720,14 +782,14 @@ namespace Exp2
             Writerd.WriteLine(year);
             Writerd.WriteLine(month);
             Writerd.WriteLine(day);
-            Writerd.WriteLine(rand.Next(1, 999999999)); //this doesnt do anything anymore
+            Writerd.WriteLine(existingreligions);
             Writerd.Close();
 
             System.IO.StreamWriter Writere = new System.IO.StreamWriter(path + "//History.dat");
             i = 0;
             while (war[i, 0] != null || i == 0)
             {
-                if(i == 0 && war[i,0] == null)
+                if (i == 0 && war[i, 0] == null)
                 {
                     Writere.WriteLine("$~");
                     break;
@@ -796,7 +858,7 @@ namespace Exp2
             }
             else
             {
-                Newsreel[lastnews] = String.Format(ev.GetValue(newevent),arg1,arg2);
+                Newsreel[lastnews] = String.Format(ev.GetValue(newevent), arg1, arg2);
                 lastnews++;
             }
         }
@@ -805,7 +867,7 @@ namespace Exp2
         {
             // Create a new bitmap.
             Bitmap bmp = Map;
-                        // Lock the bitmap's bits.  
+            // Lock the bitmap's bits.  
             Rectangle rect = new Rectangle(0, 0, xlen - 17, ylen - 40);
             System.Drawing.Imaging.BitmapData bmpData =
                 bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite,
@@ -1756,7 +1818,7 @@ namespace Exp2
                         g.DrawString("Happiness : " + provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 11], myFontDetail, newbrushD, newpointj);
 
                         Point newpointh1 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 15));
-                        g.DrawString("Manpower : " + kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) -2, 10], myFontDetail, newbrushD, newpointh1);
+                        g.DrawString("Manpower : " + kingdoms[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 10], myFontDetail, newbrushD, newpointh1);
                     }
                 }
             }
@@ -1802,7 +1864,7 @@ namespace Exp2
                     }
                     else if (mouseposY >= Convert.ToInt16((ylen / 40) * 1) && mouseposY <= Convert.ToInt16((ylen / 40) * 3))
                     {
-                        if(mouseposX >= Convert.ToInt16((xlen / 40) * 32) && mouseposX <= Convert.ToInt16((xlen / 40) * 32.7))
+                        if (mouseposX >= Convert.ToInt16((xlen / 40) * 32) && mouseposX <= Convert.ToInt16((xlen / 40) * 32.7))
                         {
                             enb = 6;
                         }
@@ -1818,29 +1880,29 @@ namespace Exp2
                         {
                             enb = 9;
                         }
-                      }
-                        //Point newpointa8 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 2));
-                        //g.DrawString("ll", myFontTitle, newbrushBlaq, newpointa8); //Pause
-
-                        //Point newpointa7 = new Point(Convert.ToInt16(((xlen / 40) * 32.9)), Convert.ToInt16((ylen / 40) * 2));
-                        //g.DrawString("►", myFontTitle, newbrushBlaq, newpointa7); //One day per sec
-
-                        //Point newpointa9 = new Point(Convert.ToInt16(((xlen / 40) * 33.5)), Convert.ToInt16((ylen / 40) * 2));
-                        //g.DrawString("►►", myFontTitle, newbrushBlaq, newpointa9); //One week per sec
-
-                        //Point newpointa10 = new Point(Convert.ToInt16(((xlen / 40) * 34.5)), Convert.ToInt16((ylen / 40) * 2));
-                        //g.DrawString("►►►", myFontTitle, newbrushBlaq, newpointa10); //One month per sec
-
-                        Dobits();
-                        defaultbuttons();
-
-
                     }
+                    //Point newpointa8 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 2));
+                    //g.DrawString("ll", myFontTitle, newbrushBlaq, newpointa8); //Pause
+
+                    //Point newpointa7 = new Point(Convert.ToInt16(((xlen / 40) * 32.9)), Convert.ToInt16((ylen / 40) * 2));
+                    //g.DrawString("►", myFontTitle, newbrushBlaq, newpointa7); //One day per sec
+
+                    //Point newpointa9 = new Point(Convert.ToInt16(((xlen / 40) * 33.5)), Convert.ToInt16((ylen / 40) * 2));
+                    //g.DrawString("►►", myFontTitle, newbrushBlaq, newpointa9); //One week per sec
+
+                    //Point newpointa10 = new Point(Convert.ToInt16(((xlen / 40) * 34.5)), Convert.ToInt16((ylen / 40) * 2));
+                    //g.DrawString("►►►", myFontTitle, newbrushBlaq, newpointa10); //One month per sec
+
+                    Dobits();
+                    defaultbuttons();
+
+
                 }
+            }
             else
             {
-                Array.Clear(Newsreel,0,15);
-                lastnews = Math.Max(lastnews - 15,0);
+                Array.Clear(Newsreel, 0, 15);
+                lastnews = Math.Max(lastnews - 15, 0);
                 Dobits();
                 defaultbuttons();
 
@@ -1858,7 +1920,7 @@ namespace Exp2
             //string[,] kingdomowner = new string[10000, 10000];
             //string[] kingidname = new string[10000];
             int i = 0;
-            while(true)
+            while (true)
             {
                 if (kingdoms[i, 0] != null)
                 {
@@ -1923,11 +1985,277 @@ namespace Exp2
 
         int existingreligions = 0;
 
+        private void die()
+        {
+            int i = 0;
+            while (true)
+            {
+                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                //string[,] kingdoms = new string[10000, 11];
+                //string[,] kingdomowner = new string[10000, 10000];
+                //string[] kingidname = new string[10000];
+
+                if (kingdoms[i, 0] == null)
+                {
+                    break;
+                }
+                int rng = rand.Next(1, 200);
+
+                if (rng <= Convert.ToInt16(kingdoms[i, 9]) - 16)
+                {
+                    rng = rand.Next(1, 100);
+                    if (rng <= 94)
+                    {
+                        kingdoms[i, 7] = NamesList[rand.Next(1, 500)];
+
+                        kingdoms[i, 5] = Convert.ToString(Convert.ToInt32(kingdoms[i, 5]) + rand.Next(-1, 2));
+                        kingdoms[i, 4] = Convert.ToString(Convert.ToInt32(kingdoms[i, 4]) + rand.Next(-1, 2));
+
+                        kingdoms[i, 9] = rand.Next(16, 50).ToString();
+
+                    }
+                    else
+                    {
+                        kingdoms[i, 5] = Convert.ToString(rand.Next(-5, 5));
+                        kingdoms[i, 4] = Convert.ToString(rand.Next(-5, 5));
+                        kingdoms[i, 7] = NamesList[rand.Next(1, 500)];
+                        kingdoms[i, 8] = SurnameList[rand.Next(1, 500)];
+                        kingdoms[i, 9] = rand.Next(16, 50).ToString();
+                    }
+                    //Writer3.Write(NamesList[Rander.Next(1, 500)] + "%");
+                    //Writer3.Write(SurnameList[Rander.Next(1, 500)] + "%");
+                    //Writer3.Write(Rander.Next(16, 50) + "%");
+                }
+                else
+                {
+                    kingdoms[i, 9] = (Convert.ToInt16(kingdoms[i, 9]) + 1).ToString();
+                }
+                i += 1;
+
+            }
+        }
+
+        int maxsci = 0;
+
+        private void MaxScience()
+        {
+            int i = 0;
+            while (true)
+            {
+                if (kingdoms[i, 0] == null)
+                {
+                    break;
+                }
+                else
+                {
+                    if (Convert.ToInt16(kingdoms[i, 6]) > maxsci)
+                    {
+                        maxsci = Convert.ToInt16(kingdoms[i, 6]);
+                    }
+                }
+
+                i += 1;
+            }
+        }
+
+        int[] valuesperprov = new int[10000];
+
+        private void ValueProv()
+        {
+            int i = 0;
+            int smallest = 999999;
+            int biggest = 0;
+
+            while (true)
+            {
+                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                //string[,] provinces = new string[10000, 16];
+
+                if (provinces[i, 0] == null)
+                {
+                    break;
+                }
+
+                if (maxsci < 50)
+                {
+                    valuesperprov[i + 2] = (Convert.ToInt16(provinces[i, 4]) + Convert.ToInt16(kingdoms[i, 9]) + Convert.ToInt16(provinces[i, 9]));
+                }
+                else if (maxsci < 100)
+                {
+                    valuesperprov[i + 2] = (Convert.ToInt16(provinces[i, 5]) + Convert.ToInt16(kingdoms[i, 9]) + Convert.ToInt16(provinces[i, 9]));
+                }
+                else if (maxsci < 150)
+                {
+                    valuesperprov[i + 2] = (Convert.ToInt16(provinces[i, 6]) + Convert.ToInt16(kingdoms[i, 9]) + Convert.ToInt16(provinces[i, 9]));
+                }
+                else if (maxsci < 200)
+                {
+                    valuesperprov[i + 2] = (Convert.ToInt16(provinces[i, 7]) + Convert.ToInt16(kingdoms[i, 9]) + Convert.ToInt16(provinces[i, 9]));
+                }
+                else
+                {
+                    valuesperprov[i + 2] = (Convert.ToInt16(provinces[i, 8]) + Convert.ToInt16(kingdoms[i, 9]) + Convert.ToInt16(provinces[i, 9]));
+                }
+
+                if (valuesperprov[i + 2] > biggest)
+                {
+                    biggest = valuesperprov[i + 2];
+                }
+                else if (valuesperprov[i + 2] < smallest)
+                {
+                    smallest = valuesperprov[i + 2];
+                }
+                i += 1;
+            }
+
+            i = 0;
+            while (true)
+            {
+                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                //string[,] provinces = new string[10000, 16];
+
+                if (provinces[i, 0] == null)
+                {
+                    break;
+                }
+
+                valuesperprov[i + 2] = Math.Abs(smallest - valuesperprov[i + 2]);
+                i += 1;
+            }
+        }
+
+        private void WarFunc()
+        {
+            int i = 2;
+
+            while (true)
+            {
+                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                //string[,] provinces = new string[10000, 16];
+
+                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+
+                if (provinces[i, 0] == null)
+                {
+                    break;
+                }
+
+                string[] tempreturn = new string[10000];
+                tempreturn = return_adjacent_king(i);
+
+                int m = 0;
+                int off = -10;
+                if (rand.Next(1, 1000) == 5)
+                {
+                    while (true)
+                    {
+                        if (tempreturn[m] == null)
+                        {
+                            break;
+                        }
+
+                        int tempid = Convert.ToInt16(kingdoms[Convert.ToInt16(provinces[Convert.ToInt16(tempreturn[m]), 0]), 0]);
+                        if (decidewar(Convert.ToInt16(valuesperprov[Convert.ToInt16(tempreturn[m])]), i, tempid, off))
+                        {
+                            //Console.WriteLine("A");
+                            eventnews("War_Declare_0", kingdoms[tempid, 1], kingdoms[Convert.ToInt16(provinces[tempid,0]),1]);
+                            //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
+                            
+                            break;
+                        }
+                        else
+                        {
+                            //Console.WriteLine("B");
+                        }
+                        m += 1;
+                        off += rand.Next(-2, 2);
+                    }
+                }
+
+                i += 1;
+            }
+        }
+
+        private bool decidewar(int value, int userid, int enemyid,int offset)
+        {
+            double score = value;
+
+            if(Convert.ToInt32(kingdoms[userid,10]) < Convert.ToInt32(kingdoms[enemyid,10]))
+            {
+                score -= 100;
+            }
+            else
+            {
+                double percent = Convert.ToInt32(kingdoms[enemyid, 10]);
+                score += Math.Min((((Convert.ToInt32(kingdoms[userid, 10]) / percent))),50);
+            }
+
+            score += rand.Next(-50, 10) + offset;
+
+            if(score > 100)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private string[] return_adjacent_king(int user)
+        {
+            //find all owned provinces by the target
+            string[] adjtiles = new string[10000];
+
+            int i = 0;
+            int back = 0;
+
+            while (true)
+            {
+                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                //string[,] provinces = new string[10000, 16];
+
+                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+
+                if (provinces[i, 0] == null)
+                {
+                    break;
+                }
+
+                //UP LEFT DOWN RIGHT
+                if (provinces[i,3] == kingdoms[user,1])
+                {
+                    for (int m = 0; m < 4; m++)
+                    {
+                        if (adjs[i, m] == null)
+                        {
+
+                        }
+                        else
+                        {
+                            adjtiles[back] = adjs[i, m];
+                            back += 1;
+                        }
+                    }
+                }
+                i += 1;
+            }
+
+            return adjtiles;
+
+                //find all adjacents by the target
+                //compile list of adjacents - ignore own provinces and duplicates.
+            }
+
         private void Religion_Form()
         {
-            int check = rand.Next(1, 100 * (10^(existingreligions + 1)));
 
-            if (check == 50 && existingreligions < 11) //check == 50
+            //IMPORTANT
+
+            //EXISTING RELIGIONS DOES NOT SAVE
+            int check = rand.Next(1, (10^(existingreligions + 1)));
+
+            if (check == 5 && existingreligions < 11) //check == 50
             {
                 int count = 0;
                 int largestindex = 0;
@@ -1974,7 +2302,7 @@ namespace Exp2
                 //string[,] Religions = new string[11, 4];
                 //string[] ReligionId = new string[11];
 
-                if (nochange == false || largestindex == 0 && provinces[largestindex, 2] == "PAGAN")
+                if (nochange == false || largestindex == 0 && provinces[largestindex, 2] == "PAGAN" && kingdoms[largestindex + 2, 2] != "TRIBAL")
                 {
                     provinces[largestindex, 2] = ReligionId[existingreligions];
                     eventnews("Religion_Form_1", provinces[largestindex, 1], ReligionId[existingreligions]);
@@ -2002,13 +2330,13 @@ namespace Exp2
             {
                 maxcount = 1;
                 tock.Interval = 71;
-                //maxcount = 7;
+                maxcount = rand.Next(5, 15);
             }
             else if (speed == 3) //vvvv fastboye
             {
                 maxcount = 1;
                 tock.Interval = 16;
-                //maxcount = 30;
+                maxcount = rand.Next(20,41);
             }
 
             while (realcount <= maxcount - 1)
@@ -2022,6 +2350,9 @@ namespace Exp2
                     Reinforcements();
                     Religion_Form();
                     eventnews("Reinforce", null, null);
+                    MaxScience();
+                    ValueProv();
+                    WarFunc();
                 }
                 else if(day == 29)
                 {
@@ -2033,7 +2364,13 @@ namespace Exp2
                 {
                     year += 1;
                     eventnews("New_Year",year.ToString(),null);
+                    die();
                     month = 1;
+                }
+
+                if(year % 10 == 0 && day == 1 && month == 1)
+                {
+                    //Save();
                 }
 
                 realcount += 1;
@@ -2041,6 +2378,7 @@ namespace Exp2
 
             Dobits();
             defaultbuttons();
+            //mapprov();
 
             Back.Invalidate();
             if (lastnews != 0 && lastnews < 10)

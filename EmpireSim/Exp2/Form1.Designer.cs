@@ -93,6 +93,7 @@
             this.Progress.Name = "Progress";
             this.Progress.Size = new System.Drawing.Size(1354, 44);
             this.Progress.TabIndex = 4;
+            this.Progress.Visible = false;
             // 
             // Form1
             // 

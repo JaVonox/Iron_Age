@@ -377,7 +377,7 @@ namespace Exp2
                     Writer4.Write("0" + "\r\n");
                     Writer4.Write("1" + "\r\n");
                     Writer4.Write("1" + "\r\n");
-                    Writer4.Write(point.ToString() + "\r\n");
+                    Writer4.Write(0 + "\r\n");
                     Writer4.Close();
 
                     System.IO.StreamWriter Writer5 = new System.IO.StreamWriter(pathing + "//History.dat");
@@ -983,6 +983,7 @@ namespace Exp2
         {
             Application.Exit();
         }
+
     }
 
 
