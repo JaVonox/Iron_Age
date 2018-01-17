@@ -115,32 +115,32 @@ namespace Exp2
                 {
                     if (Convert.ToInt16(map[x, y]) != 0)
                     {
-                        if (map[x + 1, y] != map[x, y])
+                        if (map[x + 1, y] != map[x, y] && map[x + 1, y] != "0")
                         {
                             if (Convert.ToInt16(map[x + 1, y]) != 0)
                             {
-                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 3] = map[x + 1, y];
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 3] = (Convert.ToInt16(map[x + 1, y])).ToString();
                             }
                         }
-                        else if (map[x - 1, y] != map[x, y])
+                        if (map[x - 1, y] != map[x, y] && map[x - 1, y] != "0")
                         {
                             if (Convert.ToInt16(map[x - 1, y]) != 0)
                             {
-                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 1] = map[x - 1, y];
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 1] = (Convert.ToInt16(map[x - 1, y])).ToString();
                             }
                         }
-                        else if (map[x, y + 1] != map[x, y])
+                        if (map[x, y + 1] != map[x, y] && map[x, y + 1] != "0")
                         {
                             if (Convert.ToInt16(map[x, y + 1]) != 0)
                             {
-                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 0] = map[x, y + 1];
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 0] = (Convert.ToInt16(map[x, y + 1])).ToString();
                             }
                         }
-                        else if (map[x, y - 1] != map[x, y])
+                        if (map[x, y - 1] != map[x, y] && map[x, y - 1] != "0")
                         {
                             if (Convert.ToInt16(map[x, y - 1]) != 0)
                             {
-                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 2] = map[x, y - 1];
+                                adjs[Convert.ToInt16(provinces[Convert.ToInt16(map[x, y]) - 2, 0]), 2] = (Convert.ToInt16(map[x, y - 1])).ToString();
                             }
                         }
                     }
@@ -2141,7 +2141,7 @@ namespace Exp2
                 }
 
                 string[] tempreturn = new string[10000];
-                tempreturn = return_adjacent_king(i);
+                tempreturn = return_adjacent_king(i - 2);
 
                 int m = 0;
                 int off = -10;
@@ -2154,13 +2154,17 @@ namespace Exp2
                             break;
                         }
 
-                        int tempid = Convert.ToInt16(kingdoms[Convert.ToInt16(provinces[Convert.ToInt16(tempreturn[m]), 0]), 0]);
-                        if (decidewar(Convert.ToInt16(valuesperprov[Convert.ToInt16(tempreturn[m])]), i, tempid, off))
+                        int tempid = Convert.ToInt16(tempreturn[m]);
+
+                        if (decidewar(Convert.ToInt16(valuesperprov[Convert.ToInt16(tempreturn[m])]), i - 2, tempid, off) && tempid != null && tempid >= 2)
                         {
                             //Console.WriteLine("A");
-                            eventnews("War_Declare_0", kingdoms[tempid, 1], kingdoms[Convert.ToInt16(provinces[tempid,0]),1]);
+                            eventnews("War_Declare_0", kingdoms[i - 2, 1], kingdoms[tempid,1]);
+                            kingdoms[i - 2, 6] = "250";
+                            kingdoms[tempid, 6] = "150";
+                            Console.WriteLine("");
                             //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
-                            
+
                             break;
                         }
                         else
@@ -2237,8 +2241,11 @@ namespace Exp2
                             back += 1;
                         }
                     }
+                    //back += 1;
+                    //i += 1;
                 }
                 i += 1;
+
             }
 
             return adjtiles;
