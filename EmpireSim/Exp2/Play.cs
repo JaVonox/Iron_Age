@@ -162,7 +162,7 @@ namespace Exp2
 
             for (int j = row - 1; j <= row + 1; j++)
                 for (int i = column - 1; i <= column + 1; i++)
-                    if (i >= 0 && j >= 0 && i < columns && j < rows && !(j == row && i == column))
+                    if (i >= 0 && j >= 0 && i < columns && j < rows && !(j == row && i == column) && (i == column || j == row))
                         yield return arr[j, i];
         }
 
@@ -2289,10 +2289,12 @@ namespace Exp2
 
                 //kingidname[tempid] = null;
                 //kingidname[n - 2] = provinces[n - 2, 1];
+                int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[loserprovid, 3])), -2);
+
                 if (provinces[loserprovid, 1] == provinces[loserprovid, 3])
                 {
 
-                    if (kingdoms[loserprovid, 2] != "TRIBAL")
+                    if (kingdoms[tmp3n, 2] != "TRIBAL")
                     {
                         int i = 0;
                         int back = 0;
@@ -2302,25 +2304,30 @@ namespace Exp2
 
                         while (true)
                         {
-                            if (provinces[i, 1] == null)
+                            if (provinces[i, 0] == null)
                             {
+                                if(allnewcapital[0] == null)
+                                {
+                                    break;
+                                }
                                 break;
                             }
 
-                            if (provinces[i, 3] == kingdoms[loserprovid, 1])
+                            if (provinces[i, 3] == provinces[loserprovid, 3])
                             {
-                                if (i == loserprovid)
+                                if (provinces[i, 3] == provinces[i, 1])
                                 {
-                                    Console.WriteLine("A");
+
                                 }
                                 else
                                 {
-                                    allnewcapital[back] = provinces[i, 0];
+                                    allnewcapital[back] = i.ToString();
+
 
                                     if (Convert.ToInt16(provinces[i, 11]) > highesthappiness)
                                     {
                                         highesthappiness = Convert.ToInt16(provinces[i, 11]);
-                                        highesthappyid = provinces[i, 0];
+                                        highesthappyid = i.ToString();
                                     }
 
                                     back += 1;
@@ -2344,15 +2351,28 @@ namespace Exp2
                                 {
                                     if(i == 1)
                                     {
-                                        kingdoms[Convert.ToInt16(highesthappyid) - 2, 2] = "TRIBAL";
+                                        kingdoms[Convert.ToInt16(highesthappyid), 2] = "TRIBAL";
+                                    }
+                                    else
+                                    {
+                                        kingdoms[Convert.ToInt16(highesthappyid), 2] = kingdoms[tmp3n, 2];
+                                        provinces[Convert.ToInt16(highesthappyid), 3] = provinces[Convert.ToInt16(highesthappyid), 1];
+
+                                        if (kingdoms[Convert.ToInt16(highesthappyid), 2] == "TRIBAL" || kingdoms[tmp3n, 2] == "TRIBAL")
+                                        {
+                                            Console.WriteLine("A");
+                                        }
+
+                                        kingdoms[Convert.ToInt16(highesthappyid), 10] = kingdoms[tmp3n, 10];
+                                        //kingdoms[Convert.ToInt16(highesthappyid), 2] = "EMPIRE";
                                     }
 
                                     break;
                                 }
                                 else
                                 {
-                                    provinces[Convert.ToInt16(allnewcapital[i]) -2, 3] = provinces[Convert.ToInt16(highesthappyid) - 2, 1];
-                                    kingdoms[Convert.ToInt16(highesthappyid) - 2, 10] = kingdoms[loserprovid, 10];
+                                    provinces[Convert.ToInt16(allnewcapital[i]), 3] = provinces[Convert.ToInt16(highesthappyid), 1];
+                                    kingidname[Convert.ToInt16(allnewcapital[i])] = provinces[Convert.ToInt16(highesthappyid), 1];
                                 }
                                 
 
@@ -2364,8 +2384,12 @@ namespace Exp2
 
                     }
                 }
+                else
+                {
+                    Console.WriteLine("SHOULD NTO OCCUR?");
+                }
 
-                kingidname[loserprovid] = gainerkingid.ToString();
+                kingidname[loserprovid] = kingdoms[gainerkingid,3].ToString();
                 provinces[loserprovid, 3] = kingdoms[gainerkingid, 1];
                 provinces[loserprovid, 11] = (Convert.ToInt16(provinces[loserprovid, 11]) - 1).ToString();
             }
@@ -2420,6 +2444,35 @@ namespace Exp2
             //}
             score += rand.Next(-50, 10) + offset;
 
+            if(score > 10 && score <= 101)
+            {
+                string[] tempreturn = new string[10000];
+                tempreturn = return_adjacent(userid);
+
+                int m = 0;
+                
+                while(true)
+                {
+                    if(tempreturn[m] == null)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if(provinces[Convert.ToInt16(tempreturn[m]),3] != provinces[Convert.ToInt16(tempreturn[m]), 1])
+                        {
+                            score += 25;
+
+                            if(provinces[Convert.ToInt16(tempreturn[m]), 3] == provinces[userid, 3])
+                            {
+                                score += 25;
+                            }
+                        }
+                        score -= 1;
+                        m += 1;
+                    }
+                }
+            }
             if(score > 100)
             {
                 return true;
@@ -2472,11 +2525,35 @@ namespace Exp2
 
             }
 
+            reshuffle(adjtiles);
             return adjtiles;
 
                 //find all adjacents by the target
                 //compile list of adjacents - ignore own provinces and duplicates.
             }
+
+        void reshuffle(string[] texts)
+        {
+            // Knuth shuffle algorithm :: courtesy of Wikipedia.
+            int finalindex = 0;
+            while(true)
+            {
+                if(texts[finalindex] == null)
+                {
+                    break;
+                }
+                finalindex += 1;
+            }
+
+            for (int t = 0; t < finalindex; t++)
+            {
+                string tmp = texts[t];
+                int r = rand.Next(t, finalindex);
+                texts[t] = texts[r];
+                texts[r] = tmp;
+            }
+        }
+
 
         private string[] return_adjacent(int user)
         {
@@ -2505,10 +2582,10 @@ namespace Exp2
                         back += 1;
                     }
                 }
-                //back += 1;
-                //i += 1;
+            //back += 1;
+            //i += 1;
             //}
-
+            reshuffle(adjtiles);
             return adjtiles;
 
             //find all adjacents by the target
@@ -2520,11 +2597,17 @@ namespace Exp2
             int[] Taken = new int[10000];
             int tback = 0;
             int i = 2;
-            int spreadcount = rand.Next(1, Math.Max(existingreligions * 50,5));
+            //int spreadcount = rand.Next(4, Math.Max(existingreligions * 2,6));
+            int maxspread = rand.Next(1, existingreligions + 4);
+            int[] spreadperre = new int[12]; 
             //bool spreadbroke = false;
 
             while (true)
             {
+                if(ReligionId.Contains(provinces[i,2]) == false)
+                {
+                    provinces[i, 2] = "PAGAN";
+                }
                 //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                 //string[,] provinces = new string[10000, 16];
 
@@ -2535,31 +2618,33 @@ namespace Exp2
 
                     if (ReligionId.Contains(provinces[i, 2]) == false && ReligionId.Contains(kingdoms[tmp3n,3]) && Taken.Contains(i) == false)
                     {
-                        provinces[i, 2] = kingdoms[tmp3n, 3];
-                        Taken[tback] = Convert.ToInt16(provinces[i, 0]);
-                        tback += 1;
+                            provinces[i, 2] = kingdoms[tmp3n, 3];
+                            spreadperre[Array.IndexOf(ReligionId, provinces[i, 2])] += 1;
+                            Taken[tback] = Convert.ToInt16(provinces[i, 0]);
+                            tback += 1;
                     }
 
                     if (provinces[i,3] != provinces[i,1] && ReligionId.Contains(kingdoms[tmp3n, 3]) && Taken.Contains(i) == false)
                     {
                         int rocount = rand.Next(1, 100);
-
-                        if (provinces[i, 2] != "PAGAN" && rocount == 5)
-                        {
-                            provinces[i, 2] = kingdoms[i, 3];
-                            provinces[i, 11] = (Convert.ToInt16(provinces[i, 11]) - 2).ToString();
-                            spreadcount = Math.Max(spreadcount - 1, 5);
-                            Taken[tback] = Convert.ToInt16(provinces[i,0]);
-                            tback += 1;
-                        }
-                        else if(provinces[i, 2] == "PAGAN" && rocount <= 50)
-                        {
-                            provinces[i, 2] = kingdoms[i, 3];
-                            provinces[i, 11] = (Convert.ToInt16(provinces[i, 11]) + 1).ToString();
-                            spreadcount = Math.Max(spreadcount - 1, 5);
-                            Taken[tback] = Convert.ToInt16(provinces[i, 0]);
-                            tback += 1;
-                        }
+                            if (ReligionId.Contains(provinces[i,2]) && rocount == 5 && ReligionId.Contains(kingdoms[tmp3n,3]))
+                            {
+                                provinces[i, 2] = kingdoms[tmp3n, 3];
+                                provinces[i, 11] = (Convert.ToInt16(provinces[i, 11]) - 2).ToString();
+                                //spreadcount = Math.Max(spreadcount - 1, 5);
+                                spreadperre[Array.IndexOf(ReligionId, provinces[i, 2])] += 1;
+                                Taken[tback] = Convert.ToInt16(provinces[i, 0]);
+                                tback += 1;
+                            }
+                            else if (provinces[i, 2] == "PAGAN" && rocount <= 50 && ReligionId.Contains(kingdoms[tmp3n, 3]))
+                            {
+                                provinces[i, 2] = kingdoms[tmp3n, 3];
+                                provinces[i, 11] = (Convert.ToInt16(provinces[i, 11]) + 1).ToString();
+                                //spreadcount = Math.Max(spreadcount - 1, 5);
+                                spreadperre[Array.IndexOf(ReligionId, provinces[i, 2])] += 1;
+                                Taken[tback] = Convert.ToInt16(provinces[i, 0]);
+                                tback += 1;
+                            }
                     }
 
                     if (ReligionId.Contains(provinces[i,2]))
@@ -2586,12 +2671,7 @@ namespace Exp2
                 int m = 0;
                 int off = -10;
 
-                //if(spreadbroke == true)
-                //{
-                //    break;
-                //}
-
-                if (ReligionId.Contains(provinces[i, 2]) && Taken.Contains(i) == false)
+                if (ReligionId.Contains(provinces[i, 2]) && Taken.Contains(i) == false && spreadperre[Array.IndexOf(ReligionId, provinces[i, 2])] <= maxspread)
                 {
                     while (true)
                     {
@@ -2605,7 +2685,7 @@ namespace Exp2
                         }
                         else
                         { 
-                            if (tempreturn[m] == null || rand.Next(1,spreadcount) == 3)
+                            if (tempreturn[m] == null)
                             {
                                 //spreadbroke = true;
                                 break;
@@ -2620,7 +2700,8 @@ namespace Exp2
                                     kingdoms[tmp3n, 3] = provinces[i, 2];
                                 }
                                 eventnews("Religion_Convert", provinces[Convert.ToInt16(tempreturn[m]), 1], provinces[i, 2]);
-                                spreadcount = Math.Max(spreadcount - 1, 5);
+                                //spreadcount = Math.Max(spreadcount - 1, 5);
+                                spreadperre[Array.IndexOf(ReligionId, provinces[i, 2])] += 1;
                                 Taken[tback] = Convert.ToInt16(tempreturn[m]);
                                 tback += 1;
                             }
@@ -2629,7 +2710,8 @@ namespace Exp2
                                 provinces[Convert.ToInt16(tempreturn[m]), 2] = provinces[i, 2];
                                 eventnews("Religion_Convert", provinces[Convert.ToInt16(tempreturn[m]), 1], provinces[i, 2]);
                                 kingdoms[Convert.ToInt16(tempreturn[m]), 3] = provinces[i, 2];
-                                spreadcount = Math.Max(spreadcount - 1,5);
+                                //spreadcount = Math.Max(spreadcount - 1,5);
+                                spreadperre[Array.IndexOf(ReligionId, provinces[i, 2])] += 1;
                                 Taken[tback] = Convert.ToInt16(tempreturn[m]);
                                 tback += 1;
                             }
