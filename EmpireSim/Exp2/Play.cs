@@ -41,7 +41,7 @@ namespace Exp2
         //Country id, enemy id, war id
         string[,] Warsgroup = new string[10000, 10000];
 
-        //$COUNTRYID%TRUCELENGTH%~
+        //ID | Type
         string[] truce = new string[10000];
 
 
@@ -574,7 +574,7 @@ namespace Exp2
 
             System.IO.StreamReader Readf = new System.IO.StreamReader(path + "//Peace.dat");
 
-            //$COUNTRYID%TRUCELENGTH%~ all truces end on new years?
+            //ID | TYPE all truces end on new years?
 
             ib = -1;
             aftb = false;
@@ -749,15 +749,17 @@ namespace Exp2
                 //string[,] provinces = new string[10000,16];
                 //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
 
-                if (provinces[n - 2, 3] != provinces[n - 2, 1])
-                {
-                    //kingidname[n -2] = provinces[n -2, 3];
-                    kingidname[n - 2] = null;
-                }
-                else
-                {
+                //if (provinces[n - 2, 3] != provinces[n - 2, 1])
+                //{
+                //    //kingidname[n -2] = provinces[n -2, 3];
+                //    kingidname[n - 2] = null;
+                //}
+                //else
+                //{
                     kingidname[n - 2] = provinces[n - 2, 1];
-                }
+                //}
+
+                
             }
 
         }
@@ -861,15 +863,18 @@ namespace Exp2
             Writere.Close();
 
             System.IO.StreamWriter Writerf = new System.IO.StreamWriter(path + "//Peace.dat");
-            //$COUNTRYID%TRUCELENGTH%~
+            //ID | Type
             i = 0;
 
-            while (truce[i] != null || i == 0)
+            while (i <= 9999)
             {
-                if (i == 0 && truce[i] == null)
+                if (truce[i] == null)
                 {
+                    if(provinces[i,0] == null)
+                    {
+                        break;
+                    }
                     Writerf.WriteLine("$~");
-                    break;
                 }
                 Writerf.WriteLine("$" + truce[i] + "%~");
                 i += 1;
@@ -1779,6 +1784,8 @@ namespace Exp2
 
                         Point newpointa2 = new Point(Convert.ToInt16(((xlen / 40) * 32.2)), Convert.ToInt16((ylen / 40) * 3.2));
 
+                        string tmp = Convert.ToString(Convert.ToInt32(map[mouseposX, mouseposY]) - 2);
+                        string kingidtmp = kingidname[Convert.ToInt32(map[mouseposX, mouseposY]) - 2];
                         if (kingidname[Convert.ToInt32(map[mouseposX, mouseposY]) - 2] == null || provinces[Convert.ToInt32(map[mouseposX, mouseposY]) -2,3] != provinces[Convert.ToInt32(map[mouseposX, mouseposY]) - 2, 1])
                         {
                             g.DrawString("Owned land of ", myFontDetail, newbrushD, newpointa2);
@@ -2229,7 +2236,7 @@ namespace Exp2
                     temprand = rand.Next(1, 1000);
                 }
 
-                if (temprand == 5 && provinces[i,1] == provinces[i,3])
+                if (temprand == 5 && provinces[i,1] == provinces[i,3] && truce[i] == null)
                 {
                     while (true)
                     {
@@ -2339,7 +2346,7 @@ namespace Exp2
 
                         if (highesthappyid == null)
                         {
-                            Console.WriteLine("A");
+                            //Console.WriteLine("A");
                         }
                         else
                         {
@@ -2352,19 +2359,21 @@ namespace Exp2
                                     if(i == 1)
                                     {
                                         kingdoms[Convert.ToInt16(highesthappyid), 2] = "TRIBAL";
+                                        peaceassign(gainerkingid, Convert.ToInt16(highesthappyid));
                                     }
                                     else
                                     {
                                         kingdoms[Convert.ToInt16(highesthappyid), 2] = kingdoms[tmp3n, 2];
                                         provinces[Convert.ToInt16(highesthappyid), 3] = provinces[Convert.ToInt16(highesthappyid), 1];
 
-                                        if (kingdoms[Convert.ToInt16(highesthappyid), 2] == "TRIBAL" || kingdoms[tmp3n, 2] == "TRIBAL")
-                                        {
-                                            Console.WriteLine("A");
-                                        }
+                                        //if (kingdoms[Convert.ToInt16(highesthappyid), 2] == "TRIBAL" || kingdoms[tmp3n, 2] == "TRIBAL")
+                                        //{
+                                        //    Console.WriteLine("A");
+                                        //}
 
                                         kingdoms[Convert.ToInt16(highesthappyid), 10] = kingdoms[tmp3n, 10];
                                         //kingdoms[Convert.ToInt16(highesthappyid), 2] = "EMPIRE";
+                                        peaceassign(gainerkingid, Convert.ToInt16(highesthappyid));
                                     }
 
                                     break;
@@ -2372,7 +2381,7 @@ namespace Exp2
                                 else
                                 {
                                     provinces[Convert.ToInt16(allnewcapital[i]), 3] = provinces[Convert.ToInt16(highesthappyid), 1];
-                                    kingidname[Convert.ToInt16(allnewcapital[i])] = provinces[Convert.ToInt16(highesthappyid), 1];
+                                    //kingidname[Convert.ToInt16(allnewcapital[i])] = provinces[Convert.ToInt16(highesthappyid), 1];
                                 }
                                 
 
@@ -2384,14 +2393,11 @@ namespace Exp2
 
                     }
                 }
-                else
-                {
-                    Console.WriteLine("SHOULD NTO OCCUR?");
-                }
 
-                kingidname[loserprovid] = kingdoms[gainerkingid,3].ToString();
+                //kingidname[loserprovid] = kingdoms[gainerkingid,3].ToString();
                 provinces[loserprovid, 3] = kingdoms[gainerkingid, 1];
                 provinces[loserprovid, 11] = (Convert.ToInt16(provinces[loserprovid, 11]) - 1).ToString();
+                peaceassign(gainerkingid, tmp3n);
             }
         }
         private bool decidewar(int value, int userid, int enemyid,int offset)
@@ -2554,6 +2560,27 @@ namespace Exp2
             }
         }
 
+        private void peaceassign(int winnerid,int loserid)
+        {
+            //ID | TYPE all truces end on new years?
+            //truce[]
+            //1 = truce at end of year
+
+            truce[winnerid] = "1";
+            truce[loserid] = "1";
+
+        }
+
+        private void peaceclear()
+        {
+            int i = 0;
+
+            while(i <= 9999)
+            {
+                truce[i] = null;
+                i += 1;
+            }
+        }
 
         private string[] return_adjacent(int user)
         {
@@ -2907,6 +2934,7 @@ namespace Exp2
                     year += 1;
                     eventnews("New_Year",year.ToString(),null);
                     die();
+                    peaceclear();
                     month = 1;
                 }
 
