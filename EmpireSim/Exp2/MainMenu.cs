@@ -1240,12 +1240,15 @@ namespace Exp2
         bool browse = false;
         bool sim = false;
         bool obs = false;
+        bool startenabled = false;
+        bool assignedcycle = false;
         string[] allgen = new string[10001];
         int point = 0;
         int rndcycle = 0;
 
         private void MenuImg_Click(object sender, EventArgs e)
         {
+
             using (var g = Graphics.FromImage(MenuImg.Image))
             {
                 MenuImg.Invalidate();
@@ -1272,6 +1275,7 @@ namespace Exp2
                         objanimatestage[2] = 0;
                         objanimatestage[3] = 0;
                         updatebigbox(selectedobj);
+                        assignedcycle = false;
 
                     }
                     else
@@ -1289,6 +1293,7 @@ namespace Exp2
                             objanimatestage[1] = 0;
                             objanimatestage[3] = 0;
                             updatebigbox(selectedobj);
+                            assignedcycle = false;
 
                         }
                         else
@@ -1306,6 +1311,7 @@ namespace Exp2
                                 objanimatestage[1] = 0;
                                 objanimatestage[2] = 0;
                                 updatebigbox(selectedobj);
+                                assignedcycle = false;
 
                             }
                             else
@@ -1325,13 +1331,37 @@ namespace Exp2
 
                                     //Point newpointe3 = new Point(Convert.ToInt16(((xlen / 10) * 4.86)), Convert.ToInt16((ylen / 20) * 10.52));
                                     //g.DrawString("Simulate", myFontsmall, newbrushC, newpointe3);
-                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32) && browse == false)
+                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32)) //&& browse == false
                                     {
+                                        MenuImg.Invalidate();
+                                        bool tmpo = obs;
+                                        bool tmps = sim;
+                                        updatebigbox(selectedobj);
+                                        assignedcycle = false;
+                                        obs = tmpo;
+                                        sim = tmps;
                                         filebrowse("Open");
+
+                                        if(obs == true && sim == false)
+                                        {
+
+                                            Point newpointe1 = new Point(Convert.ToInt16(((xlen / 10) * 3.76)), Convert.ToInt16((ylen / 20) * 10.52));
+                                            g.DrawString("Observe", myFontsmall, newbrushA, newpointe1);
+
+                                            Point newpointe3 = new Point(Convert.ToInt16(((xlen / 10) * 4.86)), Convert.ToInt16((ylen / 20) * 10.52));
+                                            g.DrawString("Simulate", myFontsmall, newbrushC, newpointe3);
+                                        }
+                                        else if(obs == false && sim == true)
+                                        {
+                                            Point newpointe1 = new Point(Convert.ToInt16(((xlen / 10) * 3.76)), Convert.ToInt16((ylen / 20) * 10.52));
+                                            g.DrawString("Observe", myFontsmall, newbrushC, newpointe1);
+
+                                            Point newpointe3 = new Point(Convert.ToInt16(((xlen / 10) * 4.86)), Convert.ToInt16((ylen / 20) * 10.52));
+                                            g.DrawString("Simulate", myFontsmall, newbrushA, newpointe3);
+                                        }
 
                                         if (outcancel == false)
                                         {
-                                            MenuImg.Invalidate();
                                             Point newpointa1 = new Point(Convert.ToInt16(((xlen / 10) * 4.56)), Convert.ToInt16((ylen / 20) * 7.32));
                                             g.DrawString(outname, myFontsmall, newbrushD, newpointa1);
                                             outcancel = true;
@@ -1347,10 +1377,12 @@ namespace Exp2
                                             Point newpointa3 = new Point(Convert.ToInt16(((xlen / 10) * 3.66)), Convert.ToInt16((ylen / 20) * 9.52));
                                             g.DrawString(year, myFontsmall, newbrushD, newpointa3);
                                             //filenames will stack over each other upon reentry
+                                            startenabled = true;
+                                            assignedcycle = true;
                                         }
                                         else
                                         {
-
+                                            //browse = false;
                                         }
                                     }
                                     else if (mouseposX >= (xlen / 10) * 3.66 && mouseposX <= ((xlen / 10) * 4.56) && mouseposY >= ((ylen / 20) * 10.52) && mouseposY <= ((ylen / 20) * 11.00))
@@ -1381,7 +1413,7 @@ namespace Exp2
                                     }
                                     else if (mouseposX >= (xlen / 10) * 6.70 && mouseposX <= ((xlen / 10) * 7.76) && mouseposY >= ((ylen / 20) * 13.52) && mouseposY <= ((ylen / 20) * 14.52))
                                     {
-                                        if (obs == true && browse == true)
+                                        if (obs == true && browse == true && startenabled == true)
                                         {
                                             Timera.Stop();
                                             Observe observer = new Observe();
@@ -1389,7 +1421,7 @@ namespace Exp2
                                             observer.Show();
                                             this.Hide();
                                         }
-                                        else if (sim == true && browse == true)
+                                        else if (sim == true && browse == true && startenabled == true)
                                         {
                                             Timera.Stop();
                                             Play Playfrm = new Play();
@@ -1406,16 +1438,42 @@ namespace Exp2
                                     Brush newbrushA = new SolidBrush(Color.DarkRed);
 
                                     //browse for file directory
-                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32) && browse == false)
+                                    if (mouseposX >= (xlen / 10) * 6.36 && mouseposX <= ((xlen / 10) * 7.36) && mouseposY >= ((ylen / 20) * 7.52) && mouseposY <= ((ylen / 20) * 8.32))//&& browse == false)
                                     {
+                                        MenuImg.Invalidate();
+                                        bool tmpe = existing;
+                                        bool tmpr = random;
+                                        updatebigbox(selectedobj);
+                                        assignedcycle = false;
                                         filebrowse("WriteNew");
+                                        random = tmpr;
+                                        existing = tmpe;
+
+                                        if (existing == false && random == true)
+                                        {
+                                            Point newpointb1 = new Point(Convert.ToInt16(((xlen / 10) * 5.56)), Convert.ToInt16((ylen / 20) * 8.52));
+                                            g.DrawString("Random", myFontsmall, newbrushA, newpointb1);
+
+                                            Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 6.90)), Convert.ToInt16((ylen / 20) * 8.52));
+                                            g.DrawString("Existing", myFontsmall, newbrushC, newpointb3);
+                                        }
+                                        else if(existing == true && random == false)
+                                        {
+                                            Point newpointb1 = new Point(Convert.ToInt16(((xlen / 10) * 5.56)), Convert.ToInt16((ylen / 20) * 8.52));
+                                            g.DrawString("Random", myFontsmall, newbrushC, newpointb1);
+
+                                            Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 6.90)), Convert.ToInt16((ylen / 20) * 8.52));
+                                            g.DrawString("Existing", myFontsmall, newbrushA, newpointb3);
+                                        }
+                                        
+
                                         if (outcancel == false)
                                         {
-                                            MenuImg.Invalidate();
                                             Point newpointa1 = new Point(Convert.ToInt16(((xlen / 10) * 4.56)), Convert.ToInt16((ylen / 20) * 7.32));
                                             g.DrawString(outname, myFontsmall, newbrushD, newpointa1);
                                             outcancel = true;
-
+                                            startenabled = true;
+                                            assignedcycle = true;
                                             //filenames will stack over each other upon reentry
                                         }
                                         else
@@ -1449,7 +1507,7 @@ namespace Exp2
                                     {
                                         //provinces
                                         Point newpointb3 = new Point(Convert.ToInt16(((xlen / 10) * 3.06)), Convert.ToInt16((ylen / 20) * 9.52));
-                                        if (random == true || existing == true && browse == true)
+                                        if (random == true || existing == true && browse == true && startenabled == true)
                                         {
                                             rndcycle = 1;
                                             if (random == false)
@@ -1496,12 +1554,22 @@ namespace Exp2
                                 objanimatestage[2] = 0;
                                 objanimatestage[3] = 0;
                                 updatebigbox(selectedobj);
+                                assignedcycle = false;
                                 }
                             }
                         }
                     }
                 }
             }
+
+            if(assignedcycle != true)
+            {
+                startenabled = false;
+            }
+            //else
+            //{
+            //    startenabled = false;
+            //}
         }
 
         private void MainMenu_FormClosed(object sender, FormClosedEventArgs e)

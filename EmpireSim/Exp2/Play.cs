@@ -2004,53 +2004,48 @@ namespace Exp2
             {
                 if (kingdoms[i, 0] != null)
                 {
+                    int basemn = 0;
+
+                    int m = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[i, 3])), 0);
 
                     if (provinces[i, 3] != provinces[i, 1])
                     {
-                        int m = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[i, 3])),0);
-
-                        if (Convert.ToInt32(kingdoms[m, 6]) < 50)
-                        {
-                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 4])));
-                        }
-                        else if (Convert.ToInt32(kingdoms[m, 6]) < 100)                        {
-                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 5])));
-                        }
-                        else if (Convert.ToInt32(kingdoms[m, 6]) < 150)
-                        {
-                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 6])));
-                        }
-                        else if (Convert.ToInt32(kingdoms[m, 6]) < 200)
-                        {
-                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 7])));
-                        }
-                        else
-                        {
-                            kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(kingdoms[m, 10]) + 0.001 * (1000 * Convert.ToInt32(provinces[i, 8])));
-                        }
+                        //int m = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[i, 3])),0);
+                        basemn = 10;
+                    }
+                    else if(kingdoms[m,2] != "TRIBAL")
+                    {
+                        basemn = 100;
+                    }
+                    else if (kingdoms[m, 2] == "TRIBAL")
+                    {
+                        basemn = 1;
                     }
                     else
                     {
-                        if (Convert.ToInt32(kingdoms[i, 6]) < 50)
-                        {
-                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 4])));
-                        }
-                        else if (Convert.ToInt32(kingdoms[i, 6]) < 100)
-                        {
-                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 5])));
-                        }
-                        else if (Convert.ToInt32(kingdoms[i, 6]) < 150)
-                        {
-                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 6])));
-                        }
-                        else if (Convert.ToInt32(kingdoms[i, 6]) < 200)
-                        {
-                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 7])));
-                        }
-                        else
-                        {
-                            kingdoms[i, 10] = Convert.ToString(Convert.ToInt32(kingdoms[i, 10]) + 0.01 * (1000 * Convert.ToInt32(provinces[i, 8])));
-                        }
+                        basemn = 10;
+                    }
+
+
+                    if (Convert.ToInt32(kingdoms[m, 6]) < 50)
+                    {
+                        kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(Convert.ToInt32(kingdoms[m, 10]) + Math.Max(1,0.001 * (basemn * Convert.ToInt32(provinces[i, 4])))));
+                    }
+                    else if (Convert.ToInt32(kingdoms[m, 6]) < 100)
+                    {
+                        kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(Convert.ToInt32(kingdoms[m, 10]) + Math.Max(1,0.001 * (basemn * Convert.ToInt32(provinces[i, 5])))));
+                    }
+                    else if (Convert.ToInt32(kingdoms[m, 6]) < 150)
+                    {
+                        kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(Convert.ToInt32(kingdoms[m, 10]) + Math.Max(1, 0.001 * (basemn * Convert.ToInt32(provinces[i, 6])))));
+                    }
+                    else if (Convert.ToInt32(kingdoms[m, 6]) < 200)
+                    {
+                        kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(Convert.ToInt32(kingdoms[m, 10]) + Math.Max(1, 0.001 * (basemn * Convert.ToInt32(provinces[i, 7])))));
+                    }
+                    else
+                    {
+                        kingdoms[m, 10] = Convert.ToString(Convert.ToInt32(Convert.ToInt32(kingdoms[m, 10]) + Math.Max(1, 0.001 * (basemn * Convert.ToInt32(provinces[i, 8])))));
                     }
                 }
                 else
@@ -2227,7 +2222,7 @@ namespace Exp2
                 int off = -10;
                 int temprand;
 
-                if (kingdoms[i,2] != "TRIBAL")
+                if (kingdoms[i - 2,2] != "TRIBAL")
                 {
                     temprand = rand.Next(1, 10); //TEMP
                 }
@@ -2236,7 +2231,7 @@ namespace Exp2
                     temprand = rand.Next(1, 1000);
                 }
 
-                if (temprand == 5 && provinces[i,1] == provinces[i,3] && truce[i] == null)
+                if (temprand == 5 && provinces[i - 2,1] == provinces[i - 2,3] && truce[i - 2] == null)
                 {
                     while (true)
                     {
@@ -2903,9 +2898,7 @@ namespace Exp2
                 {
                     month += 1;
                     day = 1;
-                    Reinforcements();
                     Religion_Form();
-                    eventnews("Reinforce", null, null);
                     MaxScience();
                     ValueProv();
                     WarFunc();
@@ -2938,9 +2931,10 @@ namespace Exp2
                     month = 1;
                 }
 
-                if(year % 10 == 0 && day == 1 && month == 1)
+                if(month % 3 == 0 && day == 21)
                 {
-                    //Save();
+                    Reinforcements();
+                    eventnews("Reinforce", null, null);
                 }
 
                 realcount += 1;

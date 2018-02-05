@@ -42,7 +42,7 @@
             this.MenuImg.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MenuImg.Location = new System.Drawing.Point(0, 0);
             this.MenuImg.Name = "MenuImg";
-            this.MenuImg.Size = new System.Drawing.Size(1384, 861);
+            this.MenuImg.Size = new System.Drawing.Size(1366, 745);
             this.MenuImg.TabIndex = 0;
             this.MenuImg.TabStop = false;
             this.MenuImg.Click += new System.EventHandler(this.MenuImg_Click);
@@ -61,7 +61,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1384, 861);
+            this.ClientSize = new System.Drawing.Size(1366, 745);
             this.Controls.Add(this.MenuImg);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
