@@ -35,8 +35,8 @@ namespace Exp2
         string[,] Religions = new string[11, 4];
         string[] ReligionId = new string[11];
 
-        //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
-        string[,] war = new string[10000, 7];
+        //$WARTYPE%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
+        string[,] war = new string[10000, 5];
 
         //Country id, enemy id, war id
         string[,] Warsgroup = new string[10000, 10000];
@@ -476,8 +476,8 @@ namespace Exp2
             existingreligions = Convert.ToInt16(Readd.ReadLine());
             Readd.Close();
 
-            //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%STARTDATE%~
-            //string[,] war = new string[10000, 7];
+            //$WARTYPE%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
+            //string[,] war = new string[10000, 5];
 
             //Country id, enemy id, war id
             //string[,] Warsgroup = new string[10000, 10000];
@@ -856,7 +856,7 @@ namespace Exp2
                     Writere.WriteLine("$~");
                     break;
                 }
-                Writere.WriteLine("$" + war[i, 0] + "%" + war[i, 1] + "%" + war[i, 2] + "%" + war[i, 3] + "%" + war[i, 4] + "%" + war[i, 5] + "%" + war[i, 6] + "%~");
+                Writere.WriteLine("$" + war[i, 0] + "%" + war[i, 1] + "%" + war[i, 2] + "%" + war[i, 3] + "%" + war[i, 4] + "%~");
                 i += 1;
             }
 
@@ -2231,7 +2231,7 @@ namespace Exp2
                     temprand = rand.Next(1, 1000);
                 }
 
-                if (temprand == 5 && provinces[i - 2,1] == provinces[i - 2,3] && truce[i - 2] == null)
+                if (temprand == 5 && provinces[i - 2,1] == provinces[i - 2,3] && truce[i - 2] == null && war[i -2,0] == null )
                 {
                     while (true)
                     {
@@ -2241,25 +2241,50 @@ namespace Exp2
                         }
 
                         int tempid = Convert.ToInt16(tempreturn[m]);
+                        int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[tempid, 3])), -1);
 
-                        if (decidewar(Convert.ToInt16(valuesperprov[Convert.ToInt16(tempreturn[m])]), i - 2, tempid, off) && tempid >= 2)
+                        if (decidewar(Convert.ToInt16(valuesperprov[Convert.ToInt16(tempreturn[m])]), i - 2, tmp3n, off) && tempid >= 2 && war[tmp3n,0] == null && truce[tmp3n] == null && war[i -2, 0] == null && truce[i -2] == null)
                         {
                             //Console.WriteLine("A");
                             eventnews("War_Declare_0", provinces[i - 2, 3], provinces[tempid,3]);
+                            //int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[tempid, 3])), -1);
+                            //$WARTYPE%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
+                            //string[,] war = new string[10000, 5];
+
+                            if(war[i-2,0] != null || war[tmp3n,0] != null)
+                            {
+                                Console.WriteLine("BUGGO");
+                            }
+                            war[i -2,0] = "DECLARE";
+                            war[i - 2,1] = (i - 2).ToString();
+                            war[i - 2, 2] = "0";
+                            war[i - 2, 3] = (tmp3n).ToString();
+                            war[i - 2, 4] = "0";
+
+                            war[tmp3n, 0] = "DECLARE";
+                            war[tmp3n, 1] = (i - 2).ToString();
+                            war[tmp3n, 2] = "0";
+                            war[tmp3n, 3] = (tmp3n).ToString();
+                            war[tmp3n, 4] = "0";
+
 
                             //BUG - THEY CAN DECLARE WAR ONTHEMSELVES?????? MIGHT BE DUE TO -2.
                             //if(provinces[tempid,3] == provinces[tempid,1] && kingdoms[i - 2,2] != "TRIBAL")
                             //{
-                              
+
                             //    Console.WriteLine("TMP");
                             //}
-                            gainland(i - 2, tempid, "BETA");
+
+
+                            //gainland(i - 2, tempid, "BETA");
+
+
                             //kingdoms[i - 2, 2] = "CHIEFTAINSHIP";
                             //kingidname[tempid] = null;
                             //provinces[tempid, 3] = provinces[i - 2, 3];                         
                             //Console.WriteLine("");
                             //enb = 1;
-                            //$WARID%WARTYPE%WARNAME%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
+                            //$WARTYPE%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
 
                             break;
                         }
@@ -2392,7 +2417,7 @@ namespace Exp2
                 //kingidname[loserprovid] = kingdoms[gainerkingid,3].ToString();
                 provinces[loserprovid, 3] = kingdoms[gainerkingid, 1];
                 provinces[loserprovid, 11] = (Convert.ToInt16(provinces[loserprovid, 11]) - 1).ToString();
-                peaceassign(gainerkingid, tmp3n);
+                //peaceassign(gainerkingid, tmp3n);
             }
         }
         private bool decidewar(int value, int userid, int enemyid,int offset)
@@ -2862,6 +2887,182 @@ namespace Exp2
             }
         }
 
+        public void WarProgress()
+        {
+            string[] TakenId = new string[10000];
+
+            int i = 0;
+            int bcki = 0;
+
+            while (true)
+            {
+                if(provinces[i,0] == null)
+                {
+                    break;
+                }
+
+                string[] TmpAdj = new string[10000];
+                string[] AdjPTile = new string[10];
+                string[] ValueManpower = new string[10000];
+                string[] possible = new string[10000];
+
+                //$WARTYPE%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
+                //string[,] war = new string[10000, 5];
+
+                //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                //string[,] provinces = new string[10000, 16];
+
+                //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                //string[,] kingdoms = new string[10000, 11];
+                //string[,] kingdomowner = new string[10000, 10000];
+                //string[] kingidname = new string[10000];
+
+                if (war[i,0] != null && TakenId.Contains(i.ToString()) == false)
+                {
+                    bool aggresor = false;
+
+                    int aggid = Convert.ToInt16(war[i, 1]);
+                    int defid = Convert.ToInt16(war[i, 3]);
+
+                    if(aggid == i)
+                    {
+                        aggresor = true;
+                    }
+                
+                    int totalmp = Convert.ToInt16(kingdoms[aggid, 10]) + Convert.ToInt16(kingdoms[defid, 10]);
+                    
+                    if(true) //rand.Next(1,totalmp) < Convert.ToInt16(kingdoms[aggid, 10])
+                    {
+                        int x = 0;
+                        int provcount = 0;
+
+                        while(true)
+                        {
+                            if(provinces[x,0] == null)
+                            {
+                                break;
+                            }
+
+                            if(provinces[x,3] == kingdoms[defid,1])
+                            {
+                                provcount += 1;
+                            }
+                            x += 1;
+                        }
+                        TmpAdj = return_adjacent_king(aggid);
+
+                        int m = 0;
+
+                        while (true)
+                        {
+                            if (TmpAdj[m] == null)
+                            {
+                                break;
+                            }
+
+                            if (provinces[Convert.ToInt16(TmpAdj[m]), 3] != kingdoms[defid, 1])
+                            {
+                                TmpAdj[m] = "Nulled";
+                            }
+                                 
+                            m += 1;
+                        }
+
+                        m = 0;
+
+                        
+                        while (true)
+                        {
+                            if (TmpAdj[m] == null)
+                            {
+                                break;
+                            }
+
+                            if(TmpAdj[m] != "Nulled")
+                            {
+                                AdjPTile = return_adjacent(Convert.ToInt16(TmpAdj[m]));
+
+                                int count = 0;
+                                int lm = 0;
+
+                                while(true)
+                                {
+                                    if(AdjPTile[lm] == null)
+                                    {
+                                        break;
+                                    }
+
+                                    if(provinces[Convert.ToInt16(AdjPTile[lm]),3] == kingdoms[defid,1])
+                                    {
+                                        count += 1;
+                                    }
+                                    lm += 1;
+                                }
+
+                                if(Convert.ToDouble(kingdoms[aggid,10]) > ((Convert.ToDouble(kingdoms[defid, 10]) / provcount) * count))
+                                {
+                                    ValueManpower[Convert.ToInt16(TmpAdj[m])] = ((Convert.ToDouble(valuesperprov[Convert.ToInt16(TmpAdj[m]) + 2] * 100) / ((Convert.ToDouble(kingdoms[defid, 10]) / provcount) * count))).ToString();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("A");
+                                }
+                            }
+                            m += 1;
+                        }
+
+                        int l = 0;
+                        double biggest = 0.1;
+                        int biggestid = 0;
+                        while (true)
+                        {
+                            if(provinces[l,0] == null)
+                            {
+                                break;
+                            }
+
+                            if(Convert.ToDouble(ValueManpower[l]) > biggest)
+                            {
+                                biggest = Convert.ToDouble(ValueManpower[l]);
+                                biggestid = l;
+                            }
+
+                            
+                            l += 1;
+                        }
+
+                        gainland(aggid, biggestid, "BETA");
+
+                        war[aggid, 0] = null;
+                        war[aggid, 1] = null;
+                        war[aggid, 2] = null;
+                        war[aggid, 3] = null;
+                        war[aggid, 4] = null;
+                        TakenId[bcki] = aggid.ToString();
+                        bcki += 1;
+                        war[defid, 0] = null;
+                        war[defid, 1] = null;
+                        war[defid, 2] = null;
+                        war[defid, 3] = null;
+                        war[defid, 4] = null;
+                        TakenId[bcki] = defid.ToString();
+                        bcki += 1;
+
+                        //Aggresor Turn
+                        Console.WriteLine("A");
+                    }
+                    else
+                    {
+                        //Defender Turn
+                        Console.WriteLine("A");
+                    }
+
+                }
+
+                i += 1;
+            }
+        }
+
         private void Tock_Tick(object sender, EventArgs e)
         {
             int maxcount = 0;
@@ -2901,8 +3102,9 @@ namespace Exp2
                     Religion_Form();
                     MaxScience();
                     ValueProv();
+                    //WarProgress();
                     WarFunc();
-
+                    WarProgress();
                     //if (existingreligions != 0)
                     //{
                     //    Religion_Spread();
