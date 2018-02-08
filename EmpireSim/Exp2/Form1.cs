@@ -48,7 +48,7 @@ namespace Exp2
 
         Random Rander = new Random();
 
-
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             //this.Size = new Size(800, 800);
@@ -740,7 +740,7 @@ namespace Exp2
                 {
                     Dobits();
                     bg = ((green / (green + blue))) * 100;
-                    Console.WriteLine(bg);
+                    //Console.WriteLine(bg);
                     age = "Provincial Age";
                 }
             }
