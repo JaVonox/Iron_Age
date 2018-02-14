@@ -2237,7 +2237,7 @@ namespace Exp2
                 int off = -10;
                 int temprand;
 
-                if (kingdoms[i - 2,2] != "TRIBAL")
+                if (kingdoms[i - 2,2] == "CHIEFTAINSHIP")
                 {
                     temprand = rand.Next(1, 50); 
                 }
@@ -2347,6 +2347,14 @@ namespace Exp2
 
                 if (provinces[loserprovid, 1] == provinces[loserprovid, 3])
                 {
+                    if (kingdoms[gainerkingid, 2] == kingdoms[tmp3n, 2] && kingdoms[gainerkingid, 2] == "CHIEFTAINSHIP" && ReligionId.Contains(kingdoms[gainerkingid, 3]))
+                    {
+                        kingdoms[gainerkingid, 2] = "KINGDOM";
+                    }
+                    else if (kingdoms[gainerkingid, 2] == kingdoms[tmp3n, 2] && kingdoms[gainerkingid, 2] == "KINGDOM")
+                    {
+                        kingdoms[gainerkingid, 2] = "EMPIRE";
+                    }
 
                     if (kingdoms[tmp3n, 2] != "TRIBAL")
                     {
@@ -2360,10 +2368,10 @@ namespace Exp2
                         {
                             if (provinces[i, 0] == null)
                             {
-                                if (allnewcapital[0] == null)
-                                {
-                                    break;
-                                }
+                                //if (allnewcapital[0] == null)
+                                //{
+                                //    break;
+                                //}
                                 break;
                             }
 
@@ -2464,18 +2472,18 @@ namespace Exp2
                 if (agressor == true)
                 {
                     war[gainerkingid, 2] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 2]) + (100 / provcount))).ToString();
-                    war[gainerkingid, 4] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 4]) - (100 / provcount))).ToString();
-                    war[tmp3n, 2] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 2]) - (100 / provcount))).ToString();
+                    //war[gainerkingid, 4] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 4]) - (100 / provcount))).ToString();
+                    //war[tmp3n, 2] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 2]) - (100 / provcount))).ToString();
                     war[tmp3n, 4] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 4]) + (100 / provcount))).ToString();
 
 
                 }
                 else
                 {
-                    war[gainerkingid, 2] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 2]) - (100 / provcount))).ToString();
+                    //war[gainerkingid, 2] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 2]) - (100 / provcount))).ToString();
                     war[gainerkingid, 4] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 4]) + (100 / provcount))).ToString();
                     war[tmp3n, 2] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 2]) + (100 / provcount))).ToString();
-                    war[tmp3n, 4] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 4]) - (100 / provcount))).ToString();
+                    //war[tmp3n, 4] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 4]) - (100 / provcount))).ToString();
                 }
 
                 if (kingdoms[gainerkingid, 2] == "TRIBAL")
@@ -2524,6 +2532,10 @@ namespace Exp2
             if(kingdoms[enemyid,2] == "TRIBAL")
             {
                 score += Math.Max(year / 10, 100);
+            }
+            else if(kingdoms[enemyid,2] == kingdoms[userid,2])
+            {
+                score += Math.Max(year / 10, 50);
             }
 
             //int m = 0;
@@ -2664,17 +2676,28 @@ namespace Exp2
             //{
             //    kingdoms[winnerid, 2] = "CHIEFTAINSHIP";
             //}
-            if (kingdoms[winnerid,2] == kingdoms[loserid,2]  && kingdoms[winnerid, 2] == "CHIEFTAINSHIP" && ReligionId.Contains(kingdoms[winnerid,3]))
-            {
-                kingdoms[winnerid, 2] = "KINGDOM";
-            }
-            else if (kingdoms[winnerid, 2] == kingdoms[loserid, 2] && kingdoms[winnerid, 2] == "KINGDOM")
-            {
-                kingdoms[winnerid, 2] = "EMPIRE";
-            }
+            //if (kingdoms[winnerid,2] == kingdoms[loserid,2]  && kingdoms[winnerid, 2] == "CHIEFTAINSHIP" && ReligionId.Contains(kingdoms[winnerid,3]))
+            //{
+            //    kingdoms[winnerid, 2] = "KINGDOM";
+            //}
+            //else if (kingdoms[winnerid, 2] == kingdoms[loserid, 2] && kingdoms[winnerid, 2] == "KINGDOM")
+            //{
+            //    kingdoms[winnerid, 2] = "EMPIRE";
+            //}
 
             truce[winnerid] = "1";
             truce[loserid] = "1";
+            war[winnerid, 0] = null;
+            war[winnerid, 1] = null;
+            war[winnerid, 2] = null;
+            war[winnerid, 3] = null;
+            war[winnerid, 4] = null;
+
+            war[loserid, 0] = null;
+            war[loserid, 1] = null;
+            war[loserid, 2] = null;
+            war[loserid, 3] = null;
+            war[loserid, 4] = null;
 
         }
 
@@ -3016,7 +3039,18 @@ namespace Exp2
                     int aggid = Convert.ToInt16(war[i, 1]);
                     int defid = Convert.ToInt16(war[i, 3]);
 
-                    
+                    war[aggid, 0] = war[defid, 0];
+                    war[aggid, 1] = war[defid, 1];
+                    war[aggid, 2] = war[defid, 2];
+                    war[aggid, 3] = war[defid, 3];
+                    war[aggid, 4] = war[defid, 4];
+
+                    war[i, 0] = war[aggid, 0];
+                    war[i, 1] = war[aggid, 1];
+                    war[i, 2] = war[aggid, 2];
+                    war[i, 3] = war[aggid, 3];
+                    war[i, 4] = war[aggid, 4];
+
                     if (Convert.ToInt16(war[i, 2]) >= 60 || Convert.ToInt16(war[i, 4]) >= 60)
                     {
                         peaceassign(Convert.ToInt16(war[i, 1]), Convert.ToInt16(war[i, 3]));
@@ -3199,13 +3233,13 @@ namespace Exp2
                                     {
                                         if (aggresor == true)
                                         {
-                                            war[aggid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 1)).ToString();
-                                            war[defid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 1)).ToString();
+                                            war[aggid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 10)).ToString();
+                                            war[defid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 10)).ToString();
                                         }
                                         else
                                         {
-                                            war[aggid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 1)).ToString();
-                                            war[defid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 1)).ToString();
+                                            war[aggid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 10)).ToString();
+                                            war[defid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 10)).ToString();
                                         }
 
                                         //gainland(aggid, biggestid, Convert.ToInt64((Convert.ToDouble(kingdoms[defid, 10]) / provcount) * count), provcount, aggresor, "REAL");
@@ -3377,13 +3411,13 @@ namespace Exp2
                                     {
                                         if (aggresor == true)
                                         {
-                                            war[aggid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 1)).ToString();
-                                            war[defid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 1)).ToString();
+                                            war[aggid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 10)).ToString();
+                                            war[defid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 10)).ToString();
                                         }
                                         else
                                         {
-                                            war[aggid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 1)).ToString();
-                                            war[defid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 1)).ToString();
+                                            war[aggid, 4] = Convert.ToInt16((Convert.ToInt16(war[aggid, 4]) + 10)).ToString();
+                                            war[defid, 2] = Convert.ToInt16((Convert.ToInt16(war[aggid, 2]) + 10)).ToString();
                                         }
 
                                         //gainland(aggid, biggestid, Convert.ToInt64((Convert.ToDouble(kingdoms[defid, 10]) / provcount) * count), provcount, aggresor, "REAL");
