@@ -79,6 +79,7 @@ namespace Exp2
             Dobits();
             defaultbuttons();
             this.Text = "Observing ";
+            MaxScience();
         }
 
         private void pullmapdata()
@@ -622,7 +623,7 @@ namespace Exp2
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
                                             rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
                                         }
-                                        else if (kingdoms[tmp3n, 2] == "COMMUNIST")
+                                        else if (kingdoms[tmp3n, 2] == "REPUBLIC")
                                         {
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 153; //red
@@ -699,7 +700,7 @@ namespace Exp2
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
                                             rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
                                         }
-                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "COMMUNIST")
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "REPUBLIC")
                                         {
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 153; //red
@@ -754,13 +755,25 @@ namespace Exp2
                             }
                             else if(enb == 4)
                             {
-                                int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3]));
-                                ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
-                                rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                                rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(255 - Convert.ToByte(kingdoms[tmp3n,6])); //red
-                                rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(kingdoms[tmp3n,6]); //green
-                                rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                            int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3])), 0);
+                            ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                            rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                            rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255;
+                            if (Convert.ToByte(kingdoms[tmp3n, 6]) == maxsci)
+                            {
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0;
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 255; //green
                             }
+                            else
+                            {
+                                //rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0;
+                                int diff = Convert.ToByte(Math.Max(Convert.ToByte(0), Convert.ToByte((Convert.ToDouble(kingdoms[tmp3n, 6]) / maxsci) * 255)));
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(255 - diff);
+                                rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(diff); //green
+                            }
+                            //rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(Math.Max(0,Convert.ToByte(kingdoms[tmp3n, 6]) - maxsci)); //green
+                            rgbValues[(y * bmpData.Stride) + (x * 4)] = 0; //blue
+                        }
                             else if (enb == 5)
                             {
                                 rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
@@ -816,7 +829,7 @@ namespace Exp2
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 128; //green
                                             rgbValues[(y * bmpData.Stride) + (x * 4)] = 255; //blue
                                         }
-                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "COMMUNIST")
+                                        else if (kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] == "REPUBLIC")
                                         {
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
                                             rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 153; //red
@@ -876,6 +889,29 @@ namespace Exp2
             bmp.UnlockBits(bmpData);
 
 
+        }
+
+        int maxsci = 0;
+
+        private void MaxScience()
+        {
+            int i = 0;
+            while (true)
+            {
+                if (kingdoms[i, 0] == null)
+                {
+                    break;
+                }
+                else
+                {
+                    if (Convert.ToInt16(kingdoms[i, 6]) > maxsci)
+                    {
+                        maxsci = Convert.ToInt16(kingdoms[i, 6]);
+                    }
+                }
+
+                i += 1;
+            }
         }
 
         private void PersonaliseBits(string inputarg)

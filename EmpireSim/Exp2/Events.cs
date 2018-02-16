@@ -15,30 +15,19 @@ namespace Exp2
         {
             //War_Declare - aggressor {0}. defender {1}
             {"War_Declare_0","{0} has declared war on {1}" },
-            {"War_Declare_1","{0} declared war on {1}" },
-            {"War_Declare_2","{1} target of {0} aggression (War!)" },
-            {"War_Declare_3","{0} menace declares war upon {1}" },
-            {"War_Declare_4","Conflict Erupts between {0} and {1}" },
-            {"War_Declare_5","{0} troops prepared for war against {1} menace" },
-            {"War_Declare_Holy","{0} Has Declared a crusade for {1}!" },
-            {"War_Declare_Revolt_0","Peasants rise in {1}" },
-            {"War_Declare_Revolt_1","Revolutionaries have declared war upon {1}" },
-            {"War_Declare_Revolt_2","Uprising in {1}!" },
-            //War_Capital - captor {0}. defender {1}
-            {"War_Capital","{0} Captures City Of {1}!" },
             //War_Peace - victor {0}, loser {1}
-            {"War_Peace_0","{1} Surrenders to {0}" },
-            {"War_Peace_1","{1} accepts {0} Peace Negotiations!" },
-            {"War_Peace_2","{0} Conquers {1}!" },
+            {"War_Peace_0","{1} Made peace with {0}" },
             //Religion_Form - City {0}. Religion {1}
             {"Religion_Form_0", "{1} begins in {0}" },
             {"Religion_Form_1", "{1} Forms in city of {0}" },
             {"Religion_Form_2","{0} has formed {1}!" },
+            //Nation_Rank - Target {0}. Rank {1}
+            {"Nation_Rank","{0} Has become a{1}!" },
             //Religion_Convert - Country {0}. Religion {1}
             {"Religion_Convert", "{0} Has converted to {1}" },
             //Science_Increase {0} City. {1} Level.
             {"Science_Increase_0", "{0} Develops Level {1} Science"},
-            {"Science_Increase_1", "{0} Science develops to Level {1}" },
+            {"Science_Increase_1", "{0} Gained Level {1} Science" },
             {"Science_Increase_2", "Level {1} Science discovered in {0}"},
             //Science_Milestone. {0} City. {1} Year
             {"Science_Milestone_Iron", "{1} - {0} Discovered Iron!" }, //50
