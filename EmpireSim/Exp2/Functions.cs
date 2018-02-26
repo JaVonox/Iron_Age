@@ -25,7 +25,6 @@ namespace funct
             //Devonport = 2 = codonpo
             //etc until impossible
 
-
             if (type == "Prov")
                 {
 

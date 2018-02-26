@@ -3735,27 +3735,34 @@ namespace Exp2
         {
             //Maybe repeat for maxscis value?
             int trycount = rand.Next(1, Math.Max(2,year / 10));
+            //int no = 0;
+
             while (trycount >= 0)
             {
                 int scienceup = rand.Next(1, 9000);
                 //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
-
+                int no = 0;
                 while (true)
                 {
-                    if (provinces[scienceup, 1] != provinces[scienceup, 3] || provinces[scienceup, 0] == null || kingdoms[scienceup, 2] == "TRIBAL")
+                    if ((provinces[scienceup, 1] != provinces[scienceup, 3] || provinces[scienceup, 0] == null || kingdoms[scienceup, 2] == "TRIBAL") && no < 10000)
                     {
                         scienceup = rand.Next(1, 9000);
+                        no += 1;
                     }
                     else
                     {
                         break;
                     }
                 }
-                if (kingdoms[scienceup, 2] != "TRIBAL" && kingdoms[scienceup, 2] != "CHIEFTAINSHIP" && kingdoms[scienceup, 0] != null && Convert.ToInt16(kingdoms[scienceup, 6]) < 255)
+                if ((kingdoms[scienceup, 2] != "TRIBAL" && kingdoms[scienceup, 2] != "CHIEFTAINSHIP" && kingdoms[scienceup, 0] != null && Convert.ToInt16(kingdoms[scienceup, 6]) < 255) && no <= 10000)
                 {
                     kingdoms[scienceup, 6] = (Convert.ToInt16(kingdoms[scienceup, 6]) + 1).ToString();
                     eventnews("Science_Increase_0", kingdoms[scienceup, 1], (Convert.ToInt16(kingdoms[scienceup, 6])).ToString());
                     trycount = 0;
+                }
+                else if(no <= 10000)
+                {
+                    break;
                 }
             }
 

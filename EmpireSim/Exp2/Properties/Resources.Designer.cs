@@ -19,10 +19,10 @@ namespace Exp2.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Exp2.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Exp2.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Exp2.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Exp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap arcade_alternative {
+        public static System.Drawing.Bitmap arcade_alternative {
             get {
                 object obj = ResourceManager.GetObject("arcade_alternative", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace Exp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] ArcadeAlternate {
+        public static byte[] ArcadeAlternate {
             get {
                 object obj = ResourceManager.GetObject("ArcadeAlternate", resourceCulture);
                 return ((byte[])(obj));
@@ -150,7 +150,7 @@ namespace Exp2.Properties {
         ///Aggy
         ///Ag [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string FirstNameReal {
+        public static string FirstNameReal {
             get {
                 return ResourceManager.GetString("FirstNameReal", resourceCulture);
             }
@@ -159,7 +159,7 @@ namespace Exp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap font_map_arcade_alternative {
+        public static System.Drawing.Bitmap font_map_arcade_alternative {
             get {
                 object obj = ResourceManager.GetObject("font_map_arcade_alternative", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -169,7 +169,7 @@ namespace Exp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap font_map_unicode_arcade_alternative {
+        public static System.Drawing.Bitmap font_map_unicode_arcade_alternative {
             get {
                 object obj = ResourceManager.GetObject("font_map_unicode_arcade_alternative", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -179,7 +179,7 @@ namespace Exp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon MainMenu {
+        public static System.Drawing.Icon MainMenu {
             get {
                 object obj = ResourceManager.GetObject("MainMenu", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
@@ -237,36 +237,36 @@ namespace Exp2.Properties {
         ///Gereshk
         ///Gard [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ProvincesReal {
+        public static string ProvincesReal {
             get {
                 return ResourceManager.GetString("ProvincesReal", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chinese Patriotic Catholic Association
-        ///Independent Catholic Churches
-        ///Brazilian Catholic Apostolic Church
-        ///Philippine Independent Church
-        ///Polish National Catholic Church
-        ///Union of Utrecht
-        ///Old Catholicism
-        ///Liberal Catholic Church
-        ///Roman Catholicism
-        ///Sui iuris
-        ///Traditionalist Catholicism
-        ///Eastern Catholic Churches
-        ///Syriac Catholic Church
-        ///Eastern Orthodoxy
-        ///Greek Orthodox Church
-        ///Russian Orthodox Church
-        ///Oriental Orthodoxy
-        ///Coptic Orthodox Church
-        ///Ethiopian Orthodox Church
-        ///Syriac Christianity
-        ///Assyrian Chu [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to $Wicca%244%66%241%~
+        ///$Catholic%255%244%91%~
+        ///$Protestant%79%96%249%~
+        ///$Orthodox%173%29%111%~
+        ///$Miaphysite%206%53%97%~
+        ///$Judaism%199%228%234%~
+        ///$Sunni%22%229%47%~
+        ///$Shia%21%94%30%~
+        ///$Buddhist%94%59%21%~
+        ///$Shinto%188%37%0%~
+        ///$Taoist%147%139%137%~
+        ///$Hindu%128%204%42%~
+        ///$Sikh%204%166%42%~
+        ///$Celtic%133%237%30%~
+        ///$Jainism%112%6%3%~
+        ///$Zoroastrian%3%86%112%~
+        ///$Confucian%242%155%192%~
+        ///$Germanic%193%189%191%~
+        ///$Slavic%70%122%3%~
+        ///$Tengri%29%199%27%~
+        ///$Docetist%66%53%130%~.
         /// </summary>
-        internal static string ReligionsReal {
+        public static string ReligionsReal {
             get {
                 return ResourceManager.GetString("ReligionsReal", resourceCulture);
             }
@@ -338,7 +338,7 @@ namespace Exp2.Properties {
         ///Aalaysha
         ///Aalay [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string SurnamesReal {
+        public static string SurnamesReal {
             get {
                 return ResourceManager.GetString("SurnamesReal", resourceCulture);
             }
@@ -347,7 +347,7 @@ namespace Exp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap testimage {
+        public static System.Drawing.Bitmap testimage {
             get {
                 object obj = ResourceManager.GetObject("testimage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -357,7 +357,7 @@ namespace Exp2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon WorldGen {
+        public static System.Drawing.Icon WorldGen {
             get {
                 object obj = ResourceManager.GetObject("WorldGen", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
