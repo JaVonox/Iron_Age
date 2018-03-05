@@ -59,6 +59,7 @@ namespace Exp2
         Font myFontTitle;
         Font myFontLarge;
         Font myFontDetail;
+        Font myFontSmallest;
         Events ev = new Events();
 
 
@@ -87,6 +88,7 @@ namespace Exp2
             myFontTitle = new Font(fonts.Families[0], 16.8F, FontStyle.Underline);
             myFontLarge = new Font(fonts.Families[0], 16.8F);
             myFontDetail = new Font(fonts.Families[0], 12.0F);
+            myFontSmallest = new Font(fonts.Families[0], 7.0F);
 
             this.Size = new System.Drawing.Size(xlen, ylen);
             //ImagePic.Width = xlen;
@@ -94,10 +96,14 @@ namespace Exp2
             this.Icon = Exp2.Properties.Resources.WorldGen;
             path = this.Text;
             pullmapdata();
+            //BackMap = Map;
             Back.Image = Map;
+
+            Back.BackColor = Color.FromArgb(255, 28, 107, 160);
             Dobits();
             defaultbuttons();
             this.Text = "Simulating";
+            CountEmpires();
             //madpadj();
             //Console.WriteLine("M");
 
@@ -953,6 +959,13 @@ namespace Exp2
             // Declare an array to hold the bytes of the bitmap.
             int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
             byte[] rgbValues = new byte[bytes];
+            Point[] cappos = new Point[10000];
+            string[] donenames = new string[10000];
+            int back = 0;
+            bool transparent = true;
+
+            //int ylast = 0;
+            //int xlast = 0;
 
             // Copy the RGB values into the array.
             //System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
@@ -962,11 +975,14 @@ namespace Exp2
             //{
             for (int y = 1; y <= ylen - 41; y++)
             {
+                transparent = !transparent;
                 int l = y * Math.Abs(bmpData.Stride);
                 int rowStart = y * bmpData.Stride;
 
                 for (int x = 1; x <= xlen - 18; x++)
                 {
+                    transparent = !transparent;
+
                     int dx = l + x * 4;
 
                     if (x >= (xlen / 80) * 65)
@@ -1070,23 +1086,35 @@ namespace Exp2
                     }
                     else if (map[x, y] == "0" || map[x, y] == null)
                     {
-                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 28; //red
-                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 107; //green
-                        rgbValues[(y * bmpData.Stride) + (x * 4)] = 160; //blue
+                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 28; //red
+                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 107; //green
+                        //rgbValues[(y * bmpData.Stride) + (x * 4)] = 160; //blue
                     }
                     else
                     {
                         //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
                         //string[,] provinces = new string[10000,16];
                         ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
-                        string tm = map[x, y];
-                        string tmp1bb = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
-                        string tmp2bb = provinces[Convert.ToInt32(map[x, y]) - 2, 1];
+                        //string tm = map[x, y];
+                        //string tmp1bb = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
+                        //string tmp2bb = provinces[Convert.ToInt32(map[x, y]) - 2, 1];
+                        if (provinces[Convert.ToInt32(map[x, y]) - 2, 3] == provinces[Convert.ToInt32(map[x, y]) - 2, 1] && kingdoms[Convert.ToInt32(map[x, y]) - 2, 2] != "TRIBAL")
+                        {
+                            if (back == 0 || donenames.Contains(provinces[Convert.ToInt32(map[x, y]) - 2, 3]) == false)
+                            {
+                                Point temp = new Point(x, y);
+                                cappos[back] = temp;
+                                donenames[back] = provinces[Convert.ToInt32(map[x, y]) - 2, 3];
+                                back += 1;
+                            }
+                        }
+
+                        //int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3])), 0);
 
                         if (provinces[Convert.ToInt32(map[x, y]) - 2, 3] != provinces[Convert.ToInt32(map[x, y]) - 2, 1] && enb != 3 && enb != 4 && enb != 5)
                         {
-                            int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3])),0);
+                            int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3])), 0);
                             if (kingdoms[tmp3n, 2] != "TRIBAL")
                             {
                                 if (enb == 2)
@@ -1151,9 +1179,19 @@ namespace Exp2
                                 else if (enb == 1 || enb == 6 || enb == 7 || enb == 8 || enb == 9)
                                 {
                                     rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 13]); //red
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 14]); //green
-                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 15]); //blue
+                                    if (kingdoms[tmp3n, 2] == "CHIEFTAINSHIP" && transparent == true)
+                                    {
+                                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                                    }
+                                    else
+                                    {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 13]); //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 14]); //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(tmp3n)), 15]); //blue
+                                    }
                                 }
 
                             }
@@ -1265,7 +1303,7 @@ namespace Exp2
                         }
                         else if (enb == 4)
                         {
-                            int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3])),0);
+                            int tmp3n = Math.Max(Convert.ToInt32(Array.IndexOf(kingidname, provinces[Convert.ToInt32(map[x, y]) - 2, 3])), 0);
                             ////$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
                             rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
                             rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 255;
@@ -1277,7 +1315,7 @@ namespace Exp2
                             else
                             {
                                 //rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 0;
-                                int diff = Convert.ToByte(Math.Max(Convert.ToByte(0), Convert.ToByte( (Convert.ToDouble(kingdoms[tmp3n, 6]) / maxsci) * 255) ));
+                                int diff = Convert.ToByte(Math.Max(Convert.ToByte(0), Convert.ToByte((Convert.ToDouble(kingdoms[tmp3n, 6]) / maxsci) * 255)));
                                 rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(255 - diff);
                                 rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(diff); //green
                             }
@@ -1364,9 +1402,20 @@ namespace Exp2
                                 else if (enb == 1 || enb == 6 || enb == 7 || enb == 8 || enb == 9)
                                 {
                                     rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 13]); //red
-                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 14]); //green
-                                    rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 15]); //blue
+                                    rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                    if (kingdoms[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 2] == "CHIEFTAINSHIP" && transparent == true)
+                                    {
+                                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 78; //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 176; //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = 134; //blue
+                                    }
+                                    else
+                                    {
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 13]); //red
+                                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 14]); //green
+                                        rgbValues[(y * bmpData.Stride) + (x * 4)] = Convert.ToByte(provinces[(Convert.ToInt16(Convert.ToInt32(map[x, y])) - 2), 15]); //blue
+                                    }
                                 }
                             }
                             else
@@ -1399,6 +1448,61 @@ namespace Exp2
             bmp.UnlockBits(bmpData);
             updatenews();
 
+            int rcp = 0;
+            Brush redpen = new SolidBrush(Color.Red);
+            Brush Purppen = new SolidBrush(Color.Purple);
+            Brush Blackpen = new SolidBrush(Color.White);
+            while (true)
+            {
+                if(cappos[rcp].X == 0 && cappos[rcp].Y == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    using (var g = Graphics.FromImage(Back.Image))
+                    {
+                        //g.FillEllipse(redpen, cappos[rcp].X + (xlen / 200), cappos[rcp].Y + (ylen / 200), 4, 4);
+
+                        if (kingdoms[Convert.ToInt32(map[cappos[rcp].X, cappos[rcp].Y]) - 2, 2] != "TRIBAL" && kingdoms[Convert.ToInt32(map[cappos[rcp].X, cappos[rcp].Y]) - 2, 2] != "CHIEFTAINSHIP")
+                        {
+                            if(kingdoms[Convert.ToInt32(map[cappos[rcp].X, cappos[rcp].Y]) - 2, 2] == "KINGDOM" || kingdoms[Convert.ToInt32(map[cappos[rcp].X, cappos[rcp].Y]) - 2, 2] == "REPUBLIC" || kingdoms[Convert.ToInt32(map[cappos[rcp].X, cappos[rcp].Y]) - 2, 2] == "SULTANATE")
+                            {
+                                g.FillEllipse(redpen, cappos[rcp].X + (xlen / 200), cappos[rcp].Y + (ylen / 200), 4, 4);
+                            }
+                            else
+                            {
+                                g.FillEllipse(Purppen, cappos[rcp].X + (xlen / 200), cappos[rcp].Y + (ylen / 200), 4, 4);
+                            }
+                            string name = kingdoms[Convert.ToInt32(map[cappos[rcp].X, cappos[rcp].Y]) - 2, 1];
+                            Font tofnt = new Font("Tahoma", 8);
+                            g.DrawString(name, tofnt, Blackpen, cappos[rcp].X, cappos[rcp].Y);
+                        }
+                    }
+                }
+
+                rcp += 1;
+            }
+
+            //int namp = 0;
+            //Brush Blackpen = new SolidBrush(Color.Black);
+            //while(true)
+            //{
+            //    if(provinces[namp,0] == null)
+            //    {
+            //        break;
+            //    }
+
+            //    if(kingdoms[namp,2] != "TRIBAL" && leftof[namp].X != 0 && rightof[namp].X != 0)
+            //    {
+            //        using (var g = Graphics.FromImage(Back.Image))
+            //        {
+            //            Point temppoint = new Point(rightof[namp].X - ((rightof[namp].X - leftof[namp].X) / 2), Math.Max(0, rightof[namp].Y - ((rightof[namp].Y - leftof[namp].Y) / 2)));
+            //            g.DrawString(kingdoms[namp, 1], myFontSmallest, Blackpen, temppoint);
+            //        }
+            //    }
+            //    namp += 1;
+            //}
 
             if (lastnews != 0 && lastnews < 20)
             {
@@ -1556,10 +1660,10 @@ namespace Exp2
                     }
                     else if (map[x, y] == "0" || map[x, y] == null)
                     {
-                        rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
-                        rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 28; //red
-                        rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 107; //green
-                        rgbValues[(y * bmpData.Stride) + (x * 4)] = 160; //blue
+                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 3] = 255; //alpha
+                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 2] = 28; //red
+                        //rgbValues[(y * bmpData.Stride) + (x * 4) + 1] = 107; //green
+                        //rgbValues[(y * bmpData.Stride) + (x * 4)] = 160; //blue
                     }
                     else
                     {
@@ -2145,34 +2249,18 @@ namespace Exp2
                         //Writer3.Write(SurnameList[Rander.Next(1, 500)] + "%");
                         //Writer3.Write(Rander.Next(16, 50) + "%");
 
-                        if (kingdoms[i, 2] == "KINGDOM" || kingdoms[i, 2] == "SULTANATE" || kingdoms[i, 2] == "REPUBLIC")
+                        if (kingdoms[i, 2] == "REPUBLIC")
                         {
-                            if (Convert.ToInt32(kingdoms[i, 4]) >= 5)
-                            {
-                                kingdoms[i, 2] = "SULTANATE";
-                            }
-                            else if (Convert.ToInt32(kingdoms[i, 4]) >= 0)
+                            if (Convert.ToInt32(kingdoms[i, 4]) >= 10)
                             {
                                 kingdoms[i, 2] = "KINGDOM";
                             }
-                            else
-                            {
-                                kingdoms[i, 2] = "REPUBLIC";
-                            }
                         }
-                        else if (kingdoms[i, 2] == "DICTATORSHIP" || kingdoms[i, 2] == "EMPIRE" || kingdoms[i, 2] == "DEMOCRACY")
+                        else if (kingdoms[i, 2] == "DEMOCRACY")
                         {
                             if (Convert.ToInt32(kingdoms[i, 5]) >= 10)
                             {
-                                kingdoms[i, 2] = "DICTATORSHIP";
-                            }
-                            else if (Convert.ToInt32(kingdoms[i, 5]) >= 0)
-                            {
                                 kingdoms[i, 2] = "EMPIRE";
-                            }
-                            else
-                            {
-                                kingdoms[i, 2] = "DEMOCRACY";
                             }
                         }
                     }
@@ -2453,6 +2541,26 @@ namespace Exp2
         }
 
         int hpid = 0;
+        int empirecount = 0;
+        private void CountEmpires()
+        {
+            empirecount = 0;
+            int i = 0;
+            while(true)
+            {
+                if(kingdoms[i,0] == null)
+                {
+                    break;
+                }
+
+                if( (kingdoms[i, 2] == "EMPIRE" || kingdoms[i, 2] == "DEMOCRACY" || kingdoms[i, 2] == "DICTATORSHIP"))
+                {
+                    empirecount += 1;
+                }
+
+                i += 1;
+            }
+        }
 
         private void gainland(int gainerkingid,int loserprovid,long mpcost,int provcount,bool agressor,string type)
         {
@@ -2495,20 +2603,29 @@ namespace Exp2
                     }
                     else if (kingdoms[tmp3n, 2] != "TRIBAL" && kingdoms[tmp3n, 2] != "CHIEFTAINSHIP" && (kingdoms[gainerkingid, 2] == "KINGDOM" || kingdoms[gainerkingid, 2] == "REPUBLIC" || kingdoms[gainerkingid, 2] == "SULTANATE"))
                     {
-                        if (Convert.ToInt32(kingdoms[gainerkingid, 5]) >= 10)
+
+                        if ((year / 100) * 5 < empirecount)
                         {
-                            kingdoms[gainerkingid, 2] = "DICTATORSHIP";
-                            eventnews("Nation_Rank", kingdoms[gainerkingid, 1], " Dictatorship");
-                        }
-                        else if (Convert.ToInt32(kingdoms[gainerkingid, 5]) <= -10)
-                        {
-                            kingdoms[gainerkingid, 2] = "DEMOCRACY";
-                            eventnews("Nation_Rank", kingdoms[gainerkingid, 1], " Democracy");
+
                         }
                         else
                         {
-                            kingdoms[gainerkingid, 2] = "EMPIRE";
-                            eventnews("Nation_Rank", kingdoms[gainerkingid, 1], "n Empire");
+                            empirecount += 1;
+                            if (Convert.ToInt32(kingdoms[gainerkingid, 5]) >= 10)
+                            {
+                                kingdoms[gainerkingid, 2] = "DICTATORSHIP";
+                                eventnews("Nation_Rank", kingdoms[gainerkingid, 1], " Dictatorship");
+                            }
+                            else if (Convert.ToInt32(kingdoms[gainerkingid, 5]) <= -10)
+                            {
+                                kingdoms[gainerkingid, 2] = "DEMOCRACY";
+                                eventnews("Nation_Rank", kingdoms[gainerkingid, 1], " Democracy");
+                            }
+                            else
+                            {
+                                kingdoms[gainerkingid, 2] = "EMPIRE";
+                                eventnews("Nation_Rank", kingdoms[gainerkingid, 1], "n Empire");
+                            }
                         }
                     }
 
@@ -2588,22 +2705,9 @@ namespace Exp2
                                         kingdoms[Convert.ToInt16(highesthappyid), 2] = kingdoms[tmp3n, 2];
                                         provinces[Convert.ToInt16(highesthappyid), 3] = provinces[Convert.ToInt16(highesthappyid), 1];
 
-                                        //if (kingdoms[Convert.ToInt16(highesthappyid), 2] == "TRIBAL" || kingdoms[tmp3n, 2] == "TRIBAL")
-                                        //{
-                                        //    Console.WriteLine("A");
-                                        //}
 
                                         kingdoms[Convert.ToInt16(highesthappyid), 10] = kingdoms[tmp3n, 10];
-                                        //kingdoms[Convert.ToInt16(highesthappyid), 2] = "EMPIRE";
-                                        //peaceassign(gainerkingid, Convert.ToInt16(highesthappyid));
-                                        //if (agressor == true)
-                                        //{
-                                        //    war[gainerkingid, 2] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 2]) + 1 / provcount)).ToString();
-                                        //}
-                                        //else
-                                        //{
-                                        //    war[gainerkingid, 4] = Convert.ToInt16((Convert.ToInt16(war[gainerkingid, 4]) + 1 / provcount)).ToString();
-                                        //}
+
                                         hpid = Convert.ToInt16(highesthappyid);
                                     }
 
@@ -3217,6 +3321,26 @@ namespace Exp2
                         }
                         else
                         {
+                            if (war[i, 0] == "REBEL")
+                            {
+                                int b = 0;
+
+                                while (true)
+                                {
+                                    if(provinces[b,0] == null)
+                                    {
+                                        kingdoms[defid, 10] += kingdoms[aggid, 10];
+                                        break;
+                                    }
+
+                                    if(provinces[b,3] == provinces[aggid,1])
+                                    {
+                                        provinces[b, 3] = provinces[defid, 1];
+                                    }
+                                    b += 1;
+                                }
+                            }
+
                             eventnews("War_Peace_0", provinces[defid, 1], provinces[aggid, 1]);
                         }
 
@@ -3773,6 +3897,9 @@ namespace Exp2
         {
             int i = 0;
             string[] AvailableProvinces = new string[10000];
+            string[] SpreadScience = new string[10000];
+            int back = 0;
+
             while(true)
             {
                 if(kingdoms[i,0] == null)
@@ -3783,7 +3910,7 @@ namespace Exp2
                 //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
                 if (kingdoms[i, 2] != "TRIBAL" && kingdoms[i, 2] != "CHIEFTAINSHIP")
                 {
-                    if(Convert.ToInt16(kingdoms[i,6]) != 0)
+                    if(Convert.ToInt16(kingdoms[i,6]) != 0 && (SpreadScience.Contains(kingdoms[i,6]) == false))
                     {
                         AvailableProvinces = return_adjacent_king(i);
 
@@ -3800,6 +3927,8 @@ namespace Exp2
                             if(kingdoms[tmp3n,2] != "TRIBAL" && kingdoms[tmp3n, 2] != "CHIEFTAINSHIP" && Convert.ToInt16(kingdoms[tmp3n,6]) < Convert.ToInt16(kingdoms[i,6]))
                             {
                                 kingdoms[tmp3n, 6] = (Convert.ToInt16(kingdoms[tmp3n, 6]) + 1).ToString();
+                                SpreadScience[back] = kingdoms[tmp3n, 6];
+                                back += 1;
                                 eventnews("Science_Increase_1", kingdoms[tmp3n, 1], (Convert.ToInt16(kingdoms[tmp3n, 6])).ToString());
                             }
 
@@ -3840,6 +3969,111 @@ namespace Exp2
                 }
             }
             return frequentVal;
+        }
+
+        private void rebellion()
+        {
+            int i = 0;
+
+            //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+
+            //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+
+
+            while(true)
+            {
+                if(provinces[i,0] == null)
+                {
+                    break;
+                }
+
+                int rebelpos = 0;
+                int empirepos = 0;
+                int midpoint = 0;
+                int tmp3n = Convert.ToInt32(Array.IndexOf(kingidname, provinces[i, 3]));
+                if (truce[tmp3n] == null && war[tmp3n,0] == null && provinces[i, 1] != provinces[i, 3] && Convert.ToInt16(provinces[i, 11]) <= 0 && (kingdoms[tmp3n,2] == "EMPIRE" || kingdoms[tmp3n, 2] == "DEMOCRACY" || kingdoms[tmp3n, 2] == "DICTATORSHIP"))
+                {
+
+                    for (int y = 1; y <= ylen - 1; y++)
+                    {
+                        for (int x = 1; x <= xlen - 1; x++)
+                        {
+                            if (Convert.ToInt16(map[x, y]) == (i + 2))
+                            {
+                                rebelpos = x;
+                            }
+                            else if (Convert.ToInt16(map[x, y]) == (tmp3n + 2))
+                            {
+                                empirepos = x;
+                            }
+                        }
+                    }
+
+                    midpoint = Math.Max(empirepos, rebelpos) - ((Math.Max(empirepos, rebelpos) - Math.Min(empirepos, rebelpos))/2);
+
+                    bool left = false;
+
+                    if (rebelpos < empirepos)
+                    {
+                        left = true;
+                        provinces[i, 1] = provinces[i, 3];
+                        provinces[i, 11] = "5";
+                    }
+                    else if(rebelpos == empirepos)
+                    {
+                        Console.WriteLine("A");
+                        provinces[i, 1] = provinces[i, 3];
+                        provinces[i, 11] = "5";
+                    }
+
+                    for (int y = 1; y <= ylen - 1; y++)
+                    {
+                        for (int x = 1; x <= xlen - 1; x++)
+                        {
+
+                            if (x <= midpoint && left == true && map[x,y] != "0" && map[x,y] == (tmp3n + 2).ToString())
+                            {
+                                provinces[Convert.ToInt16(map[x, y]) - 2, 3] = provinces[i, 1];
+                                provinces[Convert.ToInt16(map[x, y]) - 2, 11] = "5";
+                            }
+                            else if (x >= midpoint && left == false && map[x, y] != "0" && map[x, y] == (tmp3n + 2).ToString())
+                            {
+                                provinces[Convert.ToInt16(map[x, y]) - 2, 3] = provinces[i, 1];
+                                provinces[Convert.ToInt16(map[x, y]) - 2, 11] = "5";
+                            }
+                        }
+                    }
+
+                    //$ID%NAME%TYPE%OFFICIALRELIGION%(OWNEDPROV)%SPIRIT%ETHICS%SCIENCE%RULERF%RULERS%RULERAGE%MANPOWER%~
+                    //$ID%Name%Religion%OwningEmpire%Bronze%Iron%Steel%Gunpowder%Oil%Theology%Science%Happiness%Capital%R%G%B%~
+                    kingdoms[i, 10] = (Convert.ToInt64(kingdoms[tmp3n, 10]) / 2).ToString();
+                    kingdoms[tmp3n, 10] = (Convert.ToInt64(kingdoms[tmp3n, 10]) / 2).ToString();
+                    kingdoms[i, 2] = "KINGDOM";
+                    kingdoms[i, 3] = provinces[i, 2];
+                    kingdoms[i, 6] = kingdoms[tmp3n, 6];
+
+                    //$WARTYPE%AGGRESSORID%AGRESSORSCORE%DEFENDERID%DEFENDERSCORE%~
+                    eventnews("War_Declare_0", provinces[i, 1], kingdoms[tmp3n, 1]);
+                    war[i, 0] = "REBEL";
+                    war[i, 1] = i.ToString();
+                    war[i, 2] = "0";
+                    war[i, 3] = tmp3n.ToString();
+                    war[i, 4] = "0";
+
+                    war[tmp3n, 0] = war[i, 0];
+                    war[tmp3n, 1] = war[i, 1];
+                    war[tmp3n, 2] = war[i, 2];
+                    war[tmp3n, 3] = war[i, 3];
+                    war[tmp3n, 4] = war[i, 4];
+
+                    break;
+
+
+
+                }
+
+                i += 1;
+            }
         }
 
         private void Tock_Tick(object sender, EventArgs e)
@@ -3909,13 +4143,20 @@ namespace Exp2
                     sciencespread();
                 }
 
+                if (year % 20 == 0 && month == 4 && day == 16)
+                {
+                    rebellion();
+                }
+
 
                 if (month == 5)
                 {
                     year += 1;
                     eventnews("New_Year",year.ToString(),null);
                     die();
+                    //rebellion();
                     peaceclear();
+                    //rebellion();
                     month = 1;
                     //scienceSpawn();
                 }
