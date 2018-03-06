@@ -1,3 +1,5 @@
+IRON AGE - By James Benjamin Brimelow Gorman (Jamie Gorman)
+
 Enter File > Executable and run the exe to run the program.
 
 To use the program, select generate and choose a location for a file
