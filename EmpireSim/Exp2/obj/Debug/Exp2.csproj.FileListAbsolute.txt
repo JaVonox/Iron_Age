@@ -126,3 +126,16 @@ C:\Users\redss\Desktop\Projects\Branch Iron Age\Iron_Age-master\EmpireSim\Exp2\b
 C:\Users\redss\Desktop\Projects\Branch Iron Age\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Iron Age.pdb
 C:\Users\redss\Desktop\Projects\Branch Iron Age\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Iron Age.exe
 C:\Users\redss\Desktop\Projects\Branch Iron Age\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Iron Age.pdb
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Iron Age.exe.config
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Iron Age.exe
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\bin\Debug\Iron Age.pdb
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csprojAssemblyReference.cache
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Form1.resources
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.MainMenu.resources
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Play.resources
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Observe.resources
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.Properties.Resources.resources
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.GenerateResource.cache
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Exp2.csproj.CoreCompileInputs.cache
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Iron Age.exe
+U:\IronAgeSource\Iron_Age-master\EmpireSim\Exp2\obj\Debug\Iron Age.pdb

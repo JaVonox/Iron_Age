@@ -20,7 +20,7 @@ namespace Exp2
         static int ylen = 900;
         Bitmap Bg = new Bitmap(Exp2.Properties.Resources.testimage, xlen, ylen);
         Icon Ic = new Icon(Exp2.Properties.Resources.MainMenu,64,64);
-        Color[,] bitmapc = new Color[xlen, ylen];
+        //Color[,] bitmapc = new Color[xlen, ylen];
         private System.Drawing.Text.PrivateFontCollection fonts = new System.Drawing.Text.PrivateFontCollection();
         Font myFont;
         Font myFontB;
@@ -42,6 +42,7 @@ namespace Exp2
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
+            Color[,] bitmapc = new Color[xlen, ylen];
             //alot of this is copy and pasted from sources on the internet from free use sources
             byte[] fontData = Exp2.Properties.Resources.ArcadeAlternate;
             IntPtr fontPtr = System.Runtime.InteropServices.Marshal.AllocCoTaskMem(fontData.Length);
@@ -767,6 +768,7 @@ namespace Exp2
 
         public void updatebigbox(int mode)
         {
+            Color[,] bitmapc = new Color[xlen, ylen];
             outcancel = true;
             outname = null;
             existing = false;

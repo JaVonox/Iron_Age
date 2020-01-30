@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+
 namespace Exp2
 {
     public partial class Form1 : Form
@@ -401,7 +403,21 @@ namespace Exp2
 
 
                         timer1.Stop();
-                        Observe observer = new Observe();
+
+                            ////Create image
+                            int width = Convert.ToInt32(pictureBox1.Size.Width);
+                            int height = Convert.ToInt32(pictureBox1.Size.Height);
+                            //Bitmap bmp = new Bitmap(width, height);
+                            //pictureBox1.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+                            //bmp.Save(pathing + "//Map/Map.png", ImageFormat.Png);
+                            ////End create image
+
+                            Bitmap bmp = new Bitmap(width, height);
+                            pictureBox1.DrawToBitmap(bmp, new Rectangle(0, 0, width, height));
+
+                            bmp.Save(pathing + "//Map.bmp", ImageFormat.Bmp);
+
+                            Observe observer = new Observe();
                         observer.Text = pathing;
                         observer.Show();
                         this.Hide();
@@ -418,7 +434,7 @@ namespace Exp2
                     }
                     catch(Exception ex)
                     {
-
+                            Console.WriteLine(ex);
                     }
                 }
                 else if(age == "Age of Formation")
